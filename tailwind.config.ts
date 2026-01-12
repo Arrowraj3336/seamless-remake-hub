@@ -24,9 +24,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Exo 2', 'sans-serif'],
-        heading: ['Orbitron', 'sans-serif'],
-        display: ['Space Grotesk', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+        heading: ['Syne', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
