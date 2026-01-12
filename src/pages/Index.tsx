@@ -1,13 +1,52 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
+import LogosSection from '@/components/LogosSection';
+import FeaturesSection from '@/components/FeaturesSection';
+import MarqueeSection from '@/components/MarqueeSection';
+import CreativeToolsSection from '@/components/CreativeToolsSection';
+import CollaborationSection from '@/components/CollaborationSection';
+import ResourcesSection from '@/components/ResourcesSection';
+import PricingSection from '@/components/PricingSection';
+import StatsSection from '@/components/StatsSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import CTASection from '@/components/CTASection';
+import Footer from '@/components/Footer';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Index = () => {
+  useEffect(() => {
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Refresh ScrollTrigger on load
+    ScrollTrigger.refresh();
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Navbar />
+      <HeroSection />
+      <LogosSection />
+      <FeaturesSection />
+      <MarqueeSection />
+      <CreativeToolsSection />
+      <CollaborationSection />
+      <ResourcesSection />
+      <PricingSection />
+      <StatsSection />
+      <TestimonialsSection />
+      <CTASection />
+      <Footer />
+    </main>
   );
 };
 
