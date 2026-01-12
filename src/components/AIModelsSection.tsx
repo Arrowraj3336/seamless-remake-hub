@@ -72,16 +72,7 @@ const AIModelsSection = () => {
         stagger: 0.4,
       });
 
-      // Glow pulse animation
-      gsap.to('.model-glow', {
-        opacity: 0.9,
-        scale: 1.08,
-        duration: 2.5,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.3,
-      });
+      // Removed glow pulse animation for cleaner look
 
       // Background orbs
       gsap.to('.model-orb', {
@@ -164,7 +155,7 @@ const AIModelsSection = () => {
           {models.map((model, index) => (
             <div
               key={model.name}
-              className={`model-card relative rounded-2xl overflow-hidden glass border border-border/30 hover:border-primary/50 transition-all duration-500 group ${
+              className={`model-card relative rounded-2xl overflow-hidden glass border border-border/30 hover:border-border/60 transition-all duration-500 group ${
                 model.isFree ? 'ring-2 ring-primary/40' : ''
               }`}
               style={{ perspective: '1000px' }}
@@ -178,9 +169,6 @@ const AIModelsSection = () => {
                   </span>
                 </div>
               )}
-
-              {/* Glow effect */}
-              <div className={`model-glow absolute inset-0 bg-gradient-to-b ${model.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
 
               {/* Image/Video Preview */}
               <div className="relative aspect-[4/3] overflow-hidden">
