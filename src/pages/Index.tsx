@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import LogosSection from '@/components/LogosSection';
 import FeaturesSection from '@/components/FeaturesSection';
-import MarqueeSection from '@/components/MarqueeSection';
+import AIModelsSection from '@/components/AIModelsSection';
 import CreativeToolsSection from '@/components/CreativeToolsSection';
 import CollaborationSection from '@/components/CollaborationSection';
 import ResourcesSection from '@/components/ResourcesSection';
@@ -37,7 +37,7 @@ const Index = () => {
       <HeroSection />
       <LogosSection />
       <FeaturesSection />
-      <MarqueeSection />
+      <AIModelsSection />
       <CreativeToolsSection />
       <CollaborationSection />
       <ResourcesSection />
