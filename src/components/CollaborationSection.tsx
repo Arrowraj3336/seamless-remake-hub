@@ -13,15 +13,16 @@ const CollaborationSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title reveal animation
+      // Title reveal animation with blur
       gsap.fromTo(
         '.collab-title',
-        { opacity: 0, y: 60, rotateX: 15 },
+        { opacity: 0, y: 80, rotateX: 20, filter: 'blur(20px)' },
         {
           opacity: 1,
           y: 0,
           rotateX: 0,
-          duration: 1,
+          filter: 'blur(0px)',
+          duration: 1.2,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -34,11 +35,12 @@ const CollaborationSection = () => {
       // Description fade in
       gsap.fromTo(
         '.collab-desc',
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 50, filter: 'blur(10px)' },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          filter: 'blur(0px)',
+          duration: 1,
           delay: 0.2,
           ease: 'power2.out',
           scrollTrigger: {
@@ -52,12 +54,12 @@ const CollaborationSection = () => {
       // Button bounce in
       gsap.fromTo(
         '.collab-btn',
-        { opacity: 0, scale: 0.8, y: 20 },
+        { opacity: 0, scale: 0.7, y: 30 },
         {
           opacity: 1,
           scale: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.8,
           delay: 0.4,
           ease: 'back.out(1.7)',
           scrollTrigger: {
@@ -68,15 +70,16 @@ const CollaborationSection = () => {
         }
       );
 
-      // Video container reveal with parallax
+      // Video container reveal with scale
       gsap.fromTo(
         '.collab-video',
-        { opacity: 0, scale: 0.9, y: 60 },
+        { opacity: 0, scale: 0.85, y: 80, filter: 'blur(10px)' },
         {
           opacity: 1,
           scale: 1,
           y: 0,
-          duration: 1,
+          filter: 'blur(0px)',
+          duration: 1.2,
           delay: 0.3,
           ease: 'power3.out',
           scrollTrigger: {
@@ -89,13 +92,13 @@ const CollaborationSection = () => {
 
       // Parallax effect on video
       gsap.to('.collab-video-inner', {
-        yPercent: -10,
+        yPercent: -8,
         ease: 'none',
         scrollTrigger: {
           trigger: '.collab-video',
           start: 'top bottom',
           end: 'bottom top',
-          scrub: 1,
+          scrub: 1.5,
         },
       });
 
@@ -104,16 +107,18 @@ const CollaborationSection = () => {
         '.collab-feature',
         { 
           opacity: 0, 
-          y: 50,
+          y: 60,
           rotateY: -20,
+          scale: 0.9,
           transformOrigin: 'left center'
         },
         {
           opacity: 1,
           y: 0,
           rotateY: 0,
-          duration: 0.7,
-          stagger: 0.12,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.1,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: '.collab-features',
@@ -125,24 +130,25 @@ const CollaborationSection = () => {
 
       // Floating particles animation
       gsap.to('.particle', {
-        y: -20,
-        x: 10,
-        rotation: 360,
-        duration: 4,
+        y: 'random(-30, 30)',
+        x: 'random(-20, 20)',
+        rotation: 'random(-180, 180)',
+        opacity: 'random(0.2, 0.6)',
+        duration: 'random(4, 8)',
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
         stagger: {
-          each: 0.5,
+          each: 0.3,
           from: 'random',
         },
       });
 
       // Glow pulse
       gsap.to('.video-glow', {
-        opacity: 0.6,
-        scale: 1.1,
-        duration: 2,
+        opacity: 0.7,
+        scale: 1.15,
+        duration: 3,
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
@@ -164,45 +170,49 @@ const CollaborationSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-32 bg-secondary/20 relative overflow-hidden">
+    <section ref={sectionRef} className="py-16 sm:py-20 md:py-32 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 cyber-grid opacity-15" />
+      
       {/* Background particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="particle absolute w-2 h-2 rounded-full bg-primary/30"
+            className="particle absolute w-2 h-2 rounded-full bg-primary/40"
             style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
+              left: `${10 + i * 8}%`,
+              top: `${15 + (i % 4) * 20}%`,
+              boxShadow: '0 0 10px hsl(270 100% 60% / 0.4)',
             }}
           />
         ))}
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-12" style={{ perspective: '1000px' }}>
-          <h2 className="collab-title font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            Experience <span className="gradient-text">AI-Generated Videos</span>{' '}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12" style={{ perspective: '1000px' }}>
+          <h2 className="collab-title font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+            Experience <span className="gradient-text text-glow">AI-Generated Videos</span>{' '}
             in stunning quality.
           </h2>
-          <p className="collab-desc text-muted-foreground text-lg mb-8">
+          <p className="collab-desc text-muted-foreground text-sm sm:text-base md:text-lg mb-6 sm:mb-8 px-4">
             Watch our AI models create cinematic masterpieces in seconds. From text prompts to breathtaking visuals, 
             witness the future of video creation.
           </p>
           <Button 
             size="lg" 
-            className="collab-btn bg-primary text-primary-foreground hover:bg-primary/90 rounded-full shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 hover:scale-105"
+            className="collab-btn btn-futuristic bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white rounded-full shadow-glow hover:shadow-glow-intense transition-all duration-300 text-sm sm:text-base"
           >
             Start Creating
           </Button>
         </div>
 
         {/* AI Video Demo */}
-        <div className="collab-video relative rounded-2xl overflow-hidden mb-12">
+        <div className="collab-video relative rounded-2xl overflow-hidden mb-10 sm:mb-12">
           {/* Glow effect behind video */}
-          <div className="video-glow absolute -inset-4 bg-gradient-to-r from-primary/20 via-violet-600/20 to-primary/20 rounded-3xl blur-2xl opacity-40" />
+          <div className="video-glow absolute -inset-4 sm:-inset-6 bg-gradient-to-r from-primary/25 via-accent/20 to-cyber-magenta/25 rounded-3xl blur-2xl opacity-50" />
           
-          <div className="relative gradient-border rounded-2xl overflow-hidden">
+          <div className="relative glass-strong rounded-2xl overflow-hidden border border-primary/30">
             <div className="collab-video-inner">
               <video
                 ref={videoRef}
@@ -216,31 +226,31 @@ const CollaborationSection = () => {
             </div>
             
             {/* Video overlay with branding */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-sm border border-white/10">
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-sm font-medium text-white">AI Generated</span>
+            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between">
+              <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass border border-white/10">
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-accent animate-pulse" />
+                <span className="text-xs sm:text-sm font-medium text-white">AI Generated</span>
               </div>
-              <div className="px-4 py-2 rounded-full bg-black/50 backdrop-blur-sm border border-white/10">
-                <span className="text-sm font-medium text-white">Veo 3.1 Model</span>
+              <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass border border-white/10">
+                <span className="text-xs sm:text-sm font-medium text-white">Veo 3.1 Model</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Features Grid */}
-        <div className="collab-features grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="collab-features grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="collab-feature group flex flex-col items-center gap-3 p-6 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 text-center hover:border-primary/50 hover:bg-card/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10"
+              className="collab-feature group flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-6 rounded-xl glass border border-border/30 text-center hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-glow"
               style={{ perspective: '500px' }}
             >
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center text-primary group-hover:from-primary/30 group-hover:to-accent/20 group-hover:scale-110 transition-all duration-300">
                 {feature.icon}
               </div>
-              <span className="font-medium text-sm">{feature.label}</span>
-              <span className="text-xs text-muted-foreground">{feature.desc}</span>
+              <span className="font-medium text-xs sm:text-sm">{feature.label}</span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground hidden sm:block">{feature.desc}</span>
             </div>
           ))}
         </div>

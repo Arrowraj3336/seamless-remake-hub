@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
-import { Check, Sparkles, Star } from 'lucide-react';
+import { Check, Sparkles, Star, Zap, Crown } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,13 +11,16 @@ const PricingSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Header animation
       gsap.fromTo(
         '.pricing-header',
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 50, filter: 'blur(15px)' },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          filter: 'blur(0px)',
+          duration: 1,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 70%',
@@ -26,14 +29,18 @@ const PricingSection = () => {
         }
       );
 
+      // Cards stagger with 3D effect
       gsap.fromTo(
         '.pricing-card',
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 80, scale: 0.9, rotateX: 15 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          scale: 1,
+          rotateX: 0,
+          duration: 0.8,
           stagger: 0.15,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: '.pricing-cards',
             start: 'top 75%',
@@ -41,6 +48,27 @@ const PricingSection = () => {
           },
         }
       );
+
+      // Popular card glow
+      gsap.to('.popular-card', {
+        boxShadow: '0 0 60px hsl(270 100% 50% / 0.4)',
+        duration: 2,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+      });
+
+      // Background orbs
+      gsap.to('.pricing-orb', {
+        x: 'random(-50, 50)',
+        y: 'random(-50, 50)',
+        scale: 'random(0.9, 1.2)',
+        duration: 'random(5, 8)',
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.5,
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -64,6 +92,8 @@ const PricingSection = () => {
         'Cancel anytime',
       ],
       popular: false,
+      icon: <Zap className="w-5 h-5" />,
+      gradient: 'from-blue-500 to-cyan-500',
     },
     {
       name: 'Creator',
@@ -82,6 +112,8 @@ const PricingSection = () => {
         'Cancel anytime',
       ],
       popular: true,
+      icon: <Star className="w-5 h-5" />,
+      gradient: 'from-primary via-accent to-cyber-magenta',
     },
     {
       name: 'Pro',
@@ -100,6 +132,8 @@ const PricingSection = () => {
         'Cancel anytime',
       ],
       popular: false,
+      icon: <Sparkles className="w-5 h-5" />,
+      gradient: 'from-violet-500 to-purple-500',
     },
     {
       name: 'Studio',
@@ -120,82 +154,99 @@ const PricingSection = () => {
       ],
       popular: false,
       isStudio: true,
+      icon: <Crown className="w-5 h-5" />,
+      gradient: 'from-amber-500 to-orange-500',
     },
   ];
 
   return (
-    <section ref={sectionRef} id="pricing" className="py-20 md:py-32 bg-secondary/20">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-12 pricing-header opacity-0">
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            Choose Your <span className="gradient-text">Creative Power</span>
+    <section ref={sectionRef} id="pricing" className="py-16 sm:py-20 md:py-32 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 cyber-grid opacity-15" />
+      <div className="pricing-orb absolute top-1/4 left-0 w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-gradient-radial from-primary/15 via-primary/5 to-transparent rounded-full blur-3xl" />
+      <div className="pricing-orb absolute bottom-1/4 right-0 w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-gradient-radial from-accent/15 via-accent/5 to-transparent rounded-full blur-3xl" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 pricing-header opacity-0">
+          <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+            Choose Your <span className="gradient-text text-glow">Creative Power</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-sm sm:text-base md:text-lg px-4">
             Access all premium AI models with flexible plans. Upgrade or downgrade anytime.
           </p>
         </div>
 
-        <div className="pricing-cards grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <div className="pricing-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto">
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`pricing-card opacity-0 rounded-2xl p-6 relative ${
+              className={`pricing-card opacity-0 rounded-2xl p-5 sm:p-6 relative glass border transition-all duration-500 hover:-translate-y-2 ${
                 plan.popular
-                  ? 'bg-primary text-primary-foreground'
+                  ? 'popular-card bg-gradient-to-b from-primary/20 to-accent/10 border-primary/50'
                   : plan.isStudio
-                  ? 'bg-gradient-to-b from-accent/20 to-card gradient-border'
-                  : 'bg-card gradient-border'
+                  ? 'border-amber-500/30 hover:border-amber-500/50'
+                  : 'border-border/30 hover:border-primary/40'
               }`}
+              style={{ perspective: '1000px' }}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-background text-foreground px-4 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-primary text-primary" />
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-glow">
+                  <Star className="w-3 h-3 fill-white" />
                   Most Popular
                 </div>
               )}
 
               {plan.isStudio && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground px-4 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-lg">
+                  <Crown className="w-3 h-3" />
                   Best Value
                 </div>
               )}
 
               <div className="mb-4">
-                <h3 className="font-heading text-xl font-semibold mb-1">
-                  {plan.name}
-                </h3>
-                <p className={`text-xs ${plan.popular ? 'text-primary-foreground/80' : 'text-primary'}`}>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${plan.gradient} flex items-center justify-center text-white`}>
+                    {plan.icon}
+                  </div>
+                  <h3 className="font-heading text-lg sm:text-xl font-semibold">
+                    {plan.name}
+                  </h3>
+                </div>
+                <p className="text-xs sm:text-sm text-primary font-medium">
                   {plan.credits}
                 </p>
               </div>
 
               <div className="mb-4">
                 <div className="flex items-baseline gap-1">
-                  <span className="font-heading text-4xl font-bold">{plan.price}</span>
-                  <span className={`text-sm ${plan.popular ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
+                  <span className="font-heading text-3xl sm:text-4xl font-bold gradient-text">{plan.price}</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">
                     {plan.period}
                   </span>
                 </div>
-                <p className={`text-sm mt-1 ${plan.popular ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                <p className="text-xs sm:text-sm mt-1 text-muted-foreground">
                   {plan.description}
                 </p>
               </div>
 
               <ul className="space-y-2 mb-6">
                 {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center gap-2 text-sm">
-                    <Check className={`w-4 h-4 flex-shrink-0 ${plan.popular ? '' : 'text-primary'}`} />
-                    <span className={plan.popular ? 'text-primary-foreground/90' : ''}>{feature}</span>
+                  <li key={featureIndex} className="flex items-center gap-2 text-xs sm:text-sm">
+                    <div className={`w-4 h-4 rounded-full bg-gradient-to-br ${plan.gradient} flex items-center justify-center flex-shrink-0`}>
+                      <Check className="w-2.5 h-2.5 text-white" />
+                    </div>
+                    <span className="text-muted-foreground">{feature}</span>
                   </li>
                 ))}
               </ul>
 
               <Button
-                className={`w-full rounded-full ${
+                className={`w-full rounded-full transition-all duration-300 text-sm ${
                   plan.popular
-                    ? 'bg-background text-foreground hover:bg-background/90'
-                    : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    ? 'btn-futuristic bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white border-0 shadow-glow hover:shadow-glow-intense'
+                    : plan.isStudio
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 hover:from-amber-600 hover:to-orange-600'
+                    : 'bg-secondary/80 text-foreground hover:bg-primary/20 border border-border/50 hover:border-primary/50'
                 }`}
               >
                 Get started
@@ -204,7 +255,7 @@ const PricingSection = () => {
           ))}
         </div>
 
-        <p className="text-center text-muted-foreground text-sm mt-8">
+        <p className="text-center text-muted-foreground text-xs sm:text-sm mt-8 px-4">
           All plans include access to Seedance, Runway, Veo 3.1, Kling, and Neo Banana models
         </p>
       </div>
