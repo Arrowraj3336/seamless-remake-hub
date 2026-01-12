@@ -7,7 +7,6 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,13 +21,13 @@ const Navbar = () => {
       gsap.fromTo(
         navRef.current,
         { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.2 }
+        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.1 }
       );
 
       gsap.fromTo(
         '.nav-link',
         { y: -20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out', delay: 0.5 }
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out', delay: 0.4 }
       );
     }, navRef);
 
@@ -53,23 +52,31 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <a ref={logoRef} href="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-cyber-magenta flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300">
+          {/* Mobile Menu Button - Left side */}
+          <button
+            className="md:hidden p-2 rounded-xl hover:bg-primary/10 transition-all duration-300 border border-transparent hover:border-primary/20"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+
+          {/* Logo - Center on mobile, left on desktop */}
+          <a href="/" className="flex items-center gap-2.5 group absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-cyber-magenta flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-primary/30">
               <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white relative z-10" />
+              <Sparkles className="w-5 h-5 text-white relative z-10" />
               <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
-            <span className="font-heading font-bold text-base sm:text-lg tracking-wider text-glow">SPECTORIA</span>
+            <span className="font-heading font-bold text-lg sm:text-xl tracking-tight">SPECTORIA</span>
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8">
+          {/* Desktop Navigation - Center */}
+          <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="nav-link relative text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 group"
+                className="nav-link relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 group"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300" />
@@ -77,51 +84,50 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-4">
+          {/* Desktop CTA - Right */}
+          <div className="hidden md:flex items-center gap-4">
             <Button 
               variant="ghost" 
               size="sm" 
-              className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-300"
+              className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-300 font-medium"
             >
               Log in
             </Button>
             <Button 
               size="sm" 
-              className="btn-futuristic bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white border-0 rounded-full px-4 lg:px-6 shadow-glow hover:shadow-glow-intense"
+              className="btn-futuristic bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white border-0 rounded-full px-6 shadow-glow hover:shadow-glow-intense font-medium"
             >
               Get Started
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-primary/10 transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          {/* Mobile Login Button - Right side */}
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="md:hidden text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-300 font-medium"
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            Log in
+          </Button>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border/50 glass animate-fade-in">
-            <div className="flex flex-col gap-2">
-              {navLinks.map((link) => (
+          <div className="md:hidden py-6 border-t border-border/30 glass animate-fade-in rounded-b-2xl">
+            <div className="flex flex-col gap-1">
+              {navLinks.map((link, index) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors py-3 px-4 rounded-lg hover:bg-primary/10"
+                  className="text-muted-foreground hover:text-foreground transition-colors py-3 px-4 rounded-xl hover:bg-primary/10 font-medium"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   {link.label}
                 </a>
               ))}
-              <div className="flex flex-col gap-2 pt-4 mt-2 border-t border-border/50">
-                <Button variant="ghost" className="justify-start text-muted-foreground">
-                  Log in
-                </Button>
-                <Button className="bg-gradient-to-r from-primary to-accent text-white rounded-full">
+              <div className="flex flex-col gap-3 pt-4 mt-4 border-t border-border/30 px-4">
+                <Button className="bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white rounded-full w-full font-medium shadow-glow">
                   Get Started
                 </Button>
               </div>
