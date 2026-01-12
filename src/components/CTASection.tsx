@@ -13,31 +13,32 @@ const CTASection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate floating dots
+      // Smoother floating dots
       gsap.utils.toArray('.cta-dot').forEach((dot: any, i) => {
         gsap.to(dot, {
-          y: 'random(-100, 100)',
-          x: 'random(-50, 50)',
-          duration: 'random(15, 25)',
+          y: 'random(-80, 80)',
+          x: 'random(-40, 40)',
+          duration: 'random(18, 28)',
           repeat: -1,
           yoyo: true,
           ease: 'sine.inOut',
-          delay: i * 0.1,
+          delay: i * 0.08,
         });
       });
 
-      // Content animation
+      // Smoother content animation
       gsap.fromTo(
         '.cta-content',
-        { opacity: 0, y: 50, filter: 'blur(10px)' },
+        { opacity: 0, y: 40, filter: 'blur(12px)' },
         {
           opacity: 1,
           y: 0,
           filter: 'blur(0px)',
-          duration: 0.8,
+          duration: 1.4,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 70%',
+            start: 'top 75%',
             toggleActions: 'play none none reverse',
           },
         }

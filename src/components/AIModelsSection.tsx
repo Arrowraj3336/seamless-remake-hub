@@ -17,15 +17,15 @@ const AIModelsSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title animation with blur
+      // Title animation with smoother blur
       gsap.fromTo(
         '.models-title',
-        { opacity: 0, y: 60, filter: 'blur(20px)' },
+        { opacity: 0, y: 50, filter: 'blur(15px)' },
         {
           opacity: 1,
           y: 0,
           filter: 'blur(0px)',
-          duration: 1.2,
+          duration: 1.4,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -35,24 +35,22 @@ const AIModelsSection = () => {
         }
       );
 
-      // Stagger animation for model cards with 3D
+      // Smoother stagger animation for model cards
       gsap.fromTo(
         '.model-card',
         { 
           opacity: 0, 
-          y: 100,
-          scale: 0.85,
-          rotateX: 20,
-          filter: 'blur(10px)'
+          y: 80,
+          scale: 0.9,
+          filter: 'blur(8px)'
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          rotateX: 0,
           filter: 'blur(0px)',
-          duration: 1,
-          stagger: 0.12,
+          duration: 1.2,
+          stagger: 0.1,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -62,28 +60,26 @@ const AIModelsSection = () => {
         }
       );
 
-      // Floating animation for images
+      // Smoother floating animation for images
       gsap.to('.model-image', {
-        y: -10,
-        duration: 3,
+        y: -8,
+        duration: 4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.3,
+      });
+
+      // Background orbs - smoother motion
+      gsap.to('.model-orb', {
+        x: 'random(-25, 25)',
+        y: 'random(-25, 25)',
+        scale: 'random(0.95, 1.05)',
+        duration: 'random(8, 12)',
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
         stagger: 0.4,
-      });
-
-      // Removed glow pulse animation for cleaner look
-
-      // Background orbs
-      gsap.to('.model-orb', {
-        x: 'random(-30, 30)',
-        y: 'random(-30, 30)',
-        scale: 'random(0.9, 1.1)',
-        duration: 'random(4, 6)',
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.5,
       });
     }, sectionRef);
 
@@ -155,8 +151,8 @@ const AIModelsSection = () => {
           {models.map((model, index) => (
             <div
               key={model.name}
-              className={`model-card relative rounded-2xl overflow-hidden glass border border-border/30 hover:border-border/60 transition-all duration-500 group ${
-                model.isFree ? 'ring-2 ring-primary/40' : ''
+              className={`model-card relative rounded-2xl overflow-hidden glass border border-border/20 hover:border-border/40 transition-all duration-700 group ${
+                model.isFree ? 'ring-2 ring-primary/30' : ''
               }`}
               style={{ perspective: '1000px' }}
             >

@@ -13,39 +13,38 @@ const CollaborationSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title reveal animation with blur
+      // Smoother title reveal animation
       gsap.fromTo(
         '.collab-title',
-        { opacity: 0, y: 80, rotateX: 20, filter: 'blur(20px)' },
+        { opacity: 0, y: 60, filter: 'blur(15px)' },
         {
           opacity: 1,
           y: 0,
-          rotateX: 0,
           filter: 'blur(0px)',
-          duration: 1.2,
+          duration: 1.4,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 70%',
+            start: 'top 75%',
             toggleActions: 'play none none reverse',
           },
         }
       );
 
-      // Description fade in
+      // Smoother description fade in
       gsap.fromTo(
         '.collab-desc',
-        { opacity: 0, y: 50, filter: 'blur(10px)' },
+        { opacity: 0, y: 40, filter: 'blur(8px)' },
         {
           opacity: 1,
           y: 0,
           filter: 'blur(0px)',
-          duration: 1,
-          delay: 0.2,
-          ease: 'power2.out',
+          duration: 1.2,
+          delay: 0.15,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 70%',
+            start: 'top 75%',
             toggleActions: 'play none none reverse',
           },
         }
