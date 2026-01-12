@@ -2,7 +2,7 @@ import { Twitter, Linkedin, Instagram, Youtube, Mail } from 'lucide-react';
 
 const Footer = () => {
   const footerLinks = {
-    Product: ['Features', 'Pricing', 'Use Cases', 'Integrations', 'API'],
+    Models: ['Seedance AI', 'Runway AI', 'Veo 3.1', 'Kling AI', 'Neo Banana'],
     Resources: ['Documentation', 'Tutorials', 'Blog', 'Community', 'Support'],
     Company: ['About', 'Careers', 'Press', 'Contact', 'Partners'],
     Legal: ['Privacy', 'Terms', 'Cookie Policy', 'Licenses'],
@@ -25,10 +25,10 @@ const Footer = () => {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">S</span>
               </div>
-              <span className="font-heading font-bold text-lg">Smarter</span>
+              <span className="font-heading font-bold text-lg">SPECTORIA</span>
             </div>
             <p className="text-sm text-muted-foreground mb-6 max-w-xs">
-              Transform your ideas into stunning videos with our AI-powered platform. Start creating today.
+              Generate stunning AI videos with Seedance, Runway, Veo 3.1, Kling, and Neo Banana models. Start creating today.
             </p>
             <div className="flex items-center gap-4">
               {socialLinks.map((social, index) => (
@@ -68,7 +68,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-primary" />
-              <span className="text-sm">Subscribe to our newsletter for updates</span>
+              <span className="text-sm">Subscribe for updates on new AI models and features</span>
             </div>
             <div className="flex gap-2 w-full md:w-auto">
               <input
@@ -86,7 +86,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="pt-8 border-t border-border text-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Smarter AI. All rights reserved.
+            © {new Date().getFullYear()} SPECTORIA. All rights reserved.
           </p>
         </div>
       </div>

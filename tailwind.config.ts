@@ -61,10 +61,10 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        lime: {
-          DEFAULT: "hsl(75, 100%, 56%)",
-          dark: "hsl(75, 100%, 45%)",
-          light: "hsl(75, 100%, 70%)",
+        violet: {
+          DEFAULT: "hsl(270, 80%, 60%)",
+          dark: "hsl(270, 80%, 50%)",
+          light: "hsl(280, 85%, 70%)",
         },
       },
       borderRadius: {

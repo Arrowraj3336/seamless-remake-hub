@@ -46,21 +46,21 @@ const CreativeToolsSection = () => {
             <div className="relative h-64 md:h-80 overflow-hidden">
               <img
                 src={creativeWoman}
-                alt="Creative Tools"
+                alt="Text to Video"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
             </div>
             <div className="p-6 md:p-8">
               <h3 className="font-heading text-2xl md:text-3xl font-bold mb-3">
-                Enhance Your AI Image{' '}
-                <span className="gradient-text">with Our Creative Tools</span>
+                Text to Video{' '}
+                <span className="gradient-text">Generation</span>
               </h3>
               <p className="text-muted-foreground mb-6">
-                Unlock powerful editing capabilities to refine, enhance, and perfect your AI-generated content.
+                Describe your vision in words and watch it transform into stunning, professional-quality videos with any of our 5 AI models.
               </p>
               <Button variant="outline" className="rounded-full group/btn">
-                Explore tools
+                Try now
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
               </Button>
             </div>
@@ -71,18 +71,18 @@ const CreativeToolsSection = () => {
             <div className="relative h-64 md:h-80 overflow-hidden">
               <img
                 src={womanLifestyle}
-                alt="Lifestyle Content"
+                alt="Image to Video"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
             </div>
             <div className="p-6 md:p-8">
               <h3 className="font-heading text-2xl md:text-3xl font-bold mb-3">
-                Create Stunning{' '}
-                <span className="gradient-text">Lifestyle Content</span>
+                Image to Video{' '}
+                <span className="gradient-text">Animation</span>
               </h3>
               <p className="text-muted-foreground mb-6">
-                Generate authentic, engaging lifestyle videos that connect with your audience on a deeper level.
+                Bring your static images to life with realistic motion. Perfect for product showcases, social content, and creative projects.
               </p>
               <Button variant="outline" className="rounded-full group/btn">
                 Start creating
