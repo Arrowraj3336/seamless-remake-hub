@@ -31,14 +31,14 @@ const MarqueeSection = () => {
     return () => ctx.revert();
   }, []);
 
-  const texts = ['From Idea to Video', 'From Idea to Video', 'From Idea to Video', 'From Idea to Video'];
+  const texts = ['Seedance', 'Runway', 'Veo 3.1', 'Kling', 'Neo Banana'];
 
   return (
     <section ref={marqueeRef} className="py-16 overflow-hidden border-y border-border bg-secondary/30">
       {/* First marquee track */}
       <div className="overflow-hidden mb-4">
         <div ref={track1Ref} className="flex whitespace-nowrap">
-          {[...texts, ...texts].map((text, index) => (
+          {[...texts, ...texts, ...texts, ...texts].map((text, index) => (
             <span
               key={index}
               className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mx-8 text-foreground/90"
@@ -53,7 +53,7 @@ const MarqueeSection = () => {
       {/* Second marquee track (reverse) */}
       <div className="overflow-hidden">
         <div ref={track2Ref} className="flex whitespace-nowrap -translate-x-1/2">
-          {[...texts, ...texts].map((text, index) => (
+          {[...texts, ...texts, ...texts, ...texts].map((text, index) => (
             <span
               key={index}
               className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mx-8 text-muted-foreground/50"

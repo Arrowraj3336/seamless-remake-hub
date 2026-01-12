@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import statsBg from '@/assets/stats-bg.jpg';
 import vintageInterior from '@/assets/vintage-interior.jpg';
 
@@ -58,15 +58,28 @@ const CTASection = () => {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">S</span>
               </div>
-              <span className="font-heading font-bold">Smarter</span>
+              <span className="font-heading font-bold">SPECTORIA</span>
             </div>
             <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              Step into the World of{' '}
-              <span className="gradient-text">Smarter AI</span>
+              Start Creating{' '}
+              <span className="gradient-text">AI Videos</span> Today
             </h2>
-            <p className="text-muted-foreground text-lg mb-8">
-              Join millions of creators who are already transforming their ideas into stunning videos. Start your free trial today and experience the future of content creation.
+            <p className="text-muted-foreground text-lg mb-6">
+              Join thousands of creators using SPECTORIA to generate stunning videos with Seedance, Runway, Veo 3.1, Kling, and Neo Banana.
             </p>
+            
+            <div className="flex flex-wrap gap-3 mb-8">
+              {['Seedance', 'Runway', 'Veo 3.1', 'Kling', 'Neo Banana'].map((model) => (
+                <div
+                  key={model}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/50 border border-border text-xs"
+                >
+                  <Sparkles className="w-3 h-3 text-primary" />
+                  <span>{model}</span>
+                </div>
+              ))}
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
@@ -80,24 +93,24 @@ const CTASection = () => {
                 size="lg"
                 className="rounded-full px-8"
               >
-                Contact sales
+                View pricing
               </Button>
             </div>
           </div>
 
           {/* Right images */}
           <div className="cta-images grid grid-cols-2 gap-4">
-            <div className="cta-image opacity-0 rounded-2xl overflow-hidden h-48 md:h-64">
+            <div className="cta-image opacity-0 rounded-2xl overflow-hidden h-48 md:h-64 gradient-border">
               <img
                 src={statsBg}
-                alt="Creative content"
+                alt="AI generated video"
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
               />
             </div>
-            <div className="cta-image opacity-0 rounded-2xl overflow-hidden h-48 md:h-64 mt-8">
+            <div className="cta-image opacity-0 rounded-2xl overflow-hidden h-48 md:h-64 mt-8 gradient-border">
               <img
                 src={vintageInterior}
-                alt="Interior content"
+                alt="AI video content"
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
               />
             </div>
