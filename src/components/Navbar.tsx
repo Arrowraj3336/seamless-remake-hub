@@ -62,15 +62,15 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
           </button>
 
           {/* Center - Logo and Name */}
-          <a href="/" className="flex items-center gap-2.5 group absolute left-1/2 -translate-x-1/2">
-            <div className="relative w-10 h-10 sm:w-12 sm:h-12 overflow-hidden group-hover:scale-110 transition-transform duration-300">
+          <a href="/" className="flex items-center gap-2 group absolute left-1/2 -translate-x-1/2">
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 overflow-hidden group-hover:scale-110 transition-transform duration-300">
               <img 
                 src={logo} 
                 alt="Spectoria Logo" 
                 className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"
               />
             </div>
-            <span className="font-heading font-bold text-lg sm:text-xl tracking-tight">SPECTORIA</span>
+            <span className="font-heading font-bold text-base sm:text-lg tracking-tight">SPECTORIA</span>
           </a>
 
           {/* Right side - Desktop Navigation Menu */}
