@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Menu, X } from 'lucide-react';
 import gsap from 'gsap';
+import logo from '@/assets/logo.png';
 
 interface NavbarProps {
   isOverVideo?: boolean;
@@ -14,7 +14,6 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Consider "over video" when within the first viewport height
       const videoSectionHeight = window.innerHeight;
       setIsScrolled(window.scrollY > videoSectionHeight - 80);
     };
@@ -35,10 +34,10 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
   }, []);
 
   const navLinks = [
-    { label: 'Models', href: '#models' },
-    { label: 'Features', href: '#features' },
+    { label: 'Home', href: '#home' },
+    { label: 'Services', href: '#services' },
     { label: 'Pricing', href: '#pricing' },
-    { label: 'Resources', href: '#resources' },
+    { label: 'Contact Us', href: '#contact' },
   ];
 
   return (
@@ -56,7 +55,7 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Left side - Hamburger Menu */}
           <button
-            className="p-2 rounded-xl hover:bg-primary/10 transition-all duration-300 border border-transparent hover:border-primary/20"
+            className="p-2 rounded-xl hover:bg-primary/10 transition-all duration-300 border border-transparent hover:border-primary/20 md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -64,35 +63,36 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
 
           {/* Center - Logo and Name */}
           <a href="/" className="flex items-center gap-2.5 group absolute left-1/2 -translate-x-1/2">
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-cyber-magenta flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-primary/30">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Sparkles className="w-5 h-5 text-white relative z-10" />
-              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 overflow-hidden group-hover:scale-110 transition-transform duration-300">
+              <img 
+                src={logo} 
+                alt="Spectoria Logo" 
+                className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+              />
             </div>
             <span className="font-heading font-bold text-lg sm:text-xl tracking-tight">SPECTORIA</span>
           </a>
 
-          {/* Right side - Login and Signup */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-300 font-medium text-sm"
-            >
-              Log in
-            </Button>
-            <Button 
-              size="sm" 
-              className="hidden sm:flex btn-futuristic bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white border-0 rounded-full px-5 shadow-glow hover:shadow-glow-intense font-medium text-sm"
-            >
-              Sign up
-            </Button>
+          {/* Right side - Desktop Navigation Menu */}
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-muted-foreground hover:text-foreground transition-colors font-medium text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
+
+          {/* Empty div for mobile to balance layout */}
+          <div className="md:hidden w-10" />
         </div>
 
-        {/* Mobile/Desktop Menu */}
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="py-6 border-t border-border/30 glass animate-fade-in rounded-b-2xl">
+          <div className="py-6 border-t border-border/30 glass animate-fade-in rounded-b-2xl md:hidden">
             <div className="flex flex-col gap-1">
               {navLinks.map((link, index) => (
                 <a
@@ -105,11 +105,6 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
                   {link.label}
                 </a>
               ))}
-              <div className="flex flex-col gap-3 pt-4 mt-4 border-t border-border/30 px-4 sm:hidden">
-                <Button className="bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white rounded-full w-full font-medium shadow-glow">
-                  Sign up
-                </Button>
-              </div>
             </div>
           </div>
         )}

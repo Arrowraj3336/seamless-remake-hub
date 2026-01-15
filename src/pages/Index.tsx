@@ -60,9 +60,11 @@ const Index = () => {
     <>
       {isLoading && <ChipLoader onLoadingComplete={handleLoadingComplete} duration={2000} />}
       
-      {/* White flash effect */}
+      {/* Camera flash effect - expands from center */}
       {showFlash && (
-        <div className="fixed inset-0 z-[99] bg-white animate-flash pointer-events-none" />
+        <div className="fixed inset-0 z-[99] flex items-center justify-center pointer-events-none overflow-hidden">
+          <div className="absolute w-full h-full bg-white animate-camera-flash" />
+        </div>
       )}
       
       <main className={`min-h-screen bg-background text-foreground overflow-x-hidden relative ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}`}>
