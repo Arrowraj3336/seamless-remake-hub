@@ -35,9 +35,9 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
 
   const navLinks = [
     { label: 'Home', href: '#home' },
-    { label: 'Services', href: '#services' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Contact Us', href: '#contact' },
+    { label: 'Service', href: '#services' },
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -52,42 +52,39 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
       }`}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Left side - Hamburger Menu */}
-          <button
-            className="p-2 rounded-xl hover:bg-primary/10 transition-all duration-300 border border-transparent hover:border-primary/20 md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-
-          {/* Center - Logo and Name */}
-          <a href="/" className="flex items-center gap-2 group absolute left-1/2 -translate-x-1/2">
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 overflow-hidden group-hover:scale-110 transition-transform duration-300">
+        <div className="flex items-center justify-between h-14 md:h-16">
+          {/* Left side - Logo and Name */}
+          <a href="/" className="flex items-center gap-2 group">
+            <div className="relative w-7 h-7 sm:w-8 sm:h-8 overflow-hidden group-hover:scale-110 transition-transform duration-300">
               <img 
                 src={logo} 
                 alt="Spectoria Logo" 
                 className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"
               />
             </div>
-            <span className="font-heading font-bold text-base sm:text-lg tracking-tight">SPECTORIA</span>
+            <span className="font-heading font-bold text-sm sm:text-base tracking-tight hidden sm:block">SPECTORIA</span>
           </a>
 
           {/* Right side - Desktop Navigation Menu */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors font-medium text-sm relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                className="text-muted-foreground hover:text-foreground transition-colors font-medium text-xs uppercase tracking-wider relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link.label}
               </a>
             ))}
           </div>
 
-          {/* Empty div for mobile to balance layout */}
-          <div className="md:hidden w-10" />
+          {/* Mobile Hamburger Menu */}
+          <button
+            className="p-2 rounded-xl hover:bg-primary/10 transition-all duration-300 md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
 
         {/* Mobile Menu */}
