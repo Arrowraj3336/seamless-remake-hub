@@ -22,9 +22,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showFlash, setShowFlash] = useState(false);
 
   const handleLoadingComplete = useCallback(() => {
-    setIsLoading(false);
+    setShowFlash(true);
+    setTimeout(() => {
+      setShowFlash(false);
+      setIsLoading(false);
+    }, 400);
   }, []);
 
   useEffect(() => {
@@ -54,7 +59,13 @@ const Index = () => {
   return (
     <>
       {isLoading && <ChipLoader onLoadingComplete={handleLoadingComplete} duration={2000} />}
-      <main className={`min-h-screen bg-background text-foreground overflow-x-hidden relative ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}>
+      
+      {/* White flash effect */}
+      {showFlash && (
+        <div className="fixed inset-0 z-[99] bg-white animate-flash pointer-events-none" />
+      )}
+      
+      <main className={`min-h-screen bg-background text-foreground overflow-x-hidden relative ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}`}>
         <SnowflakesBackground />
         <Navbar isOverVideo={true} />
         <HeroVideoSection />
