@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import ChipLoader from '@/components/ChipLoader';
 import Navbar from '@/components/Navbar';
+import HeroVideoSection from '@/components/HeroVideoSection';
 import HeroSection from '@/components/HeroSection';
 import LogosSection from '@/components/LogosSection';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -19,7 +21,15 @@ import SnowflakesBackground from '@/components/SnowflakesBackground';
 gsap.registerPlugin(ScrollTrigger);
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleLoadingComplete = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
+    if (isLoading) return;
+
     // Enable smooth scrolling with smoother GSAP
     gsap.config({
       force3D: true,
@@ -39,24 +49,28 @@ const Index = () => {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, []);
+  }, [isLoading]);
 
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
-      <SnowflakesBackground />
-      <Navbar />
-      <HeroSection />
-      <LogosSection />
-      <FeaturesSection />
-      <AIModelsSection />
-      <CollaborationSection />
-      <ResourcesSection />
-      <PricingSection />
-      <StatsSection />
-      <TestimonialsSection />
-      <CTASection />
-      <Footer />
-    </main>
+    <>
+      {isLoading && <ChipLoader onLoadingComplete={handleLoadingComplete} duration={2000} />}
+      <main className={`min-h-screen bg-background text-foreground overflow-x-hidden relative ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}>
+        <SnowflakesBackground />
+        <Navbar isOverVideo={true} />
+        <HeroVideoSection />
+        <HeroSection />
+        <LogosSection />
+        <FeaturesSection />
+        <AIModelsSection />
+        <CollaborationSection />
+        <ResourcesSection />
+        <PricingSection />
+        <StatsSection />
+        <TestimonialsSection />
+        <CTASection />
+        <Footer />
+      </main>
+    </>
   );
 };
 
