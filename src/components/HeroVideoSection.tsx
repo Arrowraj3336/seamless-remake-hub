@@ -52,27 +52,37 @@ const HeroVideoSection = () => {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
           style={{
-            filter: 'brightness(0.9) contrast(1.05) saturate(1.1)',
+            filter: 'brightness(0.95) contrast(1.15) saturate(1.25)',
+            imageRendering: 'crisp-edges',
           }}
         >
           <source src={heroBackgroundVideo} type="video/mp4" />
         </video>
         
-        {/* Smooth gradient overlays - seamless blend with website */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30" />
+        {/* Seamless gradient overlays matching website background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/90" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/20" />
         
-        {/* Soft vignette for depth */}
+        {/* Enhanced color overlay for brand consistency */}
         <div 
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(ellipse at center, transparent 30%, hsl(var(--background) / 0.4) 70%, hsl(var(--background) / 0.8) 100%)'
+            background: 'linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, transparent 40%, hsl(var(--primary) / 0.08) 100%)'
           }}
         />
         
-        {/* Bottom fade for seamless transition to next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        {/* Soft vignette for depth and focus */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse at center, transparent 40%, hsl(var(--background) / 0.3) 70%, hsl(var(--background) / 0.7) 100%)'
+          }}
+        />
+        
+        {/* Extended bottom fade for ultra-smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-background/50" />
       </div>
 
       {/* Scroll indicator */}
