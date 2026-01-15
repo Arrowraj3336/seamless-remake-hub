@@ -591,4 +591,15 @@
   .text-responsive-4xl {
     @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
   }
+
+  /* White flash animation for loader transition */
+  @keyframes flash {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  .animate-flash {
+    animation: flash 0.4s ease-out forwards;
+  }
 }

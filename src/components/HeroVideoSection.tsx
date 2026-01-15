@@ -52,23 +52,27 @@ const HeroVideoSection = () => {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
           style={{
-            filter: 'brightness(0.85) contrast(1.1) saturate(1.2)',
+            filter: 'brightness(0.9) contrast(1.05) saturate(1.1)',
           }}
         >
           <source src={heroBackgroundVideo} type="video/mp4" />
         </video>
         
-        {/* Gradient overlays for depth */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
+        {/* Smooth gradient overlays - seamless blend with website */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30" />
         
-        {/* Vignette effect */}
+        {/* Soft vignette for depth */}
         <div 
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)'
+            background: 'radial-gradient(ellipse at center, transparent 30%, hsl(var(--background) / 0.4) 70%, hsl(var(--background) / 0.8) 100%)'
           }}
         />
+        
+        {/* Bottom fade for seamless transition to next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
 
       {/* Scroll indicator */}
