@@ -26,7 +26,7 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
       gsap.fromTo(
         navRef.current,
         { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.1 }
+        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.3 }
       );
     }, navRef);
 
@@ -43,59 +43,79 @@ const Navbar = ({ isOverVideo = false }: NavbarProps) => {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-4 left-4 right-4 z-50 transition-all duration-500 rounded-2xl ${
         isScrolled 
-          ? 'glass-strong shadow-lg shadow-primary/5' 
+          ? 'glass-strong shadow-lg shadow-primary/10 border border-primary/20' 
           : isOverVideo
-            ? 'bg-black/20 backdrop-blur-sm'
+            ? 'bg-gradient-to-r from-background/40 via-background/20 to-background/40 backdrop-blur-md border border-white/5'
             : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-14 md:h-16">
+      {/* Animated gradient border effect */}
+      <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+        <div className={`absolute inset-0 opacity-0 transition-opacity duration-500 ${isScrolled ? 'opacity-100' : ''}`}>
+          <div className="absolute inset-[-1px] bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30 rounded-2xl" />
+          <div className="absolute inset-[1px] bg-background/90 rounded-2xl" />
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-8 relative">
+        <div className="flex items-center justify-between h-12 md:h-14">
           {/* Left side - Logo and Name */}
-          <a href="/" className="flex items-center gap-2 group">
-            <div className="relative w-7 h-7 sm:w-8 sm:h-8 overflow-hidden group-hover:scale-110 transition-transform duration-300">
+          <a href="/" className="flex items-center gap-2.5 group">
+            <div className="relative w-8 h-8 md:w-9 md:h-9 overflow-hidden group-hover:scale-110 transition-all duration-300">
+              <div className="absolute inset-0 bg-primary/20 rounded-lg blur-lg group-hover:bg-primary/40 transition-all duration-300" />
               <img 
                 src={logo} 
                 alt="Spectoria Logo" 
-                className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+                className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]"
               />
             </div>
-            <span className="font-heading font-bold text-sm sm:text-base tracking-tight hidden sm:block">SPECTORIA</span>
+            <span className="font-heading font-bold text-sm md:text-base tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary/80 bg-clip-text text-transparent group-hover:from-primary group-hover:to-accent transition-all duration-300">
+              SPECTORIA
+            </span>
           </a>
 
           {/* Right side - Desktop Navigation Menu */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link, index) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors font-medium text-xs uppercase tracking-wider relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-all duration-300 font-medium text-xs uppercase tracking-widest group"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {link.label}
+                <span className="relative z-10">{link.label}</span>
+                {/* Hover background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Underline effect */}
+                <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-primary to-accent group-hover:w-3/4 transition-all duration-300 rounded-full" />
               </a>
             ))}
           </div>
 
           {/* Mobile Hamburger Menu */}
           <button
-            className="p-2 rounded-xl hover:bg-primary/10 transition-all duration-300 md:hidden"
+            className="p-2.5 rounded-xl bg-primary/10 hover:bg-primary/20 border border-primary/20 hover:border-primary/40 transition-all duration-300 md:hidden group"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMobileMenuOpen ? (
+              <X size={18} className="text-primary group-hover:rotate-90 transition-transform duration-300" />
+            ) : (
+              <Menu size={18} className="text-primary" />
+            )}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="py-6 border-t border-border/30 glass animate-fade-in rounded-b-2xl md:hidden">
+          <div className="py-4 border-t border-primary/10 animate-fade-in md:hidden">
             <div className="flex flex-col gap-1">
               {navLinks.map((link, index) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors py-3 px-4 rounded-xl hover:bg-primary/10 font-medium"
+                  className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-primary/10 hover:to-transparent font-medium text-sm uppercase tracking-wider border-l-2 border-transparent hover:border-primary"
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >

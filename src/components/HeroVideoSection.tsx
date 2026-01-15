@@ -30,7 +30,7 @@ const HeroVideoSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden mt-10 md:mt-12"
+      className="relative w-full h-screen overflow-hidden mt-6 md:mt-8"
       style={{ 
         perspective: '1000px',
         transformStyle: 'preserve-3d'
