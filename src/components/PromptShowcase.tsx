@@ -6,7 +6,7 @@ import heroVideo2 from '@/assets/hero-video-2.mp4';
 import featureVideo from '@/assets/feature-video.mp4';
 import aiDemoVideo from '@/assets/ai-demo-video.mp4';
 import heroVideoNew from '@/assets/hero-video-new.mp4';
-import heroBackgroundVideo from '@/assets/hero-background-video.mp4';
+import avatarBackground from '@/assets/avatar-background.mp4';
 
 interface PromptData {
   prompt: string;
@@ -162,10 +162,10 @@ const PromptShowcase = () => {
       </div>
 
       {/* Video Display - Always shows a video (background or prompt video) */}
-      <div className="mt-6 rounded-2xl overflow-hidden relative aspect-video gradient-border glow-effect">
+      <div className="mt-6 rounded-2xl overflow-hidden relative aspect-[16/9] max-w-xl mx-auto gradient-border glow-effect">
         {/* Background video - always playing */}
         <VideoPlayer 
-          src={heroBackgroundVideo} 
+          src={avatarBackground} 
           isVisible={!showPromptVideo} 
           isBackground={true}
         />
@@ -177,11 +177,11 @@ const PromptShowcase = () => {
         />
         
         {/* Overlay labels */}
-        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10">
-          <div className="px-3 py-1.5 rounded-full bg-background/80 backdrop-blur-sm text-xs text-foreground border border-primary/20">
+        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between z-10">
+          <div className="px-2 py-1 rounded-full bg-background/80 backdrop-blur-sm text-[10px] text-foreground border border-primary/20">
             {showPromptVideo ? '✨ AI Generated' : '🎬 Preview'}
           </div>
-          <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-xs text-white font-medium">
+          <div className="px-2 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-[10px] text-white font-medium">
             SPECTORIA AI
           </div>
         </div>
