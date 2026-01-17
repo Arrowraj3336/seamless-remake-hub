@@ -79,37 +79,17 @@ const HeroVideoSection = () => {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
           style={{
-            filter: 'brightness(0.95) contrast(1.15) saturate(1.25)',
-            imageRendering: 'crisp-edges',
+            filter: 'brightness(1.05) contrast(1.1) saturate(1.15)',
           }}
         >
           <source src={heroBackgroundVideo} type="video/mp4" />
         </video>
         
-        {/* Seamless gradient overlays matching website background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/90" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/20" />
+        {/* Minimal top gradient for header readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-transparent" />
         
-        {/* Enhanced color overlay for brand consistency */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, transparent 40%, hsl(var(--primary) / 0.08) 100%)'
-          }}
-        />
-        
-        {/* Soft vignette for depth and focus */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse at center, transparent 40%, hsl(var(--background) / 0.3) 70%, hsl(var(--background) / 0.7) 100%)'
-          }}
-        />
-        
-        {/* Extended bottom fade for ultra-smooth transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-background/50" />
+        {/* Bottom fade for smooth transition to next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/60 to-transparent" />
       </div>
 
       {/* Scroll indicator */}
