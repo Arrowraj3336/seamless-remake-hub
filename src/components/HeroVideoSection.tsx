@@ -11,20 +11,44 @@ const HeroVideoSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate the video container with a 3D perspective effect
+      // Animate the video container with smooth entrance
       gsap.fromTo(
         sectionRef.current,
         { 
           opacity: 0,
-          scale: 1.1,
+          scale: 1.05,
         },
         { 
           opacity: 1,
           scale: 1,
-          duration: 1.5,
-          ease: 'power2.out',
+          duration: 1.8,
+          ease: 'power3.out',
         }
       );
+
+      // Video parallax on scroll
+      gsap.to(videoRef.current, {
+        yPercent: 25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.5,
+        }
+      });
+
+      // Scale video slightly on scroll for depth
+      gsap.to(videoRef.current, {
+        scale: 1.1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 2,
+        }
+      });
     }, sectionRef);
 
     return () => ctx.revert();

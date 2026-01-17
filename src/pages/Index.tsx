@@ -38,30 +38,77 @@ const Index = () => {
       toggleActions: 'play none none reverse',
     });
 
-    // Add smooth scroll animations to all sections
+    // Add smooth scroll animations to all sections with staggered reveal
     const sections = document.querySelectorAll('section');
-    sections.forEach((section) => {
+    sections.forEach((section, index) => {
+      // Section fade-in animation
       gsap.fromTo(
         section,
         { 
           opacity: 0, 
-          y: 80,
-          filter: 'blur(10px)'
+          y: 60,
+          filter: 'blur(8px)'
         },
         {
           opacity: 1,
           y: 0,
           filter: 'blur(0px)',
-          duration: 1.2,
-          ease: 'power3.out',
+          duration: 1,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
-            end: 'top 20%',
+            start: 'top 90%',
+            end: 'top 30%',
             toggleActions: 'play none none reverse',
           }
         }
       );
+    });
+
+    // Parallax effect for all images
+    const images = document.querySelectorAll('img');
+    images.forEach((img) => {
+      gsap.to(img, {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: img,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5,
+        }
+      });
+    });
+
+    // Parallax for background elements
+    const bgElements = document.querySelectorAll('.parallax-bg');
+    bgElements.forEach((el) => {
+      gsap.to(el, {
+        yPercent: -30,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2,
+        }
+      });
+    });
+
+    // Floating orbs parallax
+    const orbs = document.querySelectorAll('.orb, [class*="bg-gradient"]');
+    orbs.forEach((orb) => {
+      gsap.to(orb, {
+        yPercent: -20,
+        xPercent: gsap.utils.random(-5, 5),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: orb,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 3,
+        }
+      });
     });
 
     return () => {
