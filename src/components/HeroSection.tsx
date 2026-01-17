@@ -2,15 +2,13 @@ import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Play, Sparkles, Zap } from 'lucide-react';
 import gsap from 'gsap';
-import heroVideo1 from '@/assets/hero-video-1.mp4';
-import heroVideo2 from '@/assets/hero-video-2.mp4';
 import PromptShowcase from './PromptShowcase';
+
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const videosRef = useRef<HTMLDivElement>(null);
   const modelsRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
 
@@ -89,40 +87,7 @@ const HeroSection = () => {
             ease: 'back.out(1.2)' 
           },
           '-=0.5'
-        )
-        .fromTo(
-          videosRef.current?.children || [],
-          { opacity: 0, scale: 0.7, y: 60 },
-          { 
-            opacity: 1, 
-            scale: 1, 
-            y: 0, 
-            duration: 1.4, 
-            stagger: 0.15, 
-            ease: 'power3.out' 
-          },
-          '-=0.6'
         );
-
-      // Smoother floating animation for videos
-      gsap.to('.hero-video-1', {
-        y: -15,
-        rotation: 2,
-        duration: 5,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      });
-
-      gsap.to('.hero-video-2', {
-        y: -20,
-        rotation: -2,
-        duration: 5.5,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        delay: 0.3,
-      });
 
       // Background glow animation - smoother
       gsap.to('.hero-glow', {
@@ -263,50 +228,6 @@ const HeroSection = () => {
           </Button>
         </div>
 
-        {/* Trust text */}
-        <p className="text-muted-foreground text-xs sm:text-sm mb-8 sm:mb-12">
-          Trusted by <span className="text-foreground font-medium gradient-text">50,000+</span> creators worldwide
-        </p>
-
-        {/* Hero videos */}
-        <div ref={videosRef} className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6" style={{ perspective: '1000px' }}>
-          <div className="relative group hero-video-1">
-            <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 rounded-2xl overflow-hidden gradient-border glow-effect">
-              <video
-                src={heroVideo1}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
-            <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-primary to-accent text-white px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium shadow-lg shadow-primary/30">
-              Veo 3.1
-            </div>
-          </div>
-          
-          <div className="relative group hero-video-2">
-            <div className="w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-2xl overflow-hidden gradient-border glow-effect-intense">
-              <video
-                src={heroVideo2}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-background/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center shadow-glow hover:scale-110 transition-transform duration-300">
-                  <Play className="h-5 w-5 sm:h-6 sm:w-6 text-white fill-current" />
-                </div>
-              </div>
-            </div>
-            <div className="absolute -bottom-2 -left-2 bg-gradient-to-r from-accent to-cyber-magenta text-white px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium shadow-lg shadow-accent/30">
-              Runway
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
