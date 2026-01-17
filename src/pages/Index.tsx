@@ -1,8 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import ChipLoader from '@/components/ChipLoader';
 import Navbar from '@/components/Navbar';
 import HeroVideoSection from '@/components/HeroVideoSection';
 import HeroSection from '@/components/HeroSection';
@@ -21,20 +20,8 @@ import SnowflakesBackground from '@/components/SnowflakesBackground';
 gsap.registerPlugin(ScrollTrigger);
 
 const Index = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [showFlash, setShowFlash] = useState(false);
-
-  const handleLoadingComplete = useCallback(() => {
-    setShowFlash(true);
-    setTimeout(() => {
-      setShowFlash(false);
-      setIsLoading(false);
-    }, 400);
-  }, []);
 
   useEffect(() => {
-    if (isLoading) return;
-
     // Enable smooth scrolling with smoother GSAP
     gsap.config({
       force3D: true,
@@ -46,44 +33,59 @@ const Index = () => {
     // Refresh ScrollTrigger on load
     ScrollTrigger.refresh();
 
-    // Configure ScrollTrigger defaults
+    // Configure ScrollTrigger defaults for smooth animations
     ScrollTrigger.defaults({
       toggleActions: 'play none none reverse',
+    });
+
+    // Add smooth scroll animations to all sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section) => {
+      gsap.fromTo(
+        section,
+        { 
+          opacity: 0, 
+          y: 80,
+          filter: 'blur(10px)'
+        },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 85%',
+            end: 'top 20%',
+            toggleActions: 'play none none reverse',
+          }
+        }
+      );
     });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, [isLoading]);
+  }, []);
 
   return (
-    <>
-      {isLoading && <ChipLoader onLoadingComplete={handleLoadingComplete} duration={2000} />}
-      
-      {/* Camera flash effect - expands from center */}
-      {showFlash && (
-        <div className="fixed inset-0 z-[99] flex items-center justify-center pointer-events-none overflow-hidden">
-          <div className="absolute w-full h-full bg-white animate-camera-flash" />
-        </div>
-      )}
-      
-      <main className={`min-h-screen bg-background text-foreground overflow-x-hidden relative ${isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}`}>
-        <SnowflakesBackground />
-        <Navbar isOverVideo={true} />
-        <HeroVideoSection />
-        <HeroSection />
-        <LogosSection />
-        <FeaturesSection />
-        <AIModelsSection />
-        <CollaborationSection />
-        <ResourcesSection />
-        <PricingSection />
-        <StatsSection />
-        <TestimonialsSection />
-        <CTASection />
-        <Footer />
-      </main>
-    </>
+    <main className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <SnowflakesBackground />
+      <Navbar isOverVideo={true} />
+      <HeroVideoSection />
+      <HeroSection />
+      <LogosSection />
+      <FeaturesSection />
+      <AIModelsSection />
+      <CollaborationSection />
+      <ResourcesSection />
+      <PricingSection />
+      <StatsSection />
+      <TestimonialsSection />
+      <CTASection />
+      <Footer />
+    </main>
   );
 };
 

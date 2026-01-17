@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import heroBackgroundVideo from '@/assets/hero-background-video.mp4';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import heroBackgroundVideo from '@/assets/hero-video-new.mp4';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const HeroVideoSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
