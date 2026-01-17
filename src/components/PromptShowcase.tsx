@@ -177,12 +177,15 @@ const PromptShowcase = () => {
           isVisible={showPromptVideo} 
         />
         
-        {/* Overlay labels */}
+        {/* Overlay labels with entrance animations */}
         <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between z-10">
-          <div className="px-2 py-1 rounded-full bg-background/80 backdrop-blur-sm text-[10px] text-foreground border border-primary/20">
+          <div 
+            key={showPromptVideo ? 'generated' : 'preview'}
+            className="px-2 py-1 rounded-full bg-background/80 backdrop-blur-sm text-[10px] text-foreground border border-primary/20 animate-[fade-in_0.5s_ease-out,scale-in_0.3s_ease-out]"
+          >
             {showPromptVideo ? '✨ AI Generated' : '🎬 Preview'}
           </div>
-          <div className="px-2 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-[10px] text-white font-medium">
+          <div className="px-2 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-[10px] text-white font-medium animate-[slide-in-right_0.4s_ease-out]">
             SPECTORIA AI
           </div>
         </div>
