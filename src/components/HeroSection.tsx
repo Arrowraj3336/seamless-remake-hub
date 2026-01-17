@@ -146,7 +146,7 @@ const HeroSection = () => {
   return (
     <section
       ref={heroRef}
-      className="min-h-screen flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-36 pb-12 sm:pb-16 px-4 relative overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-36 pb-0 px-4 relative overflow-hidden"
       style={{ perspective: '1200px' }}
     >
       {/* Animated background elements */}
@@ -210,7 +210,7 @@ const HeroSection = () => {
         </div>
 
         {/* CTA Buttons */}
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 opacity-0 px-4">
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-0 opacity-0 px-4">
           <Button
             size="lg"
             className="w-full sm:w-auto btn-futuristic bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-medium rounded-full shadow-glow hover:shadow-glow-intense border-0 transition-all duration-500"
