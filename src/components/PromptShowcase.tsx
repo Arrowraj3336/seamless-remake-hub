@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback, memo } from 'react';
 import { Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import heroVideo1 from '@/assets/hero-video-1.mp4';
@@ -6,6 +6,7 @@ import heroVideo2 from '@/assets/hero-video-2.mp4';
 import featureVideo from '@/assets/feature-video.mp4';
 import aiDemoVideo from '@/assets/ai-demo-video.mp4';
 import heroVideoNew from '@/assets/hero-video-new.mp4';
+import heroBackgroundVideo from '@/assets/hero-background-video.mp4';
 
 interface PromptData {
   prompt: string;
@@ -21,16 +22,40 @@ const prompts: PromptData[] = [
   { prompt: "A fashion model in haute couture on a dramatic runway", video: heroVideo1 },
 ];
 
+// Memoized video component for better performance
+const VideoPlayer = memo(({ src, isVisible, isBackground }: { src: string; isVisible: boolean; isBackground?: boolean }) => (
+  <video
+    src={src}
+    autoPlay
+    loop
+    muted
+    playsInline
+    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+      isVisible ? 'opacity-100' : 'opacity-0'
+    }`}
+    style={{ 
+      willChange: isBackground ? 'auto' : 'opacity',
+      transform: 'translateZ(0)'
+    }}
+  />
+));
+
+VideoPlayer.displayName = 'VideoPlayer';
+
 const PromptShowcase = () => {
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
-  const [showVideo, setShowVideo] = useState(false);
+  const [showPromptVideo, setShowPromptVideo] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const starButtonRef = useRef<HTMLButtonElement>(null);
-  const videoRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLDivElement>(null);
+  const hasAnimatedRef = useRef(false);
+
+  // Memoized next prompt handler
+  const goToNextPrompt = useCallback(() => {
+    setCurrentPromptIndex((prev) => (prev + 1) % prompts.length);
+  }, []);
 
   // Typing animation effect
   useEffect(() => {
@@ -38,7 +63,7 @@ const PromptShowcase = () => {
     let charIndex = 0;
     setDisplayedText('');
     setIsTyping(true);
-    setShowVideo(false);
+    setShowPromptVideo(false);
 
     const typingInterval = setInterval(() => {
       if (charIndex < currentPrompt.length) {
@@ -51,70 +76,47 @@ const PromptShowcase = () => {
         // Spin the star button when typing completes
         if (starButtonRef.current) {
           gsap.to(starButtonRef.current, {
-            rotation: '+=1440', // 4 full rotations
+            rotation: '+=1440',
             duration: 0.8,
             ease: 'power2.inOut',
             onComplete: () => {
-              // Show video after spinning
-              setShowVideo(true);
-              
-              // Animate video appearance
-              if (videoRef.current) {
-                gsap.fromTo(videoRef.current, 
-                  { opacity: 0, scale: 0.9, y: 20 },
-                  { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'power3.out' }
-                );
-              }
+              setShowPromptVideo(true);
             }
           });
         }
       }
-    }, 50); // Typing speed
+    }, 70); // Slower typing speed
 
     return () => clearInterval(typingInterval);
   }, [currentPromptIndex]);
 
   // Video display timer and cycle to next prompt
   useEffect(() => {
-    if (showVideo) {
+    if (showPromptVideo) {
       const videoDisplayTimer = setTimeout(() => {
-        // Fade out video
-        if (videoRef.current) {
-          gsap.to(videoRef.current, {
-            opacity: 0,
-            scale: 0.95,
-            duration: 0.4,
-            ease: 'power2.in',
-            onComplete: () => {
-              setShowVideo(false);
-              // Move to next prompt
-              setCurrentPromptIndex((prev) => (prev + 1) % prompts.length);
-            }
-          });
-        }
-      }, 4000); // Show video for 4 seconds
+        setShowPromptVideo(false);
+        goToNextPrompt();
+      }, 10000); // Show video for 10 seconds
 
       return () => clearTimeout(videoDisplayTimer);
     }
-  }, [showVideo]);
+  }, [showPromptVideo, goToNextPrompt]);
 
-  // Initial animation
+  // Initial animation - run only once
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(containerRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.3 }
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
+    if (hasAnimatedRef.current) return;
+    hasAnimatedRef.current = true;
+    
+    gsap.fromTo(containerRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.3 }
+    );
   }, []);
 
   return (
     <div ref={containerRef} className="w-full max-w-2xl mx-auto mt-8 mb-6 opacity-0">
       {/* Input Container */}
       <div 
-        ref={inputRef}
         className="relative flex items-center gap-3 px-5 py-4 rounded-2xl bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg shadow-primary/5"
       >
         {/* Text Input Display */}
@@ -159,33 +161,30 @@ const PromptShowcase = () => {
         ))}
       </div>
 
-      {/* Generated Video Display */}
-      <div 
-        ref={videoRef}
-        className={`mt-6 rounded-2xl overflow-hidden transition-all duration-500 ${showVideo ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        style={{ height: showVideo ? 'auto' : 0 }}
-      >
-        {showVideo && (
-          <div className="relative aspect-video rounded-2xl overflow-hidden gradient-border glow-effect">
-            <video
-              key={prompts[currentPromptIndex].video}
-              src={prompts[currentPromptIndex].video}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-              <div className="px-3 py-1.5 rounded-full bg-background/80 backdrop-blur-sm text-xs text-foreground border border-primary/20">
-                ✨ AI Generated
-              </div>
-              <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-xs text-white font-medium">
-                SPECTORIA AI
-              </div>
-            </div>
+      {/* Video Display - Always shows a video (background or prompt video) */}
+      <div className="mt-6 rounded-2xl overflow-hidden relative aspect-video gradient-border glow-effect">
+        {/* Background video - always playing */}
+        <VideoPlayer 
+          src={heroBackgroundVideo} 
+          isVisible={!showPromptVideo} 
+          isBackground={true}
+        />
+        
+        {/* Prompt video - shown when generated */}
+        <VideoPlayer 
+          src={prompts[currentPromptIndex].video} 
+          isVisible={showPromptVideo} 
+        />
+        
+        {/* Overlay labels */}
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10">
+          <div className="px-3 py-1.5 rounded-full bg-background/80 backdrop-blur-sm text-xs text-foreground border border-primary/20">
+            {showPromptVideo ? '✨ AI Generated' : '🎬 Preview'}
           </div>
-        )}
+          <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-xs text-white font-medium">
+            SPECTORIA AI
+          </div>
+        </div>
       </div>
     </div>
   );
