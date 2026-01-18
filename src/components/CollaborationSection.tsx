@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
 import { Users, MessageSquare, Share2, Cloud, Sparkles, Zap, Film, Wand2 } from 'lucide-react';
-import aiDemoVideo from '@/assets/ai-demo-video.mp4';
+import collaborationVideo from '@/assets/collaboration-video.mp4';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -205,7 +205,7 @@ const CollaborationSection = () => {
             <div className="collab-video-inner">
               <video
                 ref={videoRef}
-                src={aiDemoVideo}
+                src={collaborationVideo}
                 autoPlay
                 loop
                 muted
