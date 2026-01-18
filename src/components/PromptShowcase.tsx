@@ -134,9 +134,9 @@ const PromptShowcase = memo(() => {
   }, [currentIndex, animateStarAndShowVideo, addTimeout, clearAllTimeouts]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto mt-10 sm:mt-12">
+    <div className="w-full max-w-3xl mx-auto mt-6 sm:mt-8">
       {/* Input container with star button */}
-      <div className="relative mb-6 sm:mb-8">
+      <div className="relative mb-4 sm:mb-5">
         <div className="relative flex items-center gap-3 px-4 sm:px-6 py-4 rounded-2xl glass border border-primary/30 bg-background/50 backdrop-blur-xl shadow-lg shadow-primary/10">
           {/* Prompt text display */}
           <div className="flex-1 min-h-[24px] text-sm sm:text-base text-foreground/90 font-medium text-left">

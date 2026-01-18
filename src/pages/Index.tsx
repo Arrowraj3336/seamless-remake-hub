@@ -16,6 +16,7 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import SnowflakesBackground from '@/components/SnowflakesBackground';
+import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,6 +77,7 @@ const Index = () => {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
       <SnowflakesBackground />
+      <ScrollProgressIndicator />
       <Navbar isOverVideo={true} />
       <HeroVideoSection />
       <HeroSection />

@@ -57,7 +57,7 @@ const LogosSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-6 sm:py-8 border-y border-primary/20 glass opacity-0">
+    <section ref={sectionRef} className="py-4 sm:py-5 border-y border-primary/20 glass opacity-0">
       <div className="container mx-auto px-4">
         <p className="text-center text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
           Powered by the world's leading AI video models

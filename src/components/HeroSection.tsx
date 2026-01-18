@@ -145,8 +145,9 @@ const HeroSection = () => {
 
   return (
     <section
+      id="hero"
       ref={heroRef}
-      className="flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-36 pb-4 sm:pb-6 px-4 relative overflow-hidden"
+      className="flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-36 pb-2 px-4 relative overflow-hidden"
       style={{ perspective: '1200px' }}
     >
       {/* Animated background elements */}
