@@ -22,17 +22,21 @@ const prompts: PromptData[] = [
   { prompt: "A fashion model in haute couture on a dramatic runway", video: heroVideo1 },
 ];
 
-// Simple video component without transitions
-const VideoPlayer = memo(({ src, isVisible }: { src: string; isVisible: boolean }) => (
+// Memoized video component for better performance
+const VideoPlayer = memo(({ src, isVisible, isBackground }: { src: string; isVisible: boolean; isBackground?: boolean }) => (
   <video
     src={src}
     autoPlay
     loop
     muted
     playsInline
-    className={`absolute inset-0 w-full h-full object-cover ${
+    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
       isVisible ? 'opacity-100' : 'opacity-0'
     }`}
+    style={{ 
+      willChange: isBackground ? 'auto' : 'opacity',
+      transform: 'translateZ(0)'
+    }}
   />
 ));
 
@@ -163,6 +167,7 @@ const PromptShowcase = () => {
         <VideoPlayer 
           src={avatarBackground} 
           isVisible={!showPromptVideo} 
+          isBackground={true}
         />
         
         {/* Prompt video - shown when generated */}
@@ -171,15 +176,12 @@ const PromptShowcase = () => {
           isVisible={showPromptVideo} 
         />
         
-        {/* Overlay labels with entrance animations */}
+        {/* Overlay labels */}
         <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between z-10">
-          <div 
-            key={showPromptVideo ? 'generated' : 'preview'}
-            className="px-2 py-1 rounded-full bg-background/80 backdrop-blur-sm text-[10px] text-foreground border border-primary/20 animate-[fade-in_0.5s_ease-out,scale-in_0.3s_ease-out]"
-          >
+          <div className="px-2 py-1 rounded-full bg-background/80 backdrop-blur-sm text-[10px] text-foreground border border-primary/20">
             {showPromptVideo ? '✨ AI Generated' : '🎬 Preview'}
           </div>
-          <div className="px-2 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-[10px] text-white font-medium animate-[slide-in-right_0.4s_ease-out]">
+          <div className="px-2 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-[10px] text-white font-medium">
             SPECTORIA AI
           </div>
         </div>
