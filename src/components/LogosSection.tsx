@@ -2,15 +2,21 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Video, Wand2, Zap, Layers, Sparkles } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const models = [
-  { name: 'Seedance AI', icon: <Video className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { name: 'Runway AI', icon: <Wand2 className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { name: 'Veo 3.1', icon: <Zap className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { name: 'Kling AI', icon: <Layers className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { name: 'Neo Banana', icon: <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: 'Seedance AI', icon: <Video className="w-4 h-4 sm:w-5 sm:h-5" />, description: 'Advanced video generation with natural motion and cinematic quality' },
+  { name: 'Runway AI', icon: <Wand2 className="w-4 h-4 sm:w-5 sm:h-5" />, description: 'Creative AI tools for professional video editing and effects' },
+  { name: 'Veo 3.1', icon: <Zap className="w-4 h-4 sm:w-5 sm:h-5" />, description: 'Ultra-fast rendering with high-fidelity output' },
+  { name: 'Kling AI', icon: <Layers className="w-4 h-4 sm:w-5 sm:h-5" />, description: 'Multi-layer video synthesis with depth control' },
+  { name: 'Neo Banana', icon: <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />, description: 'Experimental creative effects and artistic styles' },
 ];
 
 const LogosSection = () => {
@@ -108,17 +114,25 @@ const LogosSection = () => {
         <p className="logos-text text-center text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
           Powered by the world's leading AI video models
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 md:gap-10" style={{ perspective: '800px' }}>
-          {models.map((model, index) => (
-            <div
-              key={index}
-              className="model-item flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full glass border border-primary/20 text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all duration-300 cursor-pointer group"
-            >
-              <span className="text-primary group-hover:scale-110 transition-transform">{model.icon}</span>
-              <span className="text-xs sm:text-sm font-medium whitespace-nowrap">{model.name}</span>
-            </div>
-          ))}
-        </div>
+        <TooltipProvider delayDuration={200}>
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 md:gap-10" style={{ perspective: '800px' }}>
+            {models.map((model, index) => (
+              <Tooltip key={index}>
+                <TooltipTrigger asChild>
+                  <div
+                    className="model-item flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full glass border border-primary/20 text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all duration-300 cursor-pointer group"
+                  >
+                    <span className="text-primary group-hover:scale-110 transition-transform">{model.icon}</span>
+                    <span className="text-xs sm:text-sm font-medium whitespace-nowrap">{model.name}</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="max-w-xs text-center">
+                  <p>{model.description}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </div>
+        </TooltipProvider>
       </div>
     </section>
   );
