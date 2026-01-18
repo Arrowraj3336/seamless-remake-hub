@@ -146,7 +146,7 @@ const HeroSection = () => {
   return (
     <section
       ref={heroRef}
-      className="min-h-screen flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-36 pb-12 sm:pb-16 px-4 relative overflow-hidden"
+      className="flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-36 pb-4 sm:pb-6 px-4 relative overflow-hidden"
       style={{ perspective: '1200px' }}
     >
       {/* Animated background elements */}
