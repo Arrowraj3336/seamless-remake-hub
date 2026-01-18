@@ -22,22 +22,17 @@ const prompts: PromptData[] = [
   { prompt: "A fashion model in haute couture on a dramatic runway", video: heroVideo1 },
 ];
 
-// Memoized video component for better performance with smooth crossfade
-const VideoPlayer = memo(({ src, isVisible, isBackground }: { src: string; isVisible: boolean; isBackground?: boolean }) => (
+// Simple video component without transitions
+const VideoPlayer = memo(({ src, isVisible }: { src: string; isVisible: boolean }) => (
   <video
     src={src}
     autoPlay
     loop
     muted
     playsInline
-    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
-      isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.02]'
+    className={`absolute inset-0 w-full h-full object-cover ${
+      isVisible ? 'opacity-100' : 'opacity-0'
     }`}
-    style={{ 
-      willChange: isBackground ? 'auto' : 'opacity, transform',
-      transform: 'translateZ(0)',
-      backfaceVisibility: 'hidden'
-    }}
   />
 ));
 
@@ -168,7 +163,6 @@ const PromptShowcase = () => {
         <VideoPlayer 
           src={avatarBackground} 
           isVisible={!showPromptVideo} 
-          isBackground={true}
         />
         
         {/* Prompt video - shown when generated */}
