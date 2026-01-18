@@ -65,51 +65,8 @@ const Index = () => {
       );
     });
 
-    // Parallax effect for all images
-    const images = document.querySelectorAll('img');
-    images.forEach((img) => {
-      gsap.to(img, {
-        yPercent: -15,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: img,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.5,
-        }
-      });
-    });
-
-    // Parallax for background elements
-    const bgElements = document.querySelectorAll('.parallax-bg');
-    bgElements.forEach((el) => {
-      gsap.to(el, {
-        yPercent: -30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 2,
-        }
-      });
-    });
-
-    // Floating orbs parallax
-    const orbs = document.querySelectorAll('.orb, [class*="bg-gradient"]');
-    orbs.forEach((orb) => {
-      gsap.to(orb, {
-        yPercent: -20,
-        xPercent: gsap.utils.random(-5, 5),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: orb,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 3,
-        }
-      });
-    });
+    // Note: Removed global parallax effects on images to prevent them from 
+    // detaching from their containers during scroll
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());

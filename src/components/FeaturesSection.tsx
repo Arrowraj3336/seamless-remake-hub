@@ -80,14 +80,7 @@ const FeaturesSection = () => {
         repeat: -1,
       });
 
-      // Video subtle float
-      gsap.to('.feature-video', {
-        y: -15,
-        duration: 5,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      });
+      // Removed floating animation on video to prevent detachment from container
 
       // Background orbs - smoother
       gsap.to('.feature-orb', {
