@@ -89,17 +89,7 @@ const CollaborationSection = () => {
         }
       );
 
-      // Parallax effect on video
-      gsap.to('.collab-video-inner', {
-        yPercent: -8,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.collab-video',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.5,
-        },
-      });
+      // Removed parallax effect on video to prevent detachment from container
 
       // Feature cards stagger with 3D effect
       gsap.fromTo(

@@ -60,15 +60,7 @@ const AIModelsSection = () => {
         }
       );
 
-      // Smoother floating animation for images
-      gsap.to('.model-image', {
-        y: -8,
-        duration: 4,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.3,
-      });
+      // Removed floating animation on images to prevent detachment from containers
 
       // Background orbs - smoother motion
       gsap.to('.model-orb', {

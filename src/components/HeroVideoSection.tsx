@@ -26,21 +26,9 @@ const HeroVideoSection = () => {
         }
       );
 
-      // Video parallax on scroll
+      // Subtle scale effect on scroll - removed aggressive parallax
       gsap.to(videoRef.current, {
-        yPercent: 25,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.5,
-        }
-      });
-
-      // Scale video slightly on scroll for depth
-      gsap.to(videoRef.current, {
-        scale: 1.1,
+        scale: 1.02,
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
