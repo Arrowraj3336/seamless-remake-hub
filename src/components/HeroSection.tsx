@@ -4,6 +4,7 @@ import { ArrowRight, Play, Sparkles, Zap } from 'lucide-react';
 import gsap from 'gsap';
 import heroVideo1 from '@/assets/hero-video-1.mp4';
 import heroVideo2 from '@/assets/hero-video-2.mp4';
+import PromptShowcase from './PromptShowcase';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -227,6 +228,9 @@ const HeroSection = () => {
         <p ref={subtitleRef} className="text-muted-foreground text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto opacity-0 px-4">
           Access the world's most powerful AI video generators in one platform. Create professional videos in seconds.
         </p>
+
+        {/* Interactive Prompt Showcase */}
+        <PromptShowcase />
 
         {/* AI Models badges */}
         <div ref={modelsRef} className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 opacity-0 px-2">
