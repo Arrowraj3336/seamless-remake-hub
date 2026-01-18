@@ -160,7 +160,7 @@ const PricingSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="pricing" className="py-16 sm:py-20 md:py-32 relative overflow-hidden">
+    <section ref={sectionRef} id="pricing" className="py-12 sm:py-16 md:py-20 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 cyber-grid opacity-15" />
       <div className="pricing-orb absolute top-1/4 left-0 w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-gradient-radial from-primary/15 via-primary/5 to-transparent rounded-full blur-3xl" />

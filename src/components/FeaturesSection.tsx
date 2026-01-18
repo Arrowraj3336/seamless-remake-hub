@@ -127,7 +127,7 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="features" className="py-16 sm:py-20 md:py-32 relative overflow-hidden">
+    <section ref={sectionRef} id="features" className="py-12 sm:py-16 md:py-20 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 cyber-grid opacity-10" />
       <div className="feature-orb absolute top-0 right-0 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-gradient-radial from-primary/12 via-primary/4 to-transparent rounded-full blur-3xl" />

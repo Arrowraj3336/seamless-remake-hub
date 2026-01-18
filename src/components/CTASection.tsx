@@ -85,7 +85,7 @@ const CTASection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-32 section-gradient-3 overflow-hidden">
+    <section ref={sectionRef} className="relative py-12 sm:py-16 md:py-20 section-gradient-3 overflow-hidden">
       {/* Floating dots */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (

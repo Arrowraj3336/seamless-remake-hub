@@ -159,7 +159,7 @@ const CollaborationSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-16 sm:py-20 md:py-32 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 sm:py-16 md:py-20 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 cyber-grid opacity-15" />
       

@@ -28,7 +28,7 @@ const TestimonialsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 sm:py-20 md:py-32 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 sm:py-16 md:py-20 relative overflow-hidden">
       <div className="absolute inset-0 cyber-grid opacity-15" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 testimonial-header opacity-0">

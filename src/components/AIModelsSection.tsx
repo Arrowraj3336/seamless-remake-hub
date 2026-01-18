@@ -123,7 +123,7 @@ const AIModelsSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="models" className="py-16 sm:py-20 md:py-32 relative overflow-hidden">
+    <section ref={sectionRef} id="models" className="py-12 sm:py-16 md:py-20 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 cyber-grid opacity-20" />
       <div className="model-orb absolute top-1/4 left-1/4 w-64 sm:w-80 h-64 sm:h-80 bg-gradient-radial from-primary/20 via-primary/5 to-transparent rounded-full blur-3xl" />

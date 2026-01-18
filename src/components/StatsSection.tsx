@@ -130,7 +130,7 @@ const StatsSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="about" className="relative py-20 md:py-32 section-gradient-2 overflow-hidden">
+    <section ref={sectionRef} id="about" className="relative py-12 sm:py-16 md:py-20 section-gradient-2 overflow-hidden">
       {/* Floating dots background */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(15)].map((_, i) => (
