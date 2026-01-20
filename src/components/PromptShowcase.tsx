@@ -33,7 +33,8 @@ const promptsData = [
   },
 ];
 
-const TYPING_INTERVAL_MS = 25;
+// Faster typing for a snappier hero
+const TYPING_INTERVAL_MS = 15;
 const TYPING_START_DELAY_MS = 80;
 const VIDEO_DURATION_MS = 9000;
 
@@ -103,17 +104,6 @@ const PromptShowcase = memo(() => {
           // ignore
         }
 
-        // Ensure correct source is loaded (it should already be prepared during typing)
-        const wantedSrc = promptsData[currentIndex].video;
-        try {
-          if (!pv.src.endsWith(wantedSrc.split('/').pop() || '')) {
-            pv.src = wantedSrc;
-            pv.load();
-          }
-        } catch {
-          // ignore
-        }
-
         const crossfadeIn = () => {
           if (sequenceIdRef.current !== mySequenceId) return;
           gsap.to(bg, { opacity: 0, duration: 0.45, ease: 'power2.out' });
@@ -149,9 +139,16 @@ const PromptShowcase = memo(() => {
         }
       }, 0);
 
-      // Show video for 9 seconds then move to next prompt
+       // Show video for 9 seconds then move to next prompt
       addTimeout(() => {
         if (sequenceIdRef.current !== mySequenceId) return;
+
+         const advance = () => {
+           if (sequenceIdRef.current !== mySequenceId) return;
+           setShowPromptVideo(false);
+           setCurrentIndex((prev) => (prev + 1) % promptsData.length);
+         };
+
         if (promptVideoRef.current) {
           gsap.to(promptVideoRef.current, {
             opacity: 0,
@@ -166,18 +163,20 @@ const PromptShowcase = memo(() => {
             },
           });
         }
-        if (backgroundVideoRef.current) {
-          gsap.to(backgroundVideoRef.current, {
-            opacity: 1,
-            duration: 0.4,
-            ease: 'power2.in',
-            onComplete: () => {
-              if (sequenceIdRef.current !== mySequenceId) return;
-              setShowPromptVideo(false);
-              setCurrentIndex((prev) => (prev + 1) % promptsData.length);
-            },
-          });
-        }
+
+         const bg = backgroundVideoRef.current;
+         if (bg) {
+           gsap.to(bg, {
+             opacity: 1,
+             duration: 0.4,
+             ease: 'power2.in',
+             onComplete: advance,
+           });
+           // Fallback: ensure we advance even if GSAP onComplete doesn't fire on some devices
+           addTimeout(advance, 500);
+         } else {
+           advance();
+         }
       }, VIDEO_DURATION_MS);
     }, 600);
   }, [addTimeout, currentIndex]);
@@ -189,7 +188,7 @@ const PromptShowcase = memo(() => {
     setDisplayedText('');
     setIsTyping(true);
 
-    // Preload the next prompt video DURING typing to avoid blank/lag on crossfade.
+    // Preload current prompt video DURING typing to avoid blank/lag on crossfade.
     if (promptVideoRef.current) {
       const pv = promptVideoRef.current;
       try {
@@ -198,7 +197,7 @@ const PromptShowcase = memo(() => {
         // ignore
       }
       try {
-        pv.src = promptsData[currentIndex].video;
+        // src is bound via JSX; load() forces the browser to fetch it early.
         pv.load();
       } catch {
         // ignore
@@ -243,7 +242,7 @@ const PromptShowcase = memo(() => {
   }, [currentIndex, animateStarAndShowVideo, addTimeout, clearAllTimeouts]);
 
   return (
-    <div className="w-full max-w-xl mx-auto mt-3 sm:mt-5">
+    <div className="w-full max-w-lg mx-auto mt-3 sm:mt-4">
       {/* Input container with star button */}
       <div className="relative mb-3 sm:mb-4">
         <div className="relative flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl glass border border-primary/30 bg-background/50 backdrop-blur-xl shadow-lg shadow-primary/10">
@@ -269,8 +268,8 @@ const PromptShowcase = memo(() => {
         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-6 bg-gradient-to-r from-primary/20 via-accent/30 to-primary/20 blur-xl rounded-full" />
       </div>
 
-      {/* Video display area - seamless crossfade */}
-      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect h-[170px] sm:h-[220px]">
+      {/* Video display area - seamless crossfade (smaller + minimalist) */}
+      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect h-[150px] sm:h-[190px]">
         {/* Background video - always mounted, opacity controlled */}
         <video
           ref={backgroundVideoRef}
@@ -280,7 +279,7 @@ const PromptShowcase = memo(() => {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-contain bg-background will-change-[opacity]"
+          className="w-full h-full object-cover bg-background will-change-[opacity]"
           onError={(e) => {
             console.error('Background video failed:', avatarBackground, e);
           }}
@@ -289,12 +288,12 @@ const PromptShowcase = memo(() => {
         {/* Prompt video - always mounted overlay (avoids ref timing issues) */}
         <video
           ref={promptVideoRef}
+          src={promptsData[currentIndex].video}
           autoPlay
-          loop
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-contain bg-background will-change-[opacity]"
+          className="absolute inset-0 w-full h-full object-cover bg-background will-change-[opacity]"
           style={{ opacity: 0 }}
           onError={(e) => {
             console.error('Prompt video failed:', promptsData[currentIndex].video, e);
