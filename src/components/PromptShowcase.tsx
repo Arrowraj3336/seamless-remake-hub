@@ -83,13 +83,59 @@ const PromptShowcase = memo(() => {
 
     addTimeout(() => {
       setShowPromptVideo(true);
-      // Crossfade: fade out background, fade in prompt video
-      if (backgroundVideoRef.current) {
-        gsap.to(backgroundVideoRef.current, { opacity: 0, duration: 0.5, ease: 'power2.out' });
-      }
-      if (promptVideoRef.current) {
-        gsap.fromTo(promptVideoRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' });
-      }
+      // Crossfade: wait until after React commits so the prompt video ref is available
+      addTimeout(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (backgroundVideoRef.current) {
+              // Ensure background is playing before fading
+              try {
+                void backgroundVideoRef.current.play();
+              } catch {
+                // ignore
+              }
+
+              gsap.to(backgroundVideoRef.current, { opacity: 0, duration: 0.5, ease: 'power2.out' });
+            }
+
+            if (promptVideoRef.current) {
+              // Always mount the prompt video element; set its src right before playing
+              try {
+                promptVideoRef.current.src = promptsData[currentIndex].video;
+                promptVideoRef.current.load();
+              } catch {
+                // ignore
+              }
+
+              const el = promptVideoRef.current;
+
+              // Only fade in once the browser has decoded enough to render a frame
+              const fadeInWhenReady = () => {
+                gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+              };
+
+              el.addEventListener('canplay', fadeInWhenReady, { once: true });
+
+              // Ensure it actually starts playing (some browsers need an explicit play call)
+              try {
+                el.currentTime = 0;
+                void el.play();
+              } catch {
+                // ignore
+              }
+
+              // Safety fallback: if canplay doesn't fire quickly, still show it
+              addTimeout(() => {
+                try {
+                  if (parseFloat(getComputedStyle(el).opacity || '0') < 0.5) fadeInWhenReady();
+                } catch {
+                  fadeInWhenReady();
+                }
+              }, 400);
+            }
+          });
+        });
+      }, 0);
 
       // Show video for 10 seconds then move to next prompt
       addTimeout(() => {
@@ -98,6 +144,13 @@ const PromptShowcase = memo(() => {
             opacity: 0,
             duration: 0.4,
             ease: 'power2.in',
+            onComplete: () => {
+              try {
+                promptVideoRef.current?.pause();
+              } catch {
+                // ignore
+              }
+            },
           });
         }
         if (backgroundVideoRef.current) {
@@ -178,22 +231,27 @@ const PromptShowcase = memo(() => {
           loop
           muted
           playsInline
+          preload="auto"
           className="w-full aspect-video object-cover will-change-[opacity]"
+          onError={(e) => {
+            console.error('Background video failed:', avatarBackground, e);
+          }}
         />
-        
-        {/* Prompt video - absolutely positioned overlay */}
-        {showPromptVideo && (
-          <video
-            ref={promptVideoRef}
-            key={promptsData[currentIndex].video}
-            src={promptsData[currentIndex].video}
-            autoPlay
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover will-change-[opacity]"
-            style={{ opacity: 0 }}
-          />
-        )}
+
+        {/* Prompt video - always mounted overlay (avoids ref timing issues) */}
+        <video
+          ref={promptVideoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover will-change-[opacity]"
+          style={{ opacity: 0 }}
+          onError={(e) => {
+            console.error('Prompt video failed:', promptsData[currentIndex].video, e);
+          }}
+        />
 
         {/* Video overlay with prompt badge */}
         <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 flex items-center justify-between pointer-events-none">

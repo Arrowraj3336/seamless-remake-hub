@@ -220,7 +220,7 @@ const HeroSection = () => {
         <PromptShowcase />
 
         {/* AI Models badges */}
-        <div ref={modelsRef} className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-4 mb-6 sm:mb-8 opacity-0 px-2">
+        <div ref={modelsRef} className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-3 mb-5 sm:mb-6 opacity-0 px-2">
           {aiModels.map((model, index) => (
             <div
               key={index}
@@ -233,7 +233,7 @@ const HeroSection = () => {
         </div>
 
         {/* CTA Buttons */}
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 opacity-0 px-4">
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-3 opacity-0 px-4">
           <Button
             size="lg"
             className="w-full sm:w-auto btn-futuristic bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white px-8 sm:px-10 py-6 sm:py-7 text-sm sm:text-base font-semibold rounded-full shadow-glow hover:shadow-glow-intense border-0 transition-all duration-500 group"
