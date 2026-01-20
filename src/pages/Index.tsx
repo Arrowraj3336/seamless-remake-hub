@@ -3,7 +3,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from '@/components/Navbar';
-import HeroVideoSection from '@/components/HeroVideoSection';
 import HeroSection from '@/components/HeroSection';
 import LogosSection from '@/components/LogosSection';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -41,7 +40,7 @@ const Index = () => {
 
     // Add smooth scroll animations to all sections with staggered reveal
     const sections = document.querySelectorAll('section');
-    sections.forEach((section, index) => {
+    sections.forEach((section) => {
       // Section fade-in animation
       gsap.fromTo(
         section,
@@ -66,9 +65,6 @@ const Index = () => {
       );
     });
 
-    // Note: Removed global parallax effects on images to prevent them from 
-    // detaching from their containers during scroll
-
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
@@ -78,8 +74,7 @@ const Index = () => {
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
       <SnowflakesBackground />
       <ScrollProgressIndicator />
-      <Navbar isOverVideo={true} />
-      <HeroVideoSection />
+      <Navbar />
       <HeroSection />
       <LogosSection />
       <FeaturesSection />
