@@ -45,13 +45,15 @@ const Index = () => {
       gsap.fromTo(
         section,
         { 
-          opacity: 0,
-          y: 40
+          opacity: 0, 
+          y: 60,
+          filter: 'blur(8px)'
         },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          filter: 'blur(0px)',
+          duration: 1,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: section,

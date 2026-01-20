@@ -33,11 +33,6 @@ const promptsData = [
   },
 ];
 
-// Faster typing for a snappier hero
-const TYPING_INTERVAL_MS = 15;
-const TYPING_START_DELAY_MS = 80;
-const VIDEO_DURATION_MS = 9000;
-
 const PromptShowcase = memo(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
@@ -48,11 +43,8 @@ const PromptShowcase = memo(() => {
   const backgroundVideoRef = useRef<HTMLVideoElement>(null);
   const typingIntervalRef = useRef<number | null>(null);
   const timeoutRefs = useRef<number[]>([]);
-  const sequenceIdRef = useRef(0);
 
   const clearAllTimeouts = useCallback(() => {
-    // invalidate any pending sequence callbacks
-    sequenceIdRef.current += 1;
     timeoutRefs.current.forEach(id => clearTimeout(id));
     timeoutRefs.current = [];
     if (typingIntervalRef.current) {
@@ -68,8 +60,6 @@ const PromptShowcase = memo(() => {
   }, []);
 
   const animateStarAndShowVideo = useCallback(() => {
-    const mySequenceId = (sequenceIdRef.current += 1);
-
     if (starRef.current) {
       gsap.to(starRef.current, {
         rotation: '+=1080',
@@ -87,68 +77,63 @@ const PromptShowcase = memo(() => {
     }
 
     addTimeout(() => {
-      if (sequenceIdRef.current !== mySequenceId) return;
       setShowPromptVideo(true);
-
-      // Start prompt video, but ONLY crossfade once the first frame is ready.
+      // Crossfade: wait until after React commits so the prompt video ref is available
       addTimeout(() => {
-        if (sequenceIdRef.current !== mySequenceId) return;
-        const bg = backgroundVideoRef.current;
-        const pv = promptVideoRef.current;
-        if (!bg || !pv) return;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (backgroundVideoRef.current) {
+              // Ensure background is playing before fading
+              try {
+                void backgroundVideoRef.current.play();
+              } catch {
+                // ignore
+              }
 
-        // Ensure background is playing (kept visible until prompt is ready)
-        try {
-          void bg.play();
-        } catch {
-          // ignore
-        }
-
-        const crossfadeIn = () => {
-          if (sequenceIdRef.current !== mySequenceId) return;
-          gsap.to(bg, { opacity: 0, duration: 0.45, ease: 'power2.out' });
-          gsap.to(pv, { opacity: 1, duration: 0.45, ease: 'power2.out' });
-        };
-
-        const startPlaybackThenCrossfade = () => {
-          if (sequenceIdRef.current !== mySequenceId) return;
-          try {
-            pv.currentTime = 0;
-          } catch {
-            // ignore
-          }
-
-          try {
-            const p = pv.play();
-            if (p && typeof (p as unknown as Promise<void>).then === 'function') {
-              (p as Promise<void>).then(crossfadeIn).catch(crossfadeIn);
-            } else {
-              crossfadeIn();
+              gsap.to(backgroundVideoRef.current, { opacity: 0, duration: 0.5, ease: 'power2.out' });
             }
-          } catch {
-            crossfadeIn();
-          }
-        };
 
-        if (pv.readyState >= 2) {
-          startPlaybackThenCrossfade();
-        } else {
-          pv.addEventListener('loadeddata', startPlaybackThenCrossfade, { once: true });
-          // Safety fallback
-          addTimeout(() => startPlaybackThenCrossfade(), 600);
-        }
+            if (promptVideoRef.current) {
+              // Always mount the prompt video element; set its src right before playing
+              try {
+                promptVideoRef.current.src = promptsData[currentIndex].video;
+                promptVideoRef.current.load();
+              } catch {
+                // ignore
+              }
+
+              const el = promptVideoRef.current;
+
+              // Only fade in once the browser has decoded enough to render a frame
+              const fadeInWhenReady = () => {
+                gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+              };
+
+              el.addEventListener('canplay', fadeInWhenReady, { once: true });
+
+              // Ensure it actually starts playing (some browsers need an explicit play call)
+              try {
+                el.currentTime = 0;
+                void el.play();
+              } catch {
+                // ignore
+              }
+
+              // Safety fallback: if canplay doesn't fire quickly, still show it
+              addTimeout(() => {
+                try {
+                  if (parseFloat(getComputedStyle(el).opacity || '0') < 0.5) fadeInWhenReady();
+                } catch {
+                  fadeInWhenReady();
+                }
+              }, 400);
+            }
+          });
+        });
       }, 0);
 
-       // Show video for 9 seconds then move to next prompt
+      // Show video for 10 seconds then move to next prompt
       addTimeout(() => {
-        if (sequenceIdRef.current !== mySequenceId) return;
-
-         const advance = () => {
-           if (sequenceIdRef.current !== mySequenceId) return;
-           setShowPromptVideo(false);
-           setCurrentIndex((prev) => (prev + 1) % promptsData.length);
-         };
-
         if (promptVideoRef.current) {
           gsap.to(promptVideoRef.current, {
             opacity: 0,
@@ -163,21 +148,18 @@ const PromptShowcase = memo(() => {
             },
           });
         }
-
-         const bg = backgroundVideoRef.current;
-         if (bg) {
-           gsap.to(bg, {
-             opacity: 1,
-             duration: 0.4,
-             ease: 'power2.in',
-             onComplete: advance,
-           });
-           // Fallback: ensure we advance even if GSAP onComplete doesn't fire on some devices
-           addTimeout(advance, 500);
-         } else {
-           advance();
-         }
-      }, VIDEO_DURATION_MS);
+        if (backgroundVideoRef.current) {
+          gsap.to(backgroundVideoRef.current, {
+            opacity: 1,
+            duration: 0.4,
+            ease: 'power2.in',
+            onComplete: () => {
+              setShowPromptVideo(false);
+              setCurrentIndex((prev) => (prev + 1) % promptsData.length);
+            },
+          });
+        }
+      }, 10000);
     }, 600);
   }, [addTimeout, currentIndex]);
 
@@ -187,40 +169,6 @@ const PromptShowcase = memo(() => {
     let charIndex = 0;
     setDisplayedText('');
     setIsTyping(true);
-
-    // Preload current prompt video DURING typing to avoid blank/lag on crossfade.
-    if (promptVideoRef.current) {
-      const pv = promptVideoRef.current;
-      try {
-        pv.pause();
-      } catch {
-        // ignore
-      }
-      try {
-        // src is bound via JSX; load() forces the browser to fetch it early.
-        pv.load();
-      } catch {
-        // ignore
-      }
-      try {
-        pv.currentTime = 0;
-      } catch {
-        // ignore
-      }
-      try {
-        gsap.set(pv, { opacity: 0 });
-      } catch {
-        // ignore
-      }
-    }
-
-    if (backgroundVideoRef.current) {
-      try {
-        void backgroundVideoRef.current.play();
-      } catch {
-        // ignore
-      }
-    }
 
     addTimeout(() => {
       typingIntervalRef.current = window.setInterval(() => {
@@ -235,14 +183,14 @@ const PromptShowcase = memo(() => {
           setIsTyping(false);
           animateStarAndShowVideo();
         }
-      }, TYPING_INTERVAL_MS);
-    }, TYPING_START_DELAY_MS);
+      }, 40); // Faster typing
+    }, 150);
 
     return clearAllTimeouts;
   }, [currentIndex, animateStarAndShowVideo, addTimeout, clearAllTimeouts]);
 
   return (
-    <div className="w-full max-w-lg mx-auto mt-3 sm:mt-4">
+    <div className="w-full max-w-2xl mx-auto mt-3 sm:mt-5">
       {/* Input container with star button */}
       <div className="relative mb-3 sm:mb-4">
         <div className="relative flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl glass border border-primary/30 bg-background/50 backdrop-blur-xl shadow-lg shadow-primary/10">
@@ -268,8 +216,8 @@ const PromptShowcase = memo(() => {
         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-6 bg-gradient-to-r from-primary/20 via-accent/30 to-primary/20 blur-xl rounded-full" />
       </div>
 
-      {/* Video display area - seamless crossfade (smaller + minimalist) */}
-      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect h-[150px] sm:h-[190px]">
+      {/* Video display area - seamless crossfade */}
+      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect h-[200px] sm:h-[260px]">
         {/* Background video - always mounted, opacity controlled */}
         <video
           ref={backgroundVideoRef}
@@ -279,7 +227,7 @@ const PromptShowcase = memo(() => {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover bg-background will-change-[opacity]"
+          className="w-full h-full object-cover will-change-[opacity]"
           onError={(e) => {
             console.error('Background video failed:', avatarBackground, e);
           }}
@@ -288,12 +236,12 @@ const PromptShowcase = memo(() => {
         {/* Prompt video - always mounted overlay (avoids ref timing issues) */}
         <video
           ref={promptVideoRef}
-          src={promptsData[currentIndex].video}
           autoPlay
+          loop
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover bg-background will-change-[opacity]"
+          className="absolute inset-0 w-full h-full object-cover will-change-[opacity]"
           style={{ opacity: 0 }}
           onError={(e) => {
             console.error('Prompt video failed:', promptsData[currentIndex].video, e);
