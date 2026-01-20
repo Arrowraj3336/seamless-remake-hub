@@ -4,37 +4,32 @@ import { Sparkles } from 'lucide-react';
 import avatarBackground from '@/assets/avatar-background.mp4';
 
 // Using local video assets for reliable playback
-import heroVideo1 from '@/assets/hero-video-1.mp4';
-import heroVideo2 from '@/assets/hero-video-2.mp4';
-import collaborationVideo from '@/assets/collaboration-video.mp4';
-import featureVideo from '@/assets/feature-video.mp4';
-import aiDemoVideo from '@/assets/ai-demo-video.mp4';
-import heroVideoNew from '@/assets/hero-video-new.mp4';
+import promptVideo1 from '@/assets/prompt-video-1.mp4';
+import promptVideo2 from '@/assets/prompt-video-2.mp4';
+import promptVideo3 from '@/assets/prompt-video-3.mp4';
+import promptVideo4 from '@/assets/prompt-video-4.mp4';
+import promptVideo5 from '@/assets/prompt-video-5.mp4';
 
 const promptsData = [
   {
-    prompt: "A cinematic shot of a woman walking through neon-lit streets",
-    video: heroVideo1,
+    prompt: "Silhouetted camel riders traveling through a desert under a glowing night sky",
+    video: promptVideo1,
   },
   {
-    prompt: "A majestic lion running across the African savanna",
-    video: heroVideo2,
+    prompt: "Spaceship with blue thrusters approaching an orbital station above Earth",
+    video: promptVideo2,
   },
   {
-    prompt: "Futuristic cityscape with flying cars and holograms",
-    video: collaborationVideo,
+    prompt: "Giant space station drifting through an asteroid field in a green nebula",
+    video: promptVideo3,
   },
   {
-    prompt: "A serene underwater scene with colorful coral reefs",
-    video: featureVideo,
+    prompt: "Astronaut walking through a dusty Mars colony toward a satellite dish",
+    video: promptVideo4,
   },
   {
-    prompt: "Astronaut floating in space with Earth in background",
-    video: aiDemoVideo,
-  },
-  {
-    prompt: "A magical forest with glowing fireflies at twilight",
-    video: heroVideoNew,
+    prompt: "Two people riding steampunk hover-cycles toward a futuristic alien city",
+    video: promptVideo5,
   },
 ];
 
