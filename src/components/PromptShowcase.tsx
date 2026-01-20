@@ -4,11 +4,11 @@ import { Sparkles } from 'lucide-react';
 import avatarBackground from '@/assets/avatar-background.mp4';
 
 // Using local video assets for reliable playback
-import promptVideo1 from '@/assets/prompt-video-1.mp4';
-import promptVideo2 from '@/assets/prompt-video-2.mp4';
-import promptVideo3 from '@/assets/prompt-video-3.mp4';
-import promptVideo4 from '@/assets/prompt-video-4.mp4';
-import promptVideo5 from '@/assets/prompt-video-5.mp4';
+import promptVideo1 from '@/assets/prompt-video-1b.mp4';
+import promptVideo2 from '@/assets/prompt-video-2b.mp4';
+import promptVideo3 from '@/assets/prompt-video-3b.mp4';
+import promptVideo4 from '@/assets/prompt-video-4b.mp4';
+import promptVideo5 from '@/assets/prompt-video-5b.mp4';
 
 const promptsData = [
   {
@@ -161,7 +161,7 @@ const PromptShowcase = memo(() => {
         }
       }, 10000);
     }, 600);
-  }, [addTimeout]);
+  }, [addTimeout, currentIndex]);
 
   // Typing animation effect
   useEffect(() => {
@@ -183,14 +183,14 @@ const PromptShowcase = memo(() => {
           setIsTyping(false);
           animateStarAndShowVideo();
         }
-      }, 80); // Slower typing for better readability
-    }, 300);
+      }, 40); // Faster typing
+    }, 150);
 
     return clearAllTimeouts;
   }, [currentIndex, animateStarAndShowVideo, addTimeout, clearAllTimeouts]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto mt-4 sm:mt-6">
+    <div className="w-full max-w-2xl mx-auto mt-3 sm:mt-5">
       {/* Input container with star button */}
       <div className="relative mb-3 sm:mb-4">
         <div className="relative flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl glass border border-primary/30 bg-background/50 backdrop-blur-xl shadow-lg shadow-primary/10">
@@ -217,7 +217,7 @@ const PromptShowcase = memo(() => {
       </div>
 
       {/* Video display area - seamless crossfade */}
-      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect">
+      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect h-[200px] sm:h-[260px]">
         {/* Background video - always mounted, opacity controlled */}
         <video
           ref={backgroundVideoRef}
@@ -227,7 +227,7 @@ const PromptShowcase = memo(() => {
           muted
           playsInline
           preload="auto"
-          className="w-full aspect-video object-cover will-change-[opacity]"
+          className="w-full h-full object-cover will-change-[opacity]"
           onError={(e) => {
             console.error('Background video failed:', avatarBackground, e);
           }}
