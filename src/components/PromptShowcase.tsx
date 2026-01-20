@@ -42,7 +42,6 @@ const PromptShowcase = memo(() => {
   const [showPromptVideo, setShowPromptVideo] = useState(false);
   const [isTyping, setIsTyping] = useState(true);
   const starRef = useRef<HTMLButtonElement>(null);
-  const videoContainerRef = useRef<HTMLDivElement>(null);
   const promptVideoRef = useRef<HTMLVideoElement>(null);
   const backgroundVideoRef = useRef<HTMLVideoElement>(null);
   const typingIntervalRef = useRef<number | null>(null);
@@ -82,20 +81,27 @@ const PromptShowcase = memo(() => {
 
     addTimeout(() => {
       setShowPromptVideo(true);
-      if (videoContainerRef.current) {
-        gsap.fromTo(
-          videoContainerRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.4, ease: 'power2.out' }
-        );
+      // Crossfade: fade out background, fade in prompt video
+      if (backgroundVideoRef.current) {
+        gsap.to(backgroundVideoRef.current, { opacity: 0, duration: 0.5, ease: 'power2.out' });
+      }
+      if (promptVideoRef.current) {
+        gsap.fromTo(promptVideoRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' });
       }
 
       // Show video for 10 seconds then move to next prompt
       addTimeout(() => {
-        if (videoContainerRef.current) {
-          gsap.to(videoContainerRef.current, {
+        if (promptVideoRef.current) {
+          gsap.to(promptVideoRef.current, {
             opacity: 0,
-            duration: 0.3,
+            duration: 0.4,
+            ease: 'power2.in',
+          });
+        }
+        if (backgroundVideoRef.current) {
+          gsap.to(backgroundVideoRef.current, {
+            opacity: 1,
+            duration: 0.4,
             ease: 'power2.in',
             onComplete: () => {
               setShowPromptVideo(false);
@@ -104,7 +110,7 @@ const PromptShowcase = memo(() => {
           });
         }
       }, 10000);
-    }, 800);
+    }, 600);
   }, [addTimeout]);
 
   // Typing animation effect
@@ -127,17 +133,17 @@ const PromptShowcase = memo(() => {
           setIsTyping(false);
           animateStarAndShowVideo();
         }
-      }, 65); // Slightly slower typing
-    }, 400);
+      }, 80); // Slower typing for better readability
+    }, 300);
 
     return clearAllTimeouts;
   }, [currentIndex, animateStarAndShowVideo, addTimeout, clearAllTimeouts]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto mt-6 sm:mt-8">
+    <div className="w-full max-w-3xl mx-auto mt-4 sm:mt-6">
       {/* Input container with star button */}
-      <div className="relative mb-4 sm:mb-5">
-        <div className="relative flex items-center gap-3 px-4 sm:px-6 py-4 rounded-2xl glass border border-primary/30 bg-background/50 backdrop-blur-xl shadow-lg shadow-primary/10">
+      <div className="relative mb-3 sm:mb-4">
+        <div className="relative flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl glass border border-primary/30 bg-background/50 backdrop-blur-xl shadow-lg shadow-primary/10">
           {/* Prompt text display */}
           <div className="flex-1 min-h-[24px] text-sm sm:text-base text-foreground/90 font-medium text-left">
             {displayedText}
@@ -149,7 +155,7 @@ const PromptShowcase = memo(() => {
           {/* Star button */}
           <button
             ref={starRef}
-            className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-primary via-accent to-cyber-magenta flex items-center justify-center shadow-glow transition-all duration-300 hover:shadow-glow-intense"
+            className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-primary via-accent to-cyber-magenta flex items-center justify-center shadow-glow transition-all duration-300 hover:shadow-glow-intense will-change-transform"
             style={{ transformOrigin: 'center center' }}
           >
             <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -157,12 +163,12 @@ const PromptShowcase = memo(() => {
         </div>
 
         {/* Decorative glow under input */}
-        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-r from-primary/20 via-accent/30 to-primary/20 blur-xl rounded-full" />
+        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-6 bg-gradient-to-r from-primary/20 via-accent/30 to-primary/20 blur-xl rounded-full" />
       </div>
 
-      {/* Video display area - always visible with background video */}
+      {/* Video display area - seamless crossfade */}
       <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect">
-        {/* Background video - always playing */}
+        {/* Background video - always mounted, opacity controlled */}
         <video
           ref={backgroundVideoRef}
           src={avatarBackground}
@@ -170,36 +176,31 @@ const PromptShowcase = memo(() => {
           loop
           muted
           playsInline
-          className={`w-full aspect-video object-cover transition-opacity duration-300 ${showPromptVideo ? 'opacity-0' : 'opacity-100'}`}
+          className="w-full aspect-video object-cover will-change-[opacity]"
         />
         
-        {/* Prompt video - overlays background when active */}
-        <div
-          ref={videoContainerRef}
-          className={`absolute inset-0 ${showPromptVideo ? 'pointer-events-auto' : 'pointer-events-none'}`}
-          style={{ opacity: showPromptVideo ? 1 : 0 }}
-        >
-          {showPromptVideo && (
-            <video
-              ref={promptVideoRef}
-              key={promptsData[currentIndex].video}
-              src={promptsData[currentIndex].video}
-              autoPlay
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
-          )}
-        </div>
+        {/* Prompt video - absolutely positioned overlay */}
+        {showPromptVideo && (
+          <video
+            ref={promptVideoRef}
+            key={promptsData[currentIndex].video}
+            src={promptsData[currentIndex].video}
+            autoPlay
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover will-change-[opacity]"
+            style={{ opacity: 0 }}
+          />
+        )}
 
         {/* Video overlay with prompt badge */}
-        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-          <div className="px-3 py-1.5 rounded-full glass bg-background/60 backdrop-blur-md border border-primary/30">
+        <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 flex items-center justify-between pointer-events-none">
+          <div className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full glass bg-background/60 backdrop-blur-md border border-primary/30">
             <span className="text-xs sm:text-sm font-medium text-foreground/90">
               {showPromptVideo ? 'AI Generated Video' : 'Background Preview'}
             </span>
           </div>
-          <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-white text-xs sm:text-sm font-medium shadow-lg">
+          <div className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-white text-xs sm:text-sm font-medium shadow-lg">
             <Sparkles className="w-3 h-3 inline mr-1" />
             Spectoria AI
           </div>
