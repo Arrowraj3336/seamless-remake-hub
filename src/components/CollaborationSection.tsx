@@ -4,12 +4,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from '@/components/ui/button';
 import { Users, MessageSquare, Share2, Cloud, Sparkles, Zap, Film, Wand2 } from 'lucide-react';
 import collaborationVideo from '@/assets/collaboration-video.mp4';
+import { useVideoAutoplayInView } from '@/hooks/useVideoAutoplayInView';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const CollaborationSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useVideoAutoplayInView(videoRef);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -206,10 +209,10 @@ const CollaborationSection = () => {
               <video
                 ref={videoRef}
                 src={collaborationVideo}
-                autoPlay
                 loop
                 muted
                 playsInline
+                preload="metadata"
                 className="w-full h-auto"
               />
             </div>
