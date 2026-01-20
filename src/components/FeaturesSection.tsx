@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Sparkles, Zap, Layers, Video, Wand2, ArrowRight, CheckCircle2 } from 'lucide-react';
 import featureVideo from '@/assets/feature-video.mp4';
+import { useVideoAutoplayInView } from '@/hooks/useVideoAutoplayInView';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +11,9 @@ const FeaturesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
+  const featureVideoRef = useRef<HTMLVideoElement>(null);
+
+  useVideoAutoplayInView(featureVideoRef);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -182,11 +186,12 @@ const FeaturesSection = () => {
           <div ref={videoRef} className="relative opacity-0 order-1 md:order-2">
             <div className="feature-video rounded-2xl overflow-hidden gradient-border glow-effect">
               <video
+                ref={featureVideoRef}
                 src={featureVideo}
-                autoPlay
                 loop
                 muted
                 playsInline
+                preload="metadata"
                 className="w-full h-auto object-cover"
               />
             </div>
