@@ -1,38 +1,33 @@
 import { useEffect, useRef, useState, useCallback, memo } from 'react';
 import gsap from 'gsap';
 import { Sparkles } from 'lucide-react';
-import heroVideo1 from '@/assets/hero-video-1.mp4';
-import heroVideo2 from '@/assets/hero-video-2.mp4';
-import collaborationVideo from '@/assets/collaboration-video.mp4';
-import featureVideo from '@/assets/feature-video.mp4';
-import aiDemoVideo from '@/assets/ai-demo-video.mp4';
-import heroVideoNew from '@/assets/hero-video-new.mp4';
 import avatarBackground from '@/assets/avatar-background.mp4';
 
+// Free public domain videos from reliable CDN sources
 const promptsData = [
   {
-    prompt: "A cinematic shot of a woman walking through a neon-lit Tokyo street at night",
-    video: heroVideo1,
+    prompt: "Colorful northern lights dancing across the Arctic night sky",
+    video: "https://cdn.pixabay.com/video/2020/07/30/45684-446950917_large.mp4",
   },
   {
-    prompt: "A majestic lion running across the African savanna during golden hour",
-    video: heroVideo2,
+    prompt: "Peaceful ocean waves crashing on a sandy beach at sunset",
+    video: "https://cdn.pixabay.com/video/2015/08/08/213-135735574_large.mp4",
   },
   {
-    prompt: "Futuristic cityscape with flying cars and holographic billboards",
-    video: collaborationVideo,
+    prompt: "Dramatic clouds moving through a mountain landscape timelapse",
+    video: "https://cdn.pixabay.com/video/2016/09/18/5213-183847498_large.mp4",
   },
   {
-    prompt: "A serene underwater scene with colorful coral reefs and tropical fish",
-    video: featureVideo,
+    prompt: "Golden wheat field swaying gently in the summer breeze",
+    video: "https://cdn.pixabay.com/video/2019/07/22/25382-350018123_large.mp4",
   },
   {
-    prompt: "Astronaut floating in space with Earth visible in the background",
-    video: aiDemoVideo,
+    prompt: "A starry night sky with the Milky Way galaxy visible",
+    video: "https://cdn.pixabay.com/video/2020/02/10/32186-391124209_large.mp4",
   },
   {
-    prompt: "A magical forest with glowing fireflies and mystical creatures",
-    video: heroVideoNew,
+    prompt: "Serene forest with sunlight filtering through the trees",
+    video: "https://cdn.pixabay.com/video/2020/07/02/43605-437102596_large.mp4",
   },
 ];
 
