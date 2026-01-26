@@ -190,9 +190,9 @@ const PromptShowcase = memo(() => {
   }, [currentIndex, animateStarAndShowVideo, addTimeout, clearAllTimeouts]);
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-4 sm:mt-6">
+    <div className="w-full max-w-2xl mx-auto mt-3 sm:mt-4">
       {/* Input container with star button */}
-      <div className="relative mb-5 sm:mb-6">
+      <div className="relative mb-8 sm:mb-10">
         <div className="relative flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl glass border border-primary/30 bg-background/50 backdrop-blur-xl shadow-lg shadow-primary/10">
           {/* Prompt text display */}
           <div className="flex-1 min-h-[24px] text-sm sm:text-base text-foreground/90 font-medium text-left">
@@ -216,8 +216,8 @@ const PromptShowcase = memo(() => {
         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-6 bg-gradient-to-r from-primary/20 via-accent/30 to-primary/20 blur-xl rounded-full" />
       </div>
 
-      {/* Video display area - seamless crossfade */}
-      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect h-[200px] sm:h-[260px]">
+      {/* Video display area - 13:9 aspect ratio with object-cover for zoom/stretch */}
+      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect" style={{ aspectRatio: '13/9' }}>
         {/* Background video - always mounted, opacity controlled */}
         <video
           ref={backgroundVideoRef}
@@ -227,7 +227,7 @@ const PromptShowcase = memo(() => {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover will-change-[opacity]"
+          className="absolute inset-0 w-full h-full object-cover will-change-[opacity]"
           onError={(e) => {
             console.error('Background video failed:', avatarBackground, e);
           }}
