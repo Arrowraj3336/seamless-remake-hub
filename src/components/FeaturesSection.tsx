@@ -16,12 +16,12 @@ const FeaturesSection = () => {
       // Content reveal with smooth 3D effect
       gsap.fromTo(
         contentRef.current,
-        { opacity: 0, x: -60, filter: 'blur(15px)' },
+        { opacity: 0, x: -40, filter: 'blur(10px)' },
         {
           opacity: 1,
           x: 0,
           filter: 'blur(0px)',
-          duration: 1.2,
+          duration: 1,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -34,14 +34,14 @@ const FeaturesSection = () => {
       // Video reveal with parallax
       gsap.fromTo(
         videoRef.current,
-        { opacity: 0, x: 60, scale: 0.92, filter: 'blur(15px)' },
+        { opacity: 0, x: 40, scale: 0.95, filter: 'blur(10px)' },
         {
           opacity: 1,
           x: 0,
           scale: 1,
           filter: 'blur(0px)',
-          duration: 1.2,
-          delay: 0.1,
+          duration: 1,
+          delay: 0.15,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -54,12 +54,11 @@ const FeaturesSection = () => {
       // Workflow steps stagger
       gsap.fromTo(
         '.workflow-step',
-        { opacity: 0, x: -30, y: 10 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
-          x: 0,
           y: 0,
-          duration: 0.6,
+          duration: 0.5,
           stagger: 0.1,
           ease: 'power3.out',
           scrollTrigger: {
@@ -73,12 +72,12 @@ const FeaturesSection = () => {
       // Benefit cards stagger
       gsap.fromTo(
         '.benefit-card',
-        { opacity: 0, y: 20, scale: 0.95 },
+        { opacity: 0, y: 15, scale: 0.95 },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.5,
+          duration: 0.4,
           stagger: 0.08,
           ease: 'power3.out',
           scrollTrigger: {
@@ -91,24 +90,24 @@ const FeaturesSection = () => {
 
       // Floating badge with gentle motion
       gsap.to('.feature-badge', {
-        y: -15,
-        rotation: 4,
-        duration: 4.5,
+        y: -12,
+        rotation: 3,
+        duration: 4,
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
       });
 
-      // Background orbs - smoother
+      // Background orbs
       gsap.to('.feature-orb', {
-        x: 'random(-40, 40)',
-        y: 'random(-40, 40)',
-        opacity: 'random(0.06, 0.18)',
-        duration: 'random(10, 15)',
+        x: 'random(-30, 30)',
+        y: 'random(-30, 30)',
+        opacity: 'random(0.08, 0.15)',
+        duration: 'random(10, 14)',
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
-        stagger: 0.4,
+        stagger: 0.3,
       });
     }, sectionRef);
 
@@ -118,31 +117,35 @@ const FeaturesSection = () => {
   const workflowSteps = [
     {
       number: '1',
-      icon: <Brain className="w-4 h-4 text-violet-400" />,
+      icon: <Brain className="w-4 h-4" />,
       title: 'AI Planning',
       description: 'GPT breaks your idea into cinematic scenes',
-      color: 'from-violet-500 to-purple-600',
+      gradient: 'from-violet-500 to-purple-600',
+      glowColor: 'shadow-violet-500/30',
     },
     {
       number: '2',
-      icon: <LayoutGrid className="w-4 h-4 text-pink-400" />,
+      icon: <LayoutGrid className="w-4 h-4" />,
       title: 'Storyboard',
       description: 'Preview frames generated for each scene',
-      color: 'from-pink-500 to-rose-600',
+      gradient: 'from-pink-500 to-rose-600',
+      glowColor: 'shadow-pink-500/30',
     },
     {
       number: '3',
-      icon: <RefreshCw className="w-4 h-4 text-blue-400" />,
+      icon: <RefreshCw className="w-4 h-4" />,
       title: 'Refine & Edit',
       description: "Regenerate any frame until it's perfect",
-      color: 'from-blue-500 to-cyan-500',
+      gradient: 'from-blue-500 to-cyan-500',
+      glowColor: 'shadow-blue-500/30',
     },
     {
       number: '4',
-      icon: <Play className="w-4 h-4 text-amber-400" />,
+      icon: <Play className="w-4 h-4" />,
       title: 'Generate',
       description: 'Approved frames become stunning videos',
-      color: 'from-amber-500 to-orange-500',
+      gradient: 'from-amber-500 to-orange-500',
+      glowColor: 'shadow-amber-500/30',
     },
   ];
 
@@ -150,102 +153,105 @@ const FeaturesSection = () => {
     {
       icon: <CreditCard className="w-4 h-4" />,
       title: 'Save Credits',
-      description: 'Fix issues in storyboard before expensive video generation',
-      color: 'text-green-400',
+      description: 'Fix issues before video generation',
     },
     {
       icon: <Eye className="w-4 h-4" />,
       title: 'Visual Consistency',
-      description: 'Ensure style and mood match across all scenes',
-      color: 'text-blue-400',
+      description: 'Match style across all scenes',
     },
     {
       icon: <Wand2 className="w-4 h-4" />,
       title: 'Creative Control',
-      description: 'Edit prompts and regenerate individual frames',
-      color: 'text-purple-400',
+      description: 'Edit and regenerate frames',
     },
   ];
 
   const aiFeatures = [
-    { icon: <Lightbulb className="w-3.5 h-3.5" />, text: 'Smart Prompt Enhancement' },
-    { icon: <Camera className="w-3.5 h-3.5" />, text: 'Cinematic camera angles' },
-    { icon: <Volume2 className="w-3.5 h-3.5" />, text: 'Audio cues included' },
+    { icon: <Lightbulb className="w-3 h-3" />, text: 'Smart prompts' },
+    { icon: <Camera className="w-3 h-3" />, text: 'Camera angles' },
+    { icon: <Volume2 className="w-3 h-3" />, text: 'Audio cues' },
   ];
 
   return (
-    <section ref={sectionRef} id="features" className="py-16 sm:py-20 md:py-24 relative overflow-hidden">
+    <section ref={sectionRef} id="features" className="py-12 sm:py-16 md:py-20 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 cyber-grid opacity-10" />
-      <div className="feature-orb absolute top-0 right-0 w-[350px] sm:w-[500px] md:w-[700px] h-[350px] sm:h-[500px] md:h-[700px] bg-gradient-radial from-primary/15 via-primary/5 to-transparent rounded-full blur-3xl" />
-      <div className="feature-orb absolute bottom-0 left-0 w-[250px] sm:w-[350px] md:w-[500px] h-[250px] sm:h-[350px] md:h-[500px] bg-gradient-radial from-accent/10 via-accent/3 to-transparent rounded-full blur-3xl" />
+      <div className="feature-orb absolute top-0 right-0 w-[300px] sm:w-[400px] md:w-[500px] h-[300px] sm:h-[400px] md:h-[500px] bg-gradient-radial from-primary/12 via-primary/4 to-transparent rounded-full blur-3xl" />
+      <div className="feature-orb absolute bottom-0 left-0 w-[200px] sm:w-[300px] md:w-[400px] h-[200px] sm:h-[300px] md:h-[400px] bg-gradient-radial from-accent/8 via-accent/2 to-transparent rounded-full blur-3xl" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-center" style={{ perspective: '1000px' }}>
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Content */}
-          <div ref={contentRef} className="opacity-0 order-2 md:order-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-primary/30 mb-5">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-xs font-medium text-muted-foreground">Storyboard-First Workflow</span>
+          <div ref={contentRef} className="opacity-0 order-2 lg:order-1">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-primary/30 mb-4">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span className="text-[11px] sm:text-xs font-medium text-muted-foreground">Storyboard-First Workflow</span>
             </div>
             
-            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+            {/* Title */}
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 leading-tight">
               From Idea to{' '}
-              <span className="gradient-text text-glow">Cinematic Video</span>{' '}
-              in 4 Steps
+              <span className="gradient-text text-glow">Cinematic Video</span>
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-base mb-6 leading-relaxed">
-              Our AI transforms your simple ideas into detailed, cinematic scene descriptions optimized for video generation.
+            <p className="text-muted-foreground text-xs sm:text-sm mb-5 leading-relaxed max-w-lg">
+              Our AI transforms your ideas into detailed, cinematic scene descriptions optimized for video generation.
             </p>
 
             {/* Workflow Steps */}
-            <div className="workflow-list space-y-2.5 mb-6">
+            <div className="workflow-list grid grid-cols-2 gap-2 sm:gap-3 mb-5">
               {workflowSteps.map((step, index) => (
                 <div
                   key={index}
-                  className="workflow-step flex items-center gap-3 p-3 rounded-xl glass border border-border/20 group hover:border-primary/40 hover:-translate-x-1 transition-all duration-400 cursor-pointer"
+                  className={`workflow-step group relative p-3 sm:p-4 rounded-xl glass border border-border/30 cursor-pointer transition-all duration-300 hover:border-primary/50 hover:-translate-y-1 hover:shadow-lg ${step.glowColor}`}
                 >
-                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${step.color} flex items-center justify-center flex-shrink-0 text-white font-bold text-sm shadow-lg`}>
-                    {step.number}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      {step.icon}
-                      <h3 className="font-semibold text-sm group-hover:text-primary transition-colors duration-300">{step.title}</h3>
+                  {/* Glow effect on hover */}
+                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br ${step.gradient} flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-md group-hover:scale-110 group-hover:shadow-lg transition-all duration-300`}>
+                        {step.number}
+                      </div>
+                      <div className="text-muted-foreground group-hover:text-primary transition-colors duration-300">
+                        {step.icon}
+                      </div>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-0.5 truncate">{step.description}</p>
+                    <h3 className="font-semibold text-xs sm:text-sm mb-1 group-hover:text-primary transition-colors duration-300">{step.title}</h3>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground leading-snug">{step.description}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Benefits Grid */}
-            <div className="benefits-grid grid grid-cols-3 gap-2 mb-6">
+            {/* Benefits Row */}
+            <div className="benefits-grid flex flex-wrap gap-2 mb-5">
               {benefits.map((benefit, index) => (
                 <div
                   key={index}
-                  className="benefit-card p-3 rounded-xl glass border border-border/20 hover:border-primary/30 transition-all duration-300 text-center"
+                  className="benefit-card flex items-center gap-2 px-3 py-2 rounded-full glass border border-border/30 hover:border-primary/40 transition-all duration-300"
                 >
-                  <div className={`w-8 h-8 mx-auto rounded-lg bg-primary/10 flex items-center justify-center mb-2 ${benefit.color}`}>
-                    {benefit.icon}
+                  <span className="text-primary">{benefit.icon}</span>
+                  <div>
+                    <span className="text-[10px] sm:text-xs font-medium">{benefit.title}</span>
+                    <span className="text-[9px] sm:text-[10px] text-muted-foreground ml-1.5 hidden sm:inline">— {benefit.description}</span>
                   </div>
-                  <h4 className="text-xs font-semibold mb-1">{benefit.title}</h4>
-                  <p className="text-[10px] text-muted-foreground leading-tight">{benefit.description}</p>
                 </div>
               ))}
             </div>
 
             {/* ChatGPT-4o Badge */}
-            <div className="p-3 rounded-xl glass border border-primary/20 mb-5">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                  <Sparkles className="w-3.5 h-3.5 text-white" />
+            <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl glass border border-primary/20 mb-5">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-md">
+                  <Sparkles className="w-3 h-3 text-white" />
                 </div>
-                <span className="text-xs font-semibold">Powered by ChatGPT-4o</span>
+                <span className="text-[11px] sm:text-xs font-semibold">Powered by ChatGPT-4o</span>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {aiFeatures.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                  <div key={index} className="flex items-center gap-1 text-[9px] sm:text-[10px] text-muted-foreground">
                     <span className="text-primary">{feature.icon}</span>
                     {feature.text}
                   </div>
@@ -253,38 +259,41 @@ const FeaturesSection = () => {
               </div>
             </div>
 
-            <button className="w-full sm:w-auto btn-futuristic px-6 py-3 bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white rounded-full font-semibold shadow-glow hover:shadow-glow-intense transition-all duration-500 flex items-center justify-center gap-2 text-sm group">
+            {/* CTA Button */}
+            <button className="w-full sm:w-auto btn-futuristic px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-primary via-accent to-cyber-magenta text-white rounded-full font-semibold shadow-glow hover:shadow-glow-intense transition-all duration-500 flex items-center justify-center gap-2 text-xs sm:text-sm group">
               Start Creating
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
           {/* Video */}
-          <div ref={videoRef} className="relative opacity-0 order-1 md:order-2">
-            <div className="feature-video rounded-2xl overflow-hidden gradient-border glow-effect">
+          <div ref={videoRef} className="relative opacity-0 order-1 lg:order-2">
+            <div className="feature-video rounded-2xl overflow-hidden gradient-border glow-effect" style={{ aspectRatio: '4/3' }}>
               <video
                 src={featureVideo}
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
-            <div className="feature-badge absolute -bottom-5 sm:-bottom-6 -left-3 sm:-left-6 glass-strong p-3 sm:p-3.5 rounded-xl border border-primary/30 shadow-glow">
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center">
-                  <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+            
+            {/* Floating badge - bottom left */}
+            <div className="feature-badge absolute -bottom-3 sm:-bottom-4 -left-2 sm:-left-4 glass-strong p-2.5 sm:p-3 rounded-xl border border-primary/30 shadow-glow">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center">
+                  <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm sm:text-base font-bold">AI Scene Planner</p>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground">Powered by GPT-4o</p>
+                  <p className="text-xs sm:text-sm font-bold">AI Scene Planner</p>
+                  <p className="text-[9px] sm:text-[10px] text-muted-foreground">Powered by GPT-4o</p>
                 </div>
               </div>
             </div>
             
-            {/* Additional floating badge */}
-            <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 px-3 py-1.5 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold shadow-lg">
+            {/* Top right badge */}
+            <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 px-2.5 py-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[10px] sm:text-xs font-semibold shadow-lg">
               ✨ Pro Workflow
             </div>
           </div>
