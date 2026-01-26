@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Sparkles, Zap, Star, Cpu } from "lucide-react";
+import { ArrowRight, Play, Sparkles, Zap, Star, Cpu, Brain, LayoutGrid, Eye, Wand2 } from "lucide-react";
 import gsap from "gsap";
 import PromptShowcase from "./PromptShowcase";
 
@@ -212,10 +212,8 @@ const HeroSection = () => {
           ref={titleRef}
           className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-4 sm:mb-6 opacity-0"
         >
-          Transform Your Ideas Into <br className="hidden sm:block" />
-          <span className="gradient-text text-glow">Stunning AI Videos</span>
-          <br />
-          <span className="text-foreground/90">In Seconds</span>
+          Professional Storyboard Workflow <br className="hidden sm:block" />
+          <span className="gradient-text text-glow">Like Hollywood Studios</span>
         </h1>
 
         {/* Subtitle */}
@@ -223,12 +221,29 @@ const HeroSection = () => {
           ref={subtitleRef}
           className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl mb-8 sm:mb-10 max-w-2xl mx-auto opacity-0 px-4 leading-relaxed"
         >
-          Harness the power of 5 world-class AI models. Create cinematic videos, stunning visuals, and captivating
-          content with just a text prompt.
+          We use a storyboard-first approach. Preview and perfect each frame before committing to video generation—saving time, credits, and ensuring your vision is captured exactly right.
         </p>
 
         {/* Interactive Prompt Showcase */}
         <PromptShowcase />
+
+        {/* Key Points */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-6 mb-4 px-2">
+          {[
+            { icon: <Brain className="w-4 h-4 sm:w-5 sm:h-5" />, label: "AI Planning", color: "from-violet-500 to-purple-600" },
+            { icon: <LayoutGrid className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Storyboard Workflow", color: "from-pink-500 to-rose-600" },
+            { icon: <Eye className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Visual Consistency", color: "from-blue-500 to-cyan-500" },
+            { icon: <Wand2 className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Prompt Enhancement", color: "from-amber-500 to-orange-500" },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full glass border border-primary/20 text-xs sm:text-sm group hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+            >
+              <span className={`bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>{item.icon}</span>
+              <span className="whitespace-nowrap font-medium">{item.label}</span>
+            </div>
+          ))}
+        </div>
 
         {/* AI Models badges */}
         <div
