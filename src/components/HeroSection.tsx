@@ -45,24 +45,46 @@ const HeroSection = () => {
         { opacity: 0, y: -30, scale: 0.8 },
         { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.7)" },
       )
-        // Smoother title animation
+        // Title container fade in
         .fromTo(
           titleRef.current,
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+          "-=0.4",
+        )
+        // First line blur reveal
+        .fromTo(
+          ".title-line-1",
           {
             opacity: 0,
-            y: 80,
-            scale: 0.95,
+            y: 30,
             filter: "blur(20px)",
           },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
             filter: "blur(0px)",
-            duration: 1.4,
+            duration: 1,
             ease: "power3.out",
           },
-          "-=0.4",
+          "-=0.3",
+        )
+        // Second line blur reveal with delay
+        .fromTo(
+          ".title-line-2",
+          {
+            opacity: 0,
+            y: 30,
+            filter: "blur(20px)",
+          },
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 1,
+            ease: "power3.out",
+          },
+          "-=0.7",
         )
         .fromTo(
           subtitleRef.current,
@@ -207,13 +229,13 @@ const HeroSection = () => {
           </span>
         </div>
 
-        {/* Main heading */}
+        {/* Main heading with blur reveal */}
         <h1
           ref={titleRef}
           className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.15] mb-4 sm:mb-5 opacity-0 tracking-tight"
         >
-          <span className="block mb-1 sm:mb-2">Professional Storyboard Workflow</span>
-          <span className="gradient-text text-glow">Like Hollywood Studios</span>
+          <span className="title-line-1 block mb-1 sm:mb-2 opacity-0">Professional Storyboard Workflow</span>
+          <span className="title-line-2 gradient-text text-glow opacity-0">Like Hollywood Studios</span>
         </h1>
 
         {/* Subtitle */}
