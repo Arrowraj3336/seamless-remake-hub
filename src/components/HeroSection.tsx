@@ -210,9 +210,9 @@ const HeroSection = () => {
         {/* Main heading */}
         <h1
           ref={titleRef}
-          className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-4 sm:mb-6 opacity-0"
+          className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.15] mb-4 sm:mb-5 opacity-0 tracking-tight"
         >
-          Professional Storyboard Workflow <br className="hidden sm:block" />
+          <span className="block mb-1 sm:mb-2">Professional Storyboard Workflow</span>
           <span className="gradient-text text-glow">Like Hollywood Studios</span>
         </h1>
 
@@ -228,18 +228,18 @@ const HeroSection = () => {
         <PromptShowcase />
 
         {/* Key Points */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mt-6 mb-4 px-2">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-4 mb-4 px-2">
           {[
-            { icon: <Brain className="w-4 h-4 sm:w-5 sm:h-5" />, label: "AI Planning", color: "from-violet-500 to-purple-600", bgColor: "bg-violet-500/10" },
-            { icon: <LayoutGrid className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Storyboard Workflow", color: "from-pink-500 to-rose-600", bgColor: "bg-pink-500/10" },
-            { icon: <Eye className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Visual Consistency", color: "from-blue-500 to-cyan-500", bgColor: "bg-blue-500/10" },
-            { icon: <Wand2 className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Prompt Enhancement", color: "from-amber-500 to-orange-500", bgColor: "bg-amber-500/10" },
+            { icon: <Brain className="w-3 h-3 sm:w-3.5 sm:h-3.5" />, label: "AI Planning", color: "from-violet-500 to-purple-600", bgColor: "bg-violet-500/10" },
+            { icon: <LayoutGrid className="w-3 h-3 sm:w-3.5 sm:h-3.5" />, label: "Storyboard Workflow", color: "from-pink-500 to-rose-600", bgColor: "bg-pink-500/10" },
+            { icon: <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5" />, label: "Visual Consistency", color: "from-blue-500 to-cyan-500", bgColor: "bg-blue-500/10" },
+            { icon: <Wand2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />, label: "Prompt Enhancement", color: "from-amber-500 to-orange-500", bgColor: "bg-amber-500/10" },
           ].map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full glass border border-primary/20 text-xs sm:text-sm group hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full glass border border-primary/20 text-[10px] sm:text-xs group hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
             >
-              <span className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ${item.bgColor} bg-gradient-to-br ${item.color}`}>
+              <span className={`flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full ${item.bgColor} bg-gradient-to-br ${item.color}`}>
                 <span className="text-white">{item.icon}</span>
               </span>
               <span className="whitespace-nowrap font-medium">{item.label}</span>
