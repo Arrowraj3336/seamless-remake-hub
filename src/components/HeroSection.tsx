@@ -228,18 +228,20 @@ const HeroSection = () => {
         <PromptShowcase />
 
         {/* Key Points */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-6 mb-4 px-2">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mt-6 mb-4 px-2">
           {[
-            { icon: <Brain className="w-4 h-4 sm:w-5 sm:h-5" />, label: "AI Planning", color: "from-violet-500 to-purple-600" },
-            { icon: <LayoutGrid className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Storyboard Workflow", color: "from-pink-500 to-rose-600" },
-            { icon: <Eye className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Visual Consistency", color: "from-blue-500 to-cyan-500" },
-            { icon: <Wand2 className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Prompt Enhancement", color: "from-amber-500 to-orange-500" },
+            { icon: <Brain className="w-4 h-4 sm:w-5 sm:h-5" />, label: "AI Planning", color: "from-violet-500 to-purple-600", bgColor: "bg-violet-500/10" },
+            { icon: <LayoutGrid className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Storyboard Workflow", color: "from-pink-500 to-rose-600", bgColor: "bg-pink-500/10" },
+            { icon: <Eye className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Visual Consistency", color: "from-blue-500 to-cyan-500", bgColor: "bg-blue-500/10" },
+            { icon: <Wand2 className="w-4 h-4 sm:w-5 sm:h-5" />, label: "Prompt Enhancement", color: "from-amber-500 to-orange-500", bgColor: "bg-amber-500/10" },
           ].map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full glass border border-primary/20 text-xs sm:text-sm group hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+              className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full glass border border-primary/20 text-xs sm:text-sm group hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
             >
-              <span className={`bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>{item.icon}</span>
+              <span className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ${item.bgColor} bg-gradient-to-br ${item.color}`}>
+                <span className="text-white">{item.icon}</span>
+              </span>
               <span className="whitespace-nowrap font-medium">{item.label}</span>
             </div>
           ))}
@@ -283,24 +285,6 @@ const HeroSection = () => {
           </Button>
         </div>
 
-        {/* Trust indicators */}
-        <div className="flex items-center justify-center gap-4 sm:gap-6 text-muted-foreground text-xs sm:text-sm">
-          <div className="flex items-center gap-1.5">
-            <div className="flex -space-x-2">
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-6 h-6 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 border-2 border-background"
-                />
-              ))}
-            </div>
-            <span>15M+ videos created</span>
-          </div>
-          <div className="hidden sm:flex items-center gap-1.5">
-            <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-            <span>4.9/5 rating</span>
-          </div>
-        </div>
       </div>
     </section>
   );
