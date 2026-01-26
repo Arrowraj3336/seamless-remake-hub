@@ -216,8 +216,8 @@ const PromptShowcase = memo(() => {
         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-6 bg-gradient-to-r from-primary/20 via-accent/30 to-primary/20 blur-xl rounded-full" />
       </div>
 
-      {/* Video display area - 13:9 aspect ratio with object-cover for zoom/stretch */}
-      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect" style={{ aspectRatio: '13/9' }}>
+      {/* Video display area - 14:9 aspect ratio with object-cover for zoom/stretch */}
+      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect" style={{ aspectRatio: '14/9' }}>
         {/* Background video - always mounted, opacity controlled */}
         <video
           ref={backgroundVideoRef}
