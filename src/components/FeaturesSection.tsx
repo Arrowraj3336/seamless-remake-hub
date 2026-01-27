@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Brain, LayoutGrid, RefreshCw, Play, Sparkles, CreditCard, Eye, Wand2, ArrowRight, Lightbulb, Camera, Volume2 } from 'lucide-react';
+import { Brain, LayoutGrid, RefreshCw, Play, CreditCard, Eye, Wand2, ArrowRight } from 'lucide-react';
 import featureVideo from '@/assets/feature-video.mp4';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -130,12 +130,6 @@ const FeaturesSection = () => {
     },
   ];
 
-  const aiFeatures = [
-    { icon: <Lightbulb className="w-3.5 h-3.5" />, text: 'Smart Prompt Enhancement' },
-    { icon: <Camera className="w-3.5 h-3.5" />, text: 'Cinematic Camera Angles' },
-    { icon: <Volume2 className="w-3.5 h-3.5" />, text: 'Audio Cue Suggestions' },
-  ];
-
   return (
     <section ref={sectionRef} id="features" className="py-16 md:py-24 relative overflow-hidden">
       {/* Background */}
@@ -144,10 +138,6 @@ const FeaturesSection = () => {
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         {/* Header */}
         <div className="features-header text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-primary/20 mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-medium text-muted-foreground">Storyboard-First Workflow</span>
-          </div>
           <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             From Idea to{' '}
             <span className="gradient-text">Cinematic Video</span>
@@ -170,18 +160,6 @@ const FeaturesSection = () => {
                 playsInline
                 className="w-full aspect-video object-cover"
               />
-            </div>
-            {/* Floating Badge */}
-            <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 glass-strong p-3 md:p-4 rounded-xl border border-primary/30 shadow-lg">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                </div>
-                <div>
-                  <p className="text-sm md:text-base font-bold">ChatGPT-4o</p>
-                  <p className="text-[10px] md:text-xs text-muted-foreground">AI Scene Planner</p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -208,7 +186,7 @@ const FeaturesSection = () => {
         </div>
 
         {/* Benefits Section */}
-        <div className="benefits-section grid md:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
+        <div className="benefits-section grid md:grid-cols-3 gap-4 md:gap-6">
           {benefits.map((benefit, index) => (
             <div
               key={index}
@@ -223,33 +201,6 @@ const FeaturesSection = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* AI Features Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-4 md:p-6 rounded-2xl glass border border-primary/20">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <Brain className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <p className="font-semibold text-sm md:text-base">Powered by ChatGPT-4o</p>
-              <p className="text-xs text-muted-foreground">Professional scene planning for every video</p>
-            </div>
-          </div>
-          
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-            {aiFeatures.map((feature, index) => (
-              <div key={index} className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-                <span className="text-primary">{feature.icon}</span>
-                <span>{feature.text}</span>
-              </div>
-            ))}
-          </div>
-
-          <button className="flex-shrink-0 px-5 py-2.5 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-semibold text-sm shadow-glow hover:shadow-glow-intense transition-all duration-300 flex items-center gap-2 group">
-            Get Started
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
         </div>
       </div>
     </section>

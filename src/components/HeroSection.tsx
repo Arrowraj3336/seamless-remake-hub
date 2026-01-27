@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Sparkles, Zap, Star, Cpu } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import PromptShowcase from "./PromptShowcase";
 
@@ -66,12 +66,6 @@ const HeroSection = () => {
     return () => ctx.revert();
   }, []);
 
-  const aiModels = [
-    { name: "Seedance", icon: <Sparkles className="w-3 h-3" />, color: "text-violet-400" },
-    { name: "Runway", icon: <Zap className="w-3 h-3" />, color: "text-pink-400" },
-    { name: "Veo 3.1", icon: <Cpu className="w-3 h-3" />, color: "text-cyan-400" },
-    { name: "Kling", icon: <Star className="w-3 h-3" />, color: "text-amber-400" },
-  ];
 
   return (
     <section
@@ -111,37 +105,15 @@ const HeroSection = () => {
           Preview and perfect each frame before committing to video generation—saving time, credits, and ensuring your vision is captured exactly right.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 md:mb-8 px-4">
+        {/* CTA Button */}
+        <div className="flex items-center justify-center mb-8 md:mb-12 px-4">
           <Button
             size="lg"
-            className="hero-cta w-full sm:w-auto bg-gradient-to-r from-primary via-accent to-primary text-white px-8 py-6 text-sm md:text-base font-semibold rounded-xl shadow-glow hover:shadow-glow-intense transition-all duration-300 group"
+            className="hero-cta w-full sm:w-auto bg-gradient-to-r from-primary via-accent to-primary text-white px-10 py-6 text-sm md:text-base font-semibold rounded-xl shadow-glow hover:shadow-glow-intense transition-all duration-300 group"
           >
             Start Creating Free
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="hero-cta w-full sm:w-auto border-border/50 hover:bg-primary/5 hover:border-primary/30 px-8 py-6 text-sm md:text-base rounded-xl transition-all duration-300 glass group"
-          >
-            <Play className="mr-2 h-4 w-4 fill-current group-hover:scale-110 transition-transform" />
-            Watch Demo
-          </Button>
-        </div>
-
-        {/* AI Models */}
-        <div ref={modelsRef} className="hero-models flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-8 md:mb-12 px-4">
-          <span className="text-xs text-muted-foreground">Powered by:</span>
-          {aiModels.map((model, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-1.5 text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <span className={model.color}>{model.icon}</span>
-              <span>{model.name}</span>
-            </div>
-          ))}
         </div>
 
         {/* Prompt Showcase */}
