@@ -3,7 +3,6 @@ import gsap from 'gsap';
 import { Sparkles } from 'lucide-react';
 import avatarBackground from '@/assets/avatar-background.mp4';
 
-// Using local video assets for reliable playback
 import promptVideo1 from '@/assets/prompt-video-1b.mp4';
 import promptVideo2 from '@/assets/prompt-video-2b.mp4';
 import promptVideo3 from '@/assets/prompt-video-3b.mp4';
@@ -62,9 +61,9 @@ const PromptShowcase = memo(() => {
   const animateStarAndShowVideo = useCallback(() => {
     if (starRef.current) {
       gsap.to(starRef.current, {
-        rotation: '+=1080',
-        scale: 1.2,
-        duration: 0.8,
+        rotation: '+=720',
+        scale: 1.15,
+        duration: 0.6,
         ease: 'power2.inOut',
         onComplete: () => {
           gsap.to(starRef.current, {
@@ -78,80 +77,64 @@ const PromptShowcase = memo(() => {
 
     addTimeout(() => {
       setShowPromptVideo(true);
-      // Crossfade: wait until after React commits so the prompt video ref is available
       addTimeout(() => {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             if (backgroundVideoRef.current) {
-              // Ensure background is playing before fading
               try {
                 void backgroundVideoRef.current.play();
-              } catch {
-                // ignore
-              }
-
-              gsap.to(backgroundVideoRef.current, { opacity: 0, duration: 0.5, ease: 'power2.out' });
+              } catch { /* ignore */ }
+              gsap.to(backgroundVideoRef.current, { opacity: 0, duration: 0.4, ease: 'power2.out' });
             }
 
             if (promptVideoRef.current) {
-              // Always mount the prompt video element; set its src right before playing
               try {
                 promptVideoRef.current.src = promptsData[currentIndex].video;
                 promptVideoRef.current.load();
-              } catch {
-                // ignore
-              }
+              } catch { /* ignore */ }
 
               const el = promptVideoRef.current;
 
-              // Only fade in once the browser has decoded enough to render a frame
               const fadeInWhenReady = () => {
-                gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+                gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
               };
 
               el.addEventListener('canplay', fadeInWhenReady, { once: true });
 
-              // Ensure it actually starts playing (some browsers need an explicit play call)
               try {
                 el.currentTime = 0;
                 void el.play();
-              } catch {
-                // ignore
-              }
+              } catch { /* ignore */ }
 
-              // Safety fallback: if canplay doesn't fire quickly, still show it
               addTimeout(() => {
                 try {
                   if (parseFloat(getComputedStyle(el).opacity || '0') < 0.5) fadeInWhenReady();
                 } catch {
                   fadeInWhenReady();
                 }
-              }, 400);
+              }, 300);
             }
           });
         });
       }, 0);
 
-      // Show video for 10 seconds then move to next prompt
       addTimeout(() => {
         if (promptVideoRef.current) {
           gsap.to(promptVideoRef.current, {
             opacity: 0,
-            duration: 0.4,
+            duration: 0.3,
             ease: 'power2.in',
             onComplete: () => {
               try {
                 promptVideoRef.current?.pause();
-              } catch {
-                // ignore
-              }
+              } catch { /* ignore */ }
             },
           });
         }
         if (backgroundVideoRef.current) {
           gsap.to(backgroundVideoRef.current, {
             opacity: 1,
-            duration: 0.4,
+            duration: 0.3,
             ease: 'power2.in',
             onComplete: () => {
               setShowPromptVideo(false);
@@ -160,10 +143,9 @@ const PromptShowcase = memo(() => {
           });
         }
       }, 10000);
-    }, 600);
+    }, 500);
   }, [addTimeout, currentIndex]);
 
-  // Typing animation effect
   useEffect(() => {
     const currentPrompt = promptsData[currentIndex].prompt;
     let charIndex = 0;
@@ -183,42 +165,35 @@ const PromptShowcase = memo(() => {
           setIsTyping(false);
           animateStarAndShowVideo();
         }
-      }, 40); // Faster typing
-    }, 150);
+      }, 35);
+    }, 100);
 
     return clearAllTimeouts;
   }, [currentIndex, animateStarAndShowVideo, addTimeout, clearAllTimeouts]);
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-3 sm:mt-4">
-      {/* Input container with star button */}
-      <div className="relative mb-8 sm:mb-10">
-        <div className="relative flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl glass border border-primary/30 bg-background/50 backdrop-blur-xl shadow-lg shadow-primary/10">
-          {/* Prompt text display */}
-          <div className="flex-1 min-h-[24px] text-sm sm:text-base text-foreground/90 font-medium text-left">
+    <div className="w-full">
+      {/* Input Container */}
+      <div className="relative mb-6 md:mb-8">
+        <div className="relative flex items-center gap-3 px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl glass border border-border/50 bg-card/50">
+          <div className="flex-1 min-h-[24px] text-sm md:text-base text-foreground/90 font-medium text-left">
             {displayedText}
             {isTyping && (
-              <span className="inline-block w-0.5 h-5 bg-primary ml-0.5 animate-pulse" />
+              <span className="inline-block w-0.5 h-4 md:h-5 bg-primary ml-0.5 animate-pulse" />
             )}
           </div>
-
-          {/* Star button */}
           <button
             ref={starRef}
-            className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-primary via-accent to-cyber-magenta flex items-center justify-center shadow-glow transition-all duration-300 hover:shadow-glow-intense will-change-transform"
+            className="flex-shrink-0 w-10 h-10 md:w-11 md:h-11 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg transition-all duration-300 hover:shadow-glow will-change-transform"
             style={{ transformOrigin: 'center center' }}
           >
-            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <Sparkles className="w-5 h-5 text-white" />
           </button>
         </div>
-
-        {/* Decorative glow under input */}
-        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-6 bg-gradient-to-r from-primary/20 via-accent/30 to-primary/20 blur-xl rounded-full" />
       </div>
 
-      {/* Video display area - 14:9 aspect ratio with object-cover for zoom/stretch */}
-      <div className="relative rounded-2xl overflow-hidden gradient-border glow-effect" style={{ aspectRatio: '14/9' }}>
-        {/* Background video - always mounted, opacity controlled */}
+      {/* Video Display */}
+      <div className="relative rounded-xl md:rounded-2xl overflow-hidden border border-border/30 shadow-2xl" style={{ aspectRatio: '14/9' }}>
         <video
           ref={backgroundVideoRef}
           src={avatarBackground}
@@ -228,12 +203,9 @@ const PromptShowcase = memo(() => {
           playsInline
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover will-change-[opacity]"
-          onError={(e) => {
-            console.error('Background video failed:', avatarBackground, e);
-          }}
+          onError={(e) => console.error('Background video failed:', e)}
         />
 
-        {/* Prompt video - always mounted overlay (avoids ref timing issues) */}
         <video
           ref={promptVideoRef}
           autoPlay
@@ -243,20 +215,19 @@ const PromptShowcase = memo(() => {
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover will-change-[opacity]"
           style={{ opacity: 0 }}
-          onError={(e) => {
-            console.error('Prompt video failed:', promptsData[currentIndex].video, e);
-          }}
+          onError={(e) => console.error('Prompt video failed:', e)}
         />
 
-        {/* Video overlay with prompt badge */}
-        <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 flex items-center justify-between pointer-events-none">
-          <div className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full glass bg-background/60 backdrop-blur-md border border-primary/30">
-            <span className="text-xs sm:text-sm font-medium text-foreground/90">
-              {showPromptVideo ? 'AI Generated Video' : 'Background Preview'}
-            </span>
+        {/* Video Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent pointer-events-none" />
+        
+        {/* Bottom Labels */}
+        <div className="absolute bottom-3 md:bottom-4 left-3 md:left-4 right-3 md:right-4 flex items-center justify-between pointer-events-none">
+          <div className="px-3 py-1.5 rounded-full glass-strong text-xs md:text-sm font-medium">
+            {showPromptVideo ? '✨ AI Generated' : '🎬 Preview'}
           </div>
-          <div className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-white text-xs sm:text-sm font-medium shadow-lg">
-            <Sparkles className="w-3 h-3 inline mr-1" />
+          <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/90 to-accent/90 text-white text-xs md:text-sm font-semibold shadow-lg flex items-center gap-1.5">
+            <Sparkles className="w-3 h-3" />
             Spectoria AI
           </div>
         </div>
