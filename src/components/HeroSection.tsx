@@ -1,13 +1,10 @@
 import { useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import PromptShowcase from "./PromptShowcase";
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const modelsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -34,18 +31,6 @@ const HeroSection = () => {
           "-=0.4"
         )
         .fromTo(
-          ".hero-cta",
-          { opacity: 0, y: 20, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1 },
-          "-=0.3"
-        )
-        .fromTo(
-          ".hero-models",
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.5 },
-          "-=0.2"
-        )
-        .fromTo(
           ".hero-showcase",
           { opacity: 0, y: 30, scale: 0.98 },
           { opacity: 1, y: 0, scale: 1, duration: 0.8 },
@@ -61,6 +46,18 @@ const HeroSection = () => {
         yoyo: true,
         repeat: -1,
       });
+
+      // Floating orbs
+      gsap.to(".hero-orb", {
+        x: 'random(-30, 30)',
+        y: 'random(-30, 30)',
+        scale: 'random(0.9, 1.1)',
+        duration: 'random(8, 12)',
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.5,
+      });
     }, heroRef);
 
     return () => ctx.revert();
@@ -71,53 +68,50 @@ const HeroSection = () => {
     <section
       ref={heroRef}
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20 md:py-24 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-32 sm:pt-36 md:pt-40 pb-16 md:pb-24 overflow-hidden"
     >
-      {/* Background Effects */}
-      <div className="absolute inset-0 cyber-grid opacity-[0.03]" />
-      <div className="hero-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[900px] h-[600px] md:h-[900px] bg-gradient-radial from-primary/20 via-primary/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+      {/* Enhanced Background Effects */}
+      <div className="absolute inset-0 cyber-grid opacity-[0.02]" />
+      
+      {/* Animated Gradient Orbs */}
+      <div className="hero-orb absolute top-20 left-[5%] w-[250px] h-[250px] md:w-[400px] md:h-[400px] bg-gradient-radial from-primary/25 via-primary/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="hero-orb absolute bottom-20 right-[5%] w-[200px] h-[200px] md:w-[350px] md:h-[350px] bg-gradient-radial from-accent/20 via-accent/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="hero-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[700px] h-[400px] md:h-[700px] bg-gradient-radial from-primary/15 via-primary/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+      
+      {/* Decorative Lines */}
+      <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
       
       {/* Content Container */}
-      <div ref={contentRef} className="relative z-10 w-full max-w-4xl mx-auto text-center">
+      <div ref={contentRef} className="relative z-10 w-full max-w-5xl mx-auto text-center">
         {/* Badge */}
-        <div className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 mb-6 md:mb-8">
+        <div className="hero-badge inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full glass border border-primary/30 mb-8 md:mb-10 backdrop-blur-xl">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          <span className="text-xs md:text-sm text-muted-foreground">
-            🎬 Introducing <span className="text-primary font-semibold">Flow Pro</span>
+          <span className="text-xs md:text-sm text-foreground/80 font-medium">
+            🎬 Introducing <span className="text-primary font-bold">Flow Pro</span> — Next-Gen AI Video
           </span>
         </div>
 
         {/* Title */}
-        <h1 className="font-heading mb-4 md:mb-6">
-          <span className="hero-title-line block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2">
+        <h1 className="font-heading mb-5 md:mb-8">
+          <span className="hero-title-line block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-2 md:mb-3">
             Professional Storyboard
           </span>
-          <span className="hero-title-line block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight gradient-text text-glow">
-            Like Hollywood Studios
+          <span className="hero-title-line block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+            <span className="gradient-text text-glow">Like Hollywood Studios</span>
           </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="hero-subtitle text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-4">
+        <p className="hero-subtitle text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-10 md:mb-14 leading-relaxed px-4">
           Preview and perfect each frame before committing to video generation—saving time, credits, and ensuring your vision is captured exactly right.
         </p>
 
-        {/* CTA Button */}
-        <div className="flex items-center justify-center mb-8 md:mb-12 px-4">
-          <Button
-            size="lg"
-            className="hero-cta w-full sm:w-auto bg-gradient-to-r from-primary via-accent to-primary text-white px-10 py-6 text-sm md:text-base font-semibold rounded-xl shadow-glow hover:shadow-glow-intense transition-all duration-300 group"
-          >
-            Start Creating Free
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
-        </div>
-
         {/* Prompt Showcase */}
-        <div className="hero-showcase w-full max-w-3xl mx-auto">
+        <div className="hero-showcase w-full max-w-4xl mx-auto">
           <PromptShowcase />
         </div>
       </div>
