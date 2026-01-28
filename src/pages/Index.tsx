@@ -1,9 +1,8 @@
-import { useEffect, Suspense } from 'react';
+import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from '@/components/Navbar';
-import PrismScene from '@/components/PrismScene';
 import HeroSection from '@/components/HeroSection';
 import LogosSection from '@/components/LogosSection';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -76,9 +75,6 @@ const Index = () => {
       <SnowflakesBackground />
       <ScrollProgressIndicator />
       <Navbar />
-      <Suspense fallback={<div className="w-full h-screen bg-black flex items-center justify-center"><div className="text-primary animate-pulse">Loading 3D Scene...</div></div>}>
-        <PrismScene />
-      </Suspense>
       <HeroSection />
       <LogosSection />
       <FeaturesSection />
