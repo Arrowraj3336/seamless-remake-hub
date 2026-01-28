@@ -615,4 +615,28 @@
     animation: camera-flash 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     transform-origin: center center;
   }
+
+  /* Floating particle animation */
+  @keyframes float-particle {
+    0%, 100% {
+      transform: translateY(0) translateX(0) scale(1);
+      opacity: 0.2;
+    }
+    25% {
+      transform: translateY(-80px) translateX(20px) scale(1.2);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-150px) translateX(-15px) scale(0.8);
+      opacity: 0.4;
+    }
+    75% {
+      transform: translateY(-100px) translateX(30px) scale(1.1);
+      opacity: 0.5;
+    }
+  }
+
+  .animate-float-particle {
+    animation: float-particle 20s ease-in-out infinite;
+  }
 }

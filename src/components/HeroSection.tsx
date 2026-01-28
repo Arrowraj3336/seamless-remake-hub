@@ -1,6 +1,42 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import gsap from "gsap";
 import PromptShowcase from "./PromptShowcase";
+
+// Particle component for floating effect
+const FloatingParticles = () => {
+  const particles = useMemo(() => 
+    Array.from({ length: 30 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      size: Math.random() * 3 + 1,
+      delay: Math.random() * 5,
+      duration: Math.random() * 10 + 15,
+      opacity: Math.random() * 0.4 + 0.1,
+    })),
+  []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((particle) => (
+        <div
+          key={particle.id}
+          className="absolute rounded-full bg-primary/60 animate-float-particle"
+          style={{
+            left: particle.left,
+            top: particle.top,
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            opacity: particle.opacity,
+            animationDelay: `${particle.delay}s`,
+            animationDuration: `${particle.duration}s`,
+            boxShadow: `0 0 ${particle.size * 2}px hsl(270 100% 60% / 0.4)`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -72,6 +108,9 @@ const HeroSection = () => {
     >
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0 cyber-grid opacity-[0.02]" />
+      
+      {/* Floating Particles */}
+      <FloatingParticles />
       
       {/* Animated Gradient Orbs */}
       <div className="hero-orb absolute top-20 left-[5%] w-[250px] h-[250px] md:w-[400px] md:h-[400px] bg-gradient-radial from-primary/25 via-primary/10 to-transparent rounded-full blur-3xl pointer-events-none" />
