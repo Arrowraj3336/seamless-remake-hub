@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from '@/components/Navbar';
+import PrismScene from '@/components/PrismScene';
 import HeroSection from '@/components/HeroSection';
 import LogosSection from '@/components/LogosSection';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -75,6 +76,7 @@ const Index = () => {
       <SnowflakesBackground />
       <ScrollProgressIndicator />
       <Navbar />
+      <PrismScene />
       <HeroSection />
       <LogosSection />
       <FeaturesSection />
