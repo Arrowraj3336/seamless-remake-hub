@@ -125,13 +125,13 @@ export default function PrismScene() {
   }
 
   return (
-    <section className="relative w-full h-screen min-h-screen bg-black" style={{ touchAction: 'pan-y' }}>
+    <section className="relative w-full h-screen overflow-hidden bg-black">
       <Suspense fallback={
         <div className="w-full h-full flex items-center justify-center bg-black">
           <div className="text-white/60 text-lg">Loading...</div>
         </div>
       }>
-        <Canvas orthographic gl={{ antialias: false }} camera={{ position: [0, 0, 100], zoom: 70 }} style={{ touchAction: 'none' }}>
+        <Canvas orthographic gl={{ antialias: false }} camera={{ position: [0, 0, 100], zoom: 70 }}>
           <color attach="background" args={['black']} />
           <Scene />
           <EffectComposer>
@@ -140,44 +140,34 @@ export default function PrismScene() {
         </Canvas>
       </Suspense>
       
-      {/* Hero Title Overlay - Inspired by reference: Large, bold typography with gradient fade */}
-      <div className="absolute inset-0 flex flex-col items-center justify-start pt-16 sm:pt-20 md:pt-24 lg:pt-28 pointer-events-none z-10">
-        <div className="text-center px-4">
-          {/* Main Title - Large, cinematic typography like reference */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.1]">
-            <span className="text-white/90">Dynamic without </span>
-            <span 
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage: 'linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(168,85,247,0.9) 25%, rgba(236,72,153,0.9) 50%, rgba(251,146,60,0.9) 75%, rgba(251,146,60,0.7) 100%)'
-              }}
-            >
-              Limits
-            </span>
+      {/* Hero Title Overlay */}
+      <div className="absolute inset-0 flex flex-col items-center justify-end pb-40 pointer-events-none z-10">
+        <div className="text-center space-y-4">
+          <p className="text-white/60 text-sm md:text-base tracking-[0.3em] uppercase font-medium">
+            Next-Generation AI Video Platform
+          </p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight">
+            Dynamic without <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent">Limits</span>
           </h1>
+          <p className="text-white/50 text-sm md:text-base max-w-md mx-auto mt-4">
+            Create cinematic AI videos in minutes • Professional storyboard workflow
+          </p>
         </div>
       </div>
 
-      {/* Gradient overlay for smooth transition to next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
+      {/* Gradient overlay for smooth transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
       
-      {/* CTA Input - Like reference style */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20">
-        <button 
-          onClick={handleScrollToNext}
-          className="group flex items-center gap-3 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300"
-        >
-          <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-          <span className="text-white/70 text-sm font-medium tracking-wide group-hover:text-white/90 transition-colors">
-            Enter email to claim ticket & explore.
-          </span>
-          <svg className="w-4 h-4 text-white/50 group-hover:text-white/70 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </button>
-      </div>
+      {/* Scroll indicator */}
+      <button 
+        onClick={handleScrollToNext}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 cursor-pointer group"
+      >
+        <span className="text-white/60 text-sm font-medium tracking-wider uppercase group-hover:text-white/80 transition-colors">Scroll</span>
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2 group-hover:border-white/50 transition-colors">
+          <div className="w-1.5 h-3 bg-white/60 rounded-full animate-bounce group-hover:bg-white/80" />
+        </div>
+      </button>
     </section>
   )
 }
