@@ -125,7 +125,7 @@ export default function PrismScene() {
   }
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-black">
+    <section className="relative w-full h-screen overflow-hidden bg-black overscroll-none touch-pan-x">
       <Suspense fallback={
         <div className="w-full h-full flex items-center justify-center bg-black">
           <div className="text-white/60 text-lg">Loading...</div>
@@ -141,17 +141,14 @@ export default function PrismScene() {
       </Suspense>
       
       {/* Hero Title Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-end pb-40 pointer-events-none z-10">
-        <div className="text-center space-y-4">
-          <p className="text-white/60 text-sm md:text-base tracking-[0.3em] uppercase font-medium">
-            Next-Generation AI Video Platform
-          </p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight">
-            Dynamic without <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent">Limits</span>
+      <div className="absolute inset-0 flex flex-col items-center justify-start pt-24 md:pt-32 pointer-events-none z-10">
+        <div className="text-center">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight max-w-4xl mx-auto px-4 leading-tight">
+            Expand the spectrum of{' '}
+            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent">
+              storytelling possibilities.
+            </span>
           </h1>
-          <p className="text-white/50 text-sm md:text-base max-w-md mx-auto mt-4">
-            Create cinematic AI videos in minutes • Professional storyboard workflow
-          </p>
         </div>
       </div>
 
