@@ -140,38 +140,26 @@ export default function PrismScene() {
         </Canvas>
       </Suspense>
       
-      {/* Hero Title Overlay - Refined positioning and typography */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-5xl mx-auto -mt-20 sm:-mt-16 md:-mt-12">
-          {/* Subtle glow effect behind text */}
-          <div className="absolute inset-0 blur-3xl opacity-20 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-orange-500 rounded-full scale-150" />
-          
-          <h1 className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white tracking-tight leading-tight sm:leading-tight md:leading-tight">
-            <span className="block sm:inline">Expand the spectrum of</span>{' '}
-            <span className="relative inline-block mt-1 sm:mt-0">
-              <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(167,139,250,0.4)]">
-                Storytelling possibilities
-              </span>
-              {/* Animated underline accent */}
-              <span className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-[2px] sm:h-[3px] bg-gradient-to-r from-violet-400/0 via-fuchsia-400/60 to-orange-400/0 rounded-full" />
-            </span>
+      {/* Hero Title Overlay */}
+      <div className="absolute inset-0 flex flex-col items-center justify-start pt-32 md:pt-40 pointer-events-none z-10">
+        <div className="text-center">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+            Expand the spectrum of <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent">Storytelling possibilities</span>
           </h1>
         </div>
       </div>
 
       {/* Gradient overlay for smooth transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 sm:h-40 md:h-48 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
       
-      {/* Scroll indicator - refined design */}
+      {/* Scroll indicator */}
       <button 
         onClick={handleScrollToNext}
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 sm:gap-2 z-20 cursor-pointer group transition-transform duration-300 hover:translate-y-1"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 cursor-pointer group"
       >
-        <span className="text-white/50 text-xs sm:text-sm font-medium tracking-[0.2em] uppercase group-hover:text-white/70 transition-colors duration-300">
-          Explore
-        </span>
-        <div className="w-5 h-8 sm:w-6 sm:h-10 border border-white/20 rounded-full flex justify-center pt-1.5 sm:pt-2 group-hover:border-white/40 transition-all duration-300 backdrop-blur-sm bg-white/5">
-          <div className="w-1 h-2 sm:w-1.5 sm:h-3 bg-white/50 rounded-full animate-bounce group-hover:bg-white/70" />
+        <span className="text-white/60 text-sm font-medium tracking-wider uppercase group-hover:text-white/80 transition-colors">Scroll</span>
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2 group-hover:border-white/50 transition-colors">
+          <div className="w-1.5 h-3 bg-white/60 rounded-full animate-bounce group-hover:bg-white/80" />
         </div>
       </button>
     </section>
