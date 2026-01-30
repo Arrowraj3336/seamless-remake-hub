@@ -2,9 +2,15 @@
 
 @tailwind base;
 
-/* Prevent pull-to-refresh on mobile/tablet */
-html, body {
+/* Prevent pull-to-refresh on mobile/tablet but allow normal scroll */
+html {
   overscroll-behavior-y: contain;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 @tailwind components;
 @tailwind utilities;
