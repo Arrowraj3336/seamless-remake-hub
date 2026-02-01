@@ -1,27 +1,24 @@
 import * as THREE from 'three'
-import { useRef, useCallback, useState, Suspense, useEffect } from 'react'
+import { useRef, useCallback, useState, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Center, Text3D } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 
 import { Beam } from './prism/Beam'
 import { Rainbow } from './prism/Rainbow'
 import { Prism } from './prism/Prism'
 import { Flare } from './prism/Flare'
-import { Box } from './prism/Box'
 import { calculateRefractionAngle, lerp, lerpV3 } from './prism/util'
 
 function Scene() {
-  const [isPrismHit, hitPrism] = useState(true) // Always true for continuous effect
+  const [isPrismHit, hitPrism] = useState(true)
   const flare = useRef<THREE.Group>(null)
   const ambient = useRef<THREE.AmbientLight>(null)
   const spot = useRef<THREE.SpotLight>(null)
   const boxreflect = useRef<any>(null)
   const rainbow = useRef<THREE.Mesh>(null)
-  const showmirrors = false
   const autoAngle = useRef(0)
 
-  const rayOut = useCallback(() => {}, []) // Keep rainbow on
+  const rayOut = useCallback(() => {}, [])
   const rayOver = useCallback((e: any) => {
     e.stopPropagation()
     hitPrism(true)
@@ -52,13 +49,11 @@ function Scene() {
   }, [])
 
   useFrame((state) => {
-    // Auto-animate when idle - continuous circular motion
     autoAngle.current += 0.008
     const autoX = Math.cos(autoAngle.current) * 2
     const autoY = Math.sin(autoAngle.current) * 1.5
 
     if (boxreflect.current) {
-      // Blend mouse position with auto-animation
       const mouseX = (state.pointer.x * state.viewport.width) / 2
       const mouseY = (state.pointer.y * state.viewport.height) / 2
       const isIdle = Math.abs(state.pointer.x) < 0.01 && Math.abs(state.pointer.y) < 0.01
@@ -68,7 +63,6 @@ function Scene() {
     }
     
     if (rainbow.current) {
-      // Keep rainbow always visible with continuous emission
       lerp(rainbow.current.material, 'emissiveIntensity', 2.5, 0.1)
       if (spot.current) spot.current.intensity = (rainbow.current.material as any).emissiveIntensity
     }
@@ -82,27 +76,8 @@ function Scene() {
       <pointLight position={[0, 10, 0]} intensity={0.05} />
       <pointLight position={[-10, 0, 0]} intensity={0.05} />
       <spotLight ref={spot} intensity={1} distance={7} angle={1} penumbra={1} position={[0, 0, 1]} />
-      <Center top bottom position={[0, 2.5, 0]}>
-        <Text3D size={0.5} letterSpacing={-0.03} height={0.05} font="/fonts/Inter_Bold.json">
-          Expand the spectrum
-          <meshStandardMaterial color="white" />
-        </Text3D>
-      </Center>
-      <Center top bottom position={[0, 1.7, 0]}>
-        <Text3D size={0.5} letterSpacing={-0.03} height={0.05} font="/fonts/Inter_Bold.json">
-          of Storytelling
-          <meshStandardMaterial color="white" />
-        </Text3D>
-      </Center>
       <Beam ref={boxreflect} bounce={10} far={20}>
         <Prism position={[0, -0.5, 0]} onRayOver={rayOver} onRayOut={rayOut} onRayMove={rayMove} />
-        {showmirrors && (
-          <>
-            <Box position={[2.25, -3.5, 0]} rotation={[0, 0, Math.PI / 3.5]} />
-            <Box position={[-2.5, -2.5, 0]} rotation={[0, 0, Math.PI / 4]} />
-            <Box position={[-3, 1, 0]} rotation={[0, 0, Math.PI / 4]} />
-          </>
-        )}
       </Beam>
       <Rainbow ref={rainbow} startRadius={0} endRadius={0.5} fade={0} />
       <Flare ref={flare} visible={isPrismHit} renderOrder={10} scale={1.25} streak={[12.5, 20, 1]} />
@@ -133,6 +108,19 @@ export default function PrismScene() {
           </EffectComposer>
         </Canvas>
       </Suspense>
+      
+      {/* Hero Title Overlay */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 px-4">
+        <h1 className="text-center font-bold tracking-tight leading-[1.1]">
+          <span className="block text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+            Expand the spectrum
+          </span>
+          <span className="block mt-2 md:mt-4 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl drop-shadow-[0_0_40px_rgba(167,139,250,0.4)]">
+            of Storytelling
+          </span>
+        </h1>
+      </div>
+      
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
       <button 
         onClick={handleScrollDown}
