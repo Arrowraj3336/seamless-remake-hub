@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useRef, useCallback, useState, Suspense } from 'react'
+import { useRef, useCallback, useState, Suspense, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Center, Text3D } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
@@ -12,15 +12,16 @@ import { Box } from './prism/Box'
 import { calculateRefractionAngle, lerp, lerpV3 } from './prism/util'
 
 function Scene() {
-  const [isPrismHit, hitPrism] = useState(false)
+  const [isPrismHit, hitPrism] = useState(true) // Always true for continuous effect
   const flare = useRef<THREE.Group>(null)
   const ambient = useRef<THREE.AmbientLight>(null)
   const spot = useRef<THREE.SpotLight>(null)
   const boxreflect = useRef<any>(null)
   const rainbow = useRef<THREE.Mesh>(null)
   const showmirrors = false
+  const autoAngle = useRef(0)
 
-  const rayOut = useCallback(() => hitPrism(false), [])
+  const rayOut = useCallback(() => {}, []) // Keep rainbow on
   const rayOver = useCallback((e: any) => {
     e.stopPropagation()
     hitPrism(true)
@@ -51,11 +52,24 @@ function Scene() {
   }, [])
 
   useFrame((state) => {
+    // Auto-animate when idle - continuous circular motion
+    autoAngle.current += 0.008
+    const autoX = Math.cos(autoAngle.current) * 2
+    const autoY = Math.sin(autoAngle.current) * 1.5
+
     if (boxreflect.current) {
-      boxreflect.current.setRay([(state.pointer.x * state.viewport.width) / 2, (state.pointer.y * state.viewport.height) / 2, 0], [0, 0, 0])
+      // Blend mouse position with auto-animation
+      const mouseX = (state.pointer.x * state.viewport.width) / 2
+      const mouseY = (state.pointer.y * state.viewport.height) / 2
+      const isIdle = Math.abs(state.pointer.x) < 0.01 && Math.abs(state.pointer.y) < 0.01
+      const x = isIdle ? autoX : mouseX
+      const y = isIdle ? autoY : mouseY
+      boxreflect.current.setRay([x, y, 0], [0, 0, 0])
     }
+    
     if (rainbow.current) {
-      lerp(rainbow.current.material, 'emissiveIntensity', isPrismHit ? 2.5 : 0, 0.1)
+      // Keep rainbow always visible with continuous emission
+      lerp(rainbow.current.material, 'emissiveIntensity', 2.5, 0.1)
       if (spot.current) spot.current.intensity = (rainbow.current.material as any).emissiveIntensity
     }
     if (ambient.current) lerp(ambient.current, 'intensity', 0, 0.025)
@@ -68,9 +82,15 @@ function Scene() {
       <pointLight position={[0, 10, 0]} intensity={0.05} />
       <pointLight position={[-10, 0, 0]} intensity={0.05} />
       <spotLight ref={spot} intensity={1} distance={7} angle={1} penumbra={1} position={[0, 0, 1]} />
-      <Center top bottom position={[0, 2, 0]}>
-        <Text3D size={0.7} letterSpacing={-0.05} height={0.05} font="/fonts/Inter_Bold.json">
-          SPECTORIA
+      <Center top bottom position={[0, 2.5, 0]}>
+        <Text3D size={0.5} letterSpacing={-0.03} height={0.05} font="/fonts/Inter_Bold.json">
+          Expand the spectrum
+          <meshStandardMaterial color="white" />
+        </Text3D>
+      </Center>
+      <Center top bottom position={[0, 1.7, 0]}>
+        <Text3D size={0.5} letterSpacing={-0.03} height={0.05} font="/fonts/Inter_Bold.json">
+          of Storytelling
           <meshStandardMaterial color="white" />
         </Text3D>
       </Center>
@@ -91,6 +111,13 @@ function Scene() {
 }
 
 export default function PrismScene() {
+  const handleScrollDown = () => {
+    const heroSection = document.getElementById('hero')
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <section className="relative w-full h-screen overflow-hidden bg-black">
       <Suspense fallback={
@@ -106,13 +133,16 @@ export default function PrismScene() {
           </EffectComposer>
         </Canvas>
       </Suspense>
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none" />
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
-        <span className="text-white/60 text-sm font-medium tracking-wider uppercase">Scroll</span>
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-          <div className="w-1.5 h-3 bg-white/60 rounded-full animate-bounce" />
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
+      <button 
+        onClick={handleScrollDown}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 cursor-pointer group transition-all duration-300 hover:scale-105"
+      >
+        <span className="text-white/60 text-sm font-medium tracking-wider uppercase group-hover:text-white/80 transition-colors">Scroll</span>
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2 group-hover:border-white/50 transition-colors">
+          <div className="w-1.5 h-3 bg-white/60 rounded-full animate-bounce group-hover:bg-white/80" />
         </div>
-      </div>
+      </button>
     </section>
   )
 }
