@@ -141,11 +141,17 @@ export default function PrismScene() {
       </Suspense>
       
       {/* Hero Title Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-start pt-32 md:pt-40 pointer-events-none z-10">
-        <div className="text-center">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-            Expand the spectrum of <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent">Storytelling possibilities</span>
+      <div className="absolute inset-0 flex flex-col items-center justify-end pb-40 pointer-events-none z-10">
+        <div className="text-center space-y-4">
+          <p className="text-white/60 text-sm md:text-base tracking-[0.3em] uppercase font-medium">
+            Next-Generation AI Video Platform
+          </p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight">
+            Dynamic without <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-orange-400 bg-clip-text text-transparent">Limits</span>
           </h1>
+          <p className="text-white/50 text-sm md:text-base max-w-md mx-auto mt-4">
+            Create cinematic AI videos in minutes • Professional storyboard workflow
+          </p>
         </div>
       </div>
 
