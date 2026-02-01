@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useRef, useCallback, useState, Suspense } from 'react'
+import { useRef, useCallback, useState, Suspense, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 
@@ -49,7 +49,8 @@ function Scene() {
   }, [])
 
   useFrame((state) => {
-    autoAngle.current += 0.008
+    // Slower continuous animation (reduced from 0.008 to 0.003)
+    autoAngle.current += 0.003
     const autoX = Math.cos(autoAngle.current) * 2
     const autoY = Math.sin(autoAngle.current) * 1.5
 
@@ -86,6 +87,14 @@ function Scene() {
 }
 
 export default function PrismScene() {
+  const [titleVisible, setTitleVisible] = useState(false)
+
+  useEffect(() => {
+    // Delay title entrance for dramatic effect
+    const timer = setTimeout(() => setTitleVisible(true), 500)
+    return () => clearTimeout(timer)
+  }, [])
+
   const handleScrollDown = () => {
     const heroSection = document.getElementById('hero')
     if (heroSection) {
@@ -109,22 +118,27 @@ export default function PrismScene() {
         </Canvas>
       </Suspense>
       
-      {/* Hero Title Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 px-4">
+      {/* Hero Title Overlay - Positioned at top for better composition */}
+      <div className={`absolute top-[12%] sm:top-[15%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
         <h1 className="text-center font-bold tracking-tight leading-[1.1]">
-          <span className="block text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+          <span className={`block text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Expand the spectrum
           </span>
-          <span className="block mt-2 md:mt-4 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl drop-shadow-[0_0_40px_rgba(167,139,250,0.4)]">
+          <span className={`block mt-2 md:mt-3 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             of Storytelling
           </span>
         </h1>
+        
+        {/* Subtle tagline */}
+        <p className={`mt-4 md:mt-6 text-white/50 text-xs sm:text-sm md:text-base font-light tracking-widest uppercase transition-all duration-700 delay-500 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          AI-Powered Video Creation
+        </p>
       </div>
       
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
       <button 
         onClick={handleScrollDown}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 cursor-pointer group transition-all duration-300 hover:scale-105"
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 cursor-pointer group transition-all duration-500 hover:scale-105 ${titleVisible ? 'opacity-100 translate-y-0 delay-700' : 'opacity-0 translate-y-4'}`}
       >
         <span className="text-white/60 text-sm font-medium tracking-wider uppercase group-hover:text-white/80 transition-colors">Scroll</span>
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2 group-hover:border-white/50 transition-colors">
