@@ -70,7 +70,7 @@ const HeroSection = () => {
   return (
     <section
       ref={heroRef}
-      id="hero-section"
+      id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20 md:py-24 overflow-hidden"
     >
       {/* Background Effects */}
