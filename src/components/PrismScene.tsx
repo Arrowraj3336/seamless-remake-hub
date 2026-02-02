@@ -118,28 +118,25 @@ export default function PrismScene() {
         </Canvas>
       </Suspense>
       
-      {/* Hero Title Overlay - Positioned lower for better spacing from header */}
-      <div className={`absolute top-[14%] sm:top-[15%] md:top-[16%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+      {/* Hero Title Overlay - Positioned at top */}
+      <div className={`absolute top-[8%] sm:top-[10%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
         <h1 className="text-center font-bold tracking-tight leading-[1.1]">
-          <span className={`block text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <span className={`block text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Expand the spectrum
           </span>
-          <span className={`block mt-2 md:mt-3 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <span className={`block mt-2 md:mt-3 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             of Storytelling
           </span>
         </h1>
       </div>
 
-      {/* Floating AI Feature Tags - Left Side - Mobile: reveal on rainbow animation */}
-      <div className={`absolute left-4 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 flex flex-col gap-3 sm:gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'sm:opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+      {/* Floating AI Feature Tags - Left Side */}
+      <div className={`absolute left-4 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 flex flex-col gap-3 sm:gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
         {['4K Ultra HD', 'AI Upscaling', 'Neural Engine'].map((tag, i) => (
           <div 
             key={tag}
-            className={`flex items-center gap-2 transition-all duration-700 opacity-0 sm:opacity-100 animate-[rainbow-reveal_4s_ease-in-out_infinite] sm:animate-none`}
-            style={{ 
-              transitionDelay: `${600 + i * 150}ms`,
-              animationDelay: `${1.5 + i * 0.3}s`
-            }}
+            className={`flex items-center gap-2 transition-all duration-700`}
+            style={{ transitionDelay: `${600 + i * 150}ms` }}
           >
             <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 animate-pulse" />
             <span className="text-white/40 text-[10px] sm:text-xs font-medium tracking-wider uppercase">{tag}</span>
@@ -147,16 +144,13 @@ export default function PrismScene() {
         ))}
       </div>
 
-      {/* Floating AI Feature Tags - Right Side - Mobile: reveal on rainbow animation */}
-      <div className={`absolute right-4 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 flex flex-col items-end gap-3 sm:gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'sm:opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+      {/* Floating AI Feature Tags - Right Side */}
+      <div className={`absolute right-4 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 flex flex-col items-end gap-3 sm:gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
         {['Cinematic FX', 'Motion AI', 'Frame Perfect'].map((tag, i) => (
           <div 
             key={tag}
-            className={`flex items-center gap-2 transition-all duration-700 opacity-0 sm:opacity-100 animate-[rainbow-reveal_4s_ease-in-out_infinite] sm:animate-none`}
-            style={{ 
-              transitionDelay: `${750 + i * 150}ms`,
-              animationDelay: `${2.5 + i * 0.3}s`
-            }}
+            className={`flex items-center gap-2 transition-all duration-700`}
+            style={{ transitionDelay: `${750 + i * 150}ms` }}
           >
             <span className="text-white/40 text-[10px] sm:text-xs font-medium tracking-wider uppercase">{tag}</span>
             <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 animate-pulse" />

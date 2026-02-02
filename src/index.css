@@ -160,13 +160,6 @@
     50% { background-position: 100% 50%; }
   }
 
-  /* Rainbow reveal animation for mobile prism scene tags */
-  @keyframes rainbow-reveal {
-    0%, 15% { opacity: 0; filter: blur(4px); }
-    25%, 35% { opacity: 0.8; filter: blur(0px); text-shadow: 0 0 8px rgba(167, 139, 250, 0.6); }
-    45%, 100% { opacity: 0; filter: blur(4px); }
-  }
-
   /* Futuristic gradient border */
   .gradient-border {
     position: relative;
