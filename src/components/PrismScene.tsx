@@ -118,14 +118,19 @@ export default function PrismScene() {
         </Canvas>
       </Suspense>
       
-      {/* Hero Title Overlay - Positioned with better spacing from header */}
-      <div className={`absolute top-[12%] sm:top-[14%] md:top-[12%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+      {/* Hero Title Overlay - PC: single line, positioned lower | Mobile: two lines */}
+      <div className={`absolute top-[12%] sm:top-[16%] md:top-[18%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
         <h1 className="text-center font-bold tracking-tight leading-[1.1]">
-          <span className={`block text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          {/* Mobile: Two lines */}
+          <span className={`block sm:hidden text-white text-xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Expand the spectrum
           </span>
-          <span className={`block mt-2 md:mt-3 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <span className={`block sm:hidden mt-2 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             of Storytelling
+          </span>
+          {/* PC: Single line, forced nowrap */}
+          <span className={`hidden sm:block whitespace-nowrap text-white text-2xl md:text-3xl lg:text-4xl xl:text-5xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            Expand the spectrum <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent">of Storytelling</span>
           </span>
         </h1>
       </div>
@@ -158,8 +163,8 @@ export default function PrismScene() {
         ))}
       </div>
 
-      {/* Mobile-Only Floating Orbs & Stats */}
-      <div className={`flex sm:hidden absolute left-0 right-0 top-[32%] justify-center gap-6 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+      {/* Mobile-Only Floating Orbs - Positioned below prism */}
+      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[42%] justify-center gap-6 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
         {[
           { icon: '✦', label: 'Create' },
           { icon: '◈', label: 'Generate' },
@@ -178,18 +183,6 @@ export default function PrismScene() {
         ))}
       </div>
 
-      {/* Mobile-Only Bottom Pills */}
-      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[38%] justify-center gap-2 pointer-events-none z-10 transition-all duration-1000 delay-800 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        {['AI Studio', 'Pro Tools', 'Cloud Render'].map((pill, i) => (
-          <div 
-            key={pill}
-            className="px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 transition-all duration-700"
-            style={{ transitionDelay: `${900 + i * 100}ms` }}
-          >
-            <span className="text-white/50 text-[10px] font-medium tracking-wide">{pill}</span>
-          </div>
-        ))}
-      </div>
 
       {/* Bottom Info Section */}
       <div className={`absolute bottom-24 sm:bottom-28 left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 delay-700 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
