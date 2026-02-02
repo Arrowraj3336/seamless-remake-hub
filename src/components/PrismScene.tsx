@@ -190,17 +190,35 @@ export default function PrismScene() {
       </div>
 
       {/* Mobile-Only Bottom Info Section - Positioned higher, larger text */}
-      <div className={`flex sm:hidden absolute bottom-28 left-0 right-0 flex-col items-center pointer-events-none z-10 px-6 transition-all duration-1000 delay-800 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        <div className="flex items-center gap-3 mb-2">
-          <div className="h-px w-10 bg-gradient-to-r from-transparent to-white/25" />
-          <span className="text-white/40 text-[10px] font-light tracking-[0.2em] uppercase">Next-Gen AI</span>
-          <div className="h-px w-10 bg-gradient-to-l from-transparent to-white/25" />
+      <div className={`flex sm:hidden absolute bottom-32 left-0 right-0 flex-col items-center pointer-events-none z-10 px-6 transition-all duration-1000 delay-800 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        {/* Decorative AI Circuit Lines */}
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-32 h-6 opacity-30">
+          <svg viewBox="0 0 120 24" className="w-full h-full">
+            <path d="M0 12 L20 12 L25 6 L35 6 L40 12 L80 12 L85 18 L95 18 L100 12 L120 12" 
+              stroke="url(#circuit-gradient)" strokeWidth="1" fill="none" className="animate-pulse" style={{ animationDuration: '3s' }} />
+            <circle cx="25" cy="6" r="2" fill="url(#circuit-gradient)" />
+            <circle cx="85" cy="18" r="2" fill="url(#circuit-gradient)" />
+            <circle cx="60" cy="12" r="1.5" fill="url(#circuit-gradient)" className="animate-pulse" />
+            <defs>
+              <linearGradient id="circuit-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.5" />
+                <stop offset="50%" stopColor="#ec4899" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#f97316" stopOpacity="0.5" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        
+        <div className="flex items-center gap-3 mb-2.5">
+          <div className="h-px w-12 bg-gradient-to-r from-transparent to-white/30" />
+          <span className="text-white/50 text-xs font-light tracking-[0.25em] uppercase">Next-Gen AI</span>
+          <div className="h-px w-12 bg-gradient-to-l from-transparent to-white/30" />
         </div>
         <div className="flex items-center gap-5">
           {['Text to Video', 'Image to Video'].map((feature, i) => (
             <div key={feature} className="flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-violet-400/50" />
-              <span className="text-white/35 text-[9px] font-medium tracking-wide">{feature}</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-violet-400/60" />
+              <span className="text-white/40 text-[10px] font-medium tracking-wide">{feature}</span>
             </div>
           ))}
         </div>
@@ -229,12 +247,12 @@ export default function PrismScene() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none" />
       <button 
         onClick={handleScrollDown}
-        className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-10 cursor-pointer group transition-all duration-500 hover:scale-105 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 cursor-pointer group transition-all duration-500 hover:scale-105 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         style={{ transitionDelay: '900ms' }}
       >
-        <span className="text-white/50 text-[10px] sm:text-xs font-medium tracking-wider uppercase group-hover:text-white/70 transition-colors">Explore</span>
-        <div className="w-5 h-8 sm:w-6 sm:h-9 border border-white/20 rounded-full flex justify-center pt-1.5 group-hover:border-white/40 transition-colors">
-          <div className="w-1 h-2 sm:w-1.5 sm:h-2.5 bg-white/50 rounded-full animate-bounce group-hover:bg-white/70" />
+        <span className="text-white/60 text-xs sm:text-xs font-medium tracking-widest uppercase group-hover:text-white/80 transition-colors">Explore</span>
+        <div className="w-6 h-10 sm:w-6 sm:h-9 border-2 sm:border border-white/30 sm:border-white/20 rounded-full flex justify-center pt-2 sm:pt-1.5 group-hover:border-white/50 transition-colors backdrop-blur-sm">
+          <div className="w-1.5 h-2.5 sm:w-1.5 sm:h-2.5 bg-white/60 sm:bg-white/50 rounded-full animate-bounce group-hover:bg-white/80" />
         </div>
       </button>
     </section>
