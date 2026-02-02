@@ -56,11 +56,14 @@ function Scene() {
     const autoY = Math.sin(autoAngle.current) * 1.5
 
     if (boxreflect.current) {
+      // Detect mobile/touch device - always use auto animation on mobile
+      const isMobile = window.innerWidth < 640
       const mouseX = (state.pointer.x * state.viewport.width) / 2
       const mouseY = (state.pointer.y * state.viewport.height) / 2
       const isIdle = Math.abs(state.pointer.x) < 0.01 && Math.abs(state.pointer.y) < 0.01
-      const x = isIdle ? autoX : mouseX
-      const y = isIdle ? autoY : mouseY
+      // On mobile, always use auto animation; on desktop, switch based on pointer activity
+      const x = isMobile || isIdle ? autoX : mouseX
+      const y = isMobile || isIdle ? autoY : mouseY
       boxreflect.current.setRay([x, y, 0], [0, 0, 0])
     }
     
@@ -230,12 +233,12 @@ export default function PrismScene() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none" />
       <button 
         onClick={handleScrollDown}
-        className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-10 cursor-pointer group transition-all duration-500 hover:scale-105 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-1.5 z-10 cursor-pointer group transition-all duration-500 hover:scale-105 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         style={{ transitionDelay: '900ms' }}
       >
-        <span className="text-white/50 text-[10px] sm:text-xs font-medium tracking-wider uppercase group-hover:text-white/70 transition-colors">Explore</span>
-        <div className="w-5 h-8 sm:w-6 sm:h-9 border border-white/20 rounded-full flex justify-center pt-1.5 group-hover:border-white/40 transition-colors">
-          <div className="w-1 h-2 sm:w-1.5 sm:h-2.5 bg-white/50 rounded-full animate-bounce group-hover:bg-white/70" />
+        <span className="text-white/60 sm:text-white/50 text-xs sm:text-xs font-medium tracking-wider uppercase group-hover:text-white/70 transition-colors">Explore</span>
+        <div className="w-7 h-10 sm:w-6 sm:h-9 border-2 sm:border border-white/30 sm:border-white/20 rounded-full flex justify-center pt-2 sm:pt-1.5 group-hover:border-white/40 transition-colors">
+          <div className="w-1.5 h-2.5 sm:w-1.5 sm:h-2.5 bg-white/60 sm:bg-white/50 rounded-full animate-bounce group-hover:bg-white/70" />
         </div>
       </button>
     </section>
