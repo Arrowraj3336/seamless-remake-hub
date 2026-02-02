@@ -118,42 +118,75 @@ export default function PrismScene() {
         </Canvas>
       </Suspense>
       
-      {/* Hero Title Overlay - Positioned at top */}
-      <div className={`absolute top-[8%] sm:top-[10%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+      {/* Hero Title Overlay - Positioned with better spacing from header */}
+      <div className={`absolute top-[12%] sm:top-[14%] md:top-[12%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
         <h1 className="text-center font-bold tracking-tight leading-[1.1]">
-          <span className={`block text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <span className={`block text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Expand the spectrum
           </span>
-          <span className={`block mt-2 md:mt-3 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <span className={`block mt-2 md:mt-3 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             of Storytelling
           </span>
         </h1>
       </div>
 
-      {/* Floating AI Feature Tags - Left Side */}
-      <div className={`absolute left-4 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 flex flex-col gap-3 sm:gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+      {/* Floating AI Feature Tags - Left Side (Hidden on Mobile) */}
+      <div className={`hidden sm:flex absolute left-8 lg:left-16 top-1/2 -translate-y-1/2 flex-col gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
         {['4K Ultra HD', 'AI Upscaling', 'Neural Engine'].map((tag, i) => (
           <div 
             key={tag}
             className={`flex items-center gap-2 transition-all duration-700`}
             style={{ transitionDelay: `${600 + i * 150}ms` }}
           >
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 animate-pulse" />
-            <span className="text-white/40 text-[10px] sm:text-xs font-medium tracking-wider uppercase">{tag}</span>
+            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 animate-pulse" />
+            <span className="text-white/40 text-xs font-medium tracking-wider uppercase">{tag}</span>
           </div>
         ))}
       </div>
 
-      {/* Floating AI Feature Tags - Right Side */}
-      <div className={`absolute right-4 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 flex flex-col items-end gap-3 sm:gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+      {/* Floating AI Feature Tags - Right Side (Hidden on Mobile) */}
+      <div className={`hidden sm:flex absolute right-8 lg:right-16 top-1/2 -translate-y-1/2 flex-col items-end gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
         {['Cinematic FX', 'Motion AI', 'Frame Perfect'].map((tag, i) => (
           <div 
             key={tag}
             className={`flex items-center gap-2 transition-all duration-700`}
             style={{ transitionDelay: `${750 + i * 150}ms` }}
           >
-            <span className="text-white/40 text-[10px] sm:text-xs font-medium tracking-wider uppercase">{tag}</span>
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 animate-pulse" />
+            <span className="text-white/40 text-xs font-medium tracking-wider uppercase">{tag}</span>
+            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 animate-pulse" />
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile-Only Floating Orbs & Stats */}
+      <div className={`flex sm:hidden absolute left-0 right-0 top-[32%] justify-center gap-6 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+        {[
+          { icon: '✦', label: 'Create' },
+          { icon: '◈', label: 'Generate' },
+          { icon: '❖', label: 'Transform' }
+        ].map((item, i) => (
+          <div 
+            key={item.label}
+            className="flex flex-col items-center gap-1.5 transition-all duration-700"
+            style={{ transitionDelay: `${700 + i * 120}ms` }}
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500/20 to-pink-500/20 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+              <span className="text-white/70 text-sm">{item.icon}</span>
+            </div>
+            <span className="text-white/40 text-[9px] font-medium tracking-widest uppercase">{item.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile-Only Bottom Pills */}
+      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[38%] justify-center gap-2 pointer-events-none z-10 transition-all duration-1000 delay-800 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        {['AI Studio', 'Pro Tools', 'Cloud Render'].map((pill, i) => (
+          <div 
+            key={pill}
+            className="px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 transition-all duration-700"
+            style={{ transitionDelay: `${900 + i * 100}ms` }}
+          >
+            <span className="text-white/50 text-[10px] font-medium tracking-wide">{pill}</span>
           </div>
         ))}
       </div>
