@@ -118,8 +118,8 @@ export default function PrismScene() {
         </Canvas>
       </Suspense>
       
-      {/* Hero Title Overlay - Positioned at top for better composition */}
-      <div className={`absolute top-[12%] sm:top-[15%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+      {/* Hero Title Overlay - Positioned at top */}
+      <div className={`absolute top-[8%] sm:top-[10%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
         <h1 className="text-center font-bold tracking-tight leading-[1.1]">
           <span className={`block text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Expand the spectrum
@@ -128,21 +128,64 @@ export default function PrismScene() {
             of Storytelling
           </span>
         </h1>
-        
-        {/* Subtle tagline */}
-        <p className={`mt-4 md:mt-6 text-white/50 text-xs sm:text-sm md:text-base font-light tracking-widest uppercase transition-all duration-700 delay-500 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      </div>
+
+      {/* Floating AI Feature Tags - Left Side */}
+      <div className={`absolute left-4 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 flex flex-col gap-3 sm:gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+        {['4K Ultra HD', 'AI Upscaling', 'Neural Engine'].map((tag, i) => (
+          <div 
+            key={tag}
+            className={`flex items-center gap-2 transition-all duration-700`}
+            style={{ transitionDelay: `${600 + i * 150}ms` }}
+          >
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 animate-pulse" />
+            <span className="text-white/40 text-[10px] sm:text-xs font-medium tracking-wider uppercase">{tag}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Floating AI Feature Tags - Right Side */}
+      <div className={`absolute right-4 sm:right-8 lg:right-16 top-1/2 -translate-y-1/2 flex flex-col items-end gap-3 sm:gap-4 pointer-events-none z-10 transition-all duration-1000 delay-500 ${titleVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+        {['Cinematic FX', 'Motion AI', 'Frame Perfect'].map((tag, i) => (
+          <div 
+            key={tag}
+            className={`flex items-center gap-2 transition-all duration-700`}
+            style={{ transitionDelay: `${750 + i * 150}ms` }}
+          >
+            <span className="text-white/40 text-[10px] sm:text-xs font-medium tracking-wider uppercase">{tag}</span>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 animate-pulse" />
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom Info Section */}
+      <div className={`absolute bottom-24 sm:bottom-28 left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 delay-700 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <p className="text-white/50 text-[10px] sm:text-xs md:text-sm font-light tracking-widest uppercase mb-3">
           AI-Powered Video Creation
         </p>
+        <div className="flex items-center gap-4 sm:gap-6">
+          {['Text to Video', 'Image to Video', 'Video Enhancement'].map((feature, i) => (
+            <div 
+              key={feature}
+              className="flex items-center gap-1.5 sm:gap-2"
+              style={{ animationDelay: `${i * 100}ms` }}
+            >
+              <div className="w-1 h-1 rounded-full bg-violet-400/60" />
+              <span className="text-white/30 text-[8px] sm:text-[10px] md:text-xs font-medium tracking-wide">{feature}</span>
+            </div>
+          ))}
+        </div>
       </div>
       
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none" />
       <button 
         onClick={handleScrollDown}
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 cursor-pointer group transition-all duration-500 hover:scale-105 ${titleVisible ? 'opacity-100 translate-y-0 delay-700' : 'opacity-0 translate-y-4'}`}
+        className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-10 cursor-pointer group transition-all duration-500 hover:scale-105 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        style={{ transitionDelay: '900ms' }}
       >
-        <span className="text-white/60 text-sm font-medium tracking-wider uppercase group-hover:text-white/80 transition-colors">Scroll</span>
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2 group-hover:border-white/50 transition-colors">
-          <div className="w-1.5 h-3 bg-white/60 rounded-full animate-bounce group-hover:bg-white/80" />
+        <span className="text-white/50 text-[10px] sm:text-xs font-medium tracking-wider uppercase group-hover:text-white/70 transition-colors">Explore</span>
+        <div className="w-5 h-8 sm:w-6 sm:h-9 border border-white/20 rounded-full flex justify-center pt-1.5 group-hover:border-white/40 transition-colors">
+          <div className="w-1 h-2 sm:w-1.5 sm:h-2.5 bg-white/50 rounded-full animate-bounce group-hover:bg-white/70" />
         </div>
       </button>
     </section>
