@@ -93,68 +93,68 @@ const Navbar = () => {
         ref={navRef}
         className={`fixed top-4 left-4 right-4 z-50 transition-all duration-500 rounded-2xl ${
           isScrolled 
-            ? 'glass-strong shadow-lg shadow-primary/10 border border-primary/20' 
-            : 'bg-gradient-to-r from-background/60 via-background/40 to-background/60 backdrop-blur-md border border-white/10'
+            ? 'bg-black/70 backdrop-blur-xl shadow-2xl shadow-violet-500/10 border border-white/10' 
+            : 'bg-black/40 backdrop-blur-lg border border-white/5'
         }`}
       >
-        {/* Animated gradient border effect */}
+        {/* Subtle animated gradient border */}
         <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-          <div className={`absolute inset-0 opacity-0 transition-opacity duration-500 ${isScrolled ? 'opacity-100' : ''}`}>
-            <div className="absolute inset-[-1px] bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30 rounded-2xl" />
-            <div className="absolute inset-[1px] bg-background/90 rounded-2xl" />
+          <div className={`absolute inset-0 transition-opacity duration-700 ${isScrolled ? 'opacity-100' : 'opacity-50'}`}>
+            <div className="absolute inset-[-1px] bg-gradient-to-r from-violet-500/20 via-transparent to-pink-500/20 rounded-2xl" />
+            <div className="absolute inset-[1px] bg-black/80 rounded-2xl" />
           </div>
         </div>
 
         <div className="container mx-auto px-4 md:px-8 relative">
-          <div className="flex items-center justify-between h-14 md:h-16">
+          <div className="flex items-center justify-between h-12 md:h-14">
             {/* Left side - Logo and Name */}
-            <a href="/" className="flex items-center gap-2.5 group">
-              <div className="relative w-9 h-9 md:w-10 md:h-10 overflow-hidden group-hover:scale-110 transition-all duration-300">
-                <div className="absolute inset-0 bg-primary/20 rounded-lg blur-lg group-hover:bg-primary/40 transition-all duration-300" />
+            <a href="/" className="flex items-center gap-2 group">
+              <div className="relative w-8 h-8 md:w-9 md:h-9 overflow-hidden group-hover:scale-105 transition-all duration-300">
+                <div className="absolute inset-0 bg-violet-500/30 rounded-lg blur-lg group-hover:bg-violet-500/50 transition-all duration-300" />
                 <img 
                   src={logo} 
                   alt="Spectoria Logo" 
-                  className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]"
+                  className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_12px_rgba(139,92,246,0.7)]"
                 />
               </div>
-              <span className="font-heading font-bold text-base md:text-lg tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary/80 bg-clip-text text-transparent group-hover:from-primary group-hover:to-accent transition-all duration-300">
+              <span className="font-heading font-bold text-sm md:text-base tracking-wide text-white/90 group-hover:text-white transition-colors duration-300">
                 SPECTORIA
               </span>
             </a>
 
             {/* Right side - Desktop Navigation Menu */}
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-0.5">
               {navLinks.map((link, index) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-all duration-300 font-medium text-xs uppercase tracking-widest group"
+                  className="relative px-3.5 py-2 text-white/50 hover:text-white transition-all duration-300 font-medium text-[11px] uppercase tracking-[0.15em] group"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <span className="relative z-10">{link.label}</span>
-                  {/* Hover background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Subtle hover glow */}
+                  <div className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {/* Underline effect */}
-                  <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-primary to-accent group-hover:w-3/4 transition-all duration-300 rounded-full" />
+                  <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-gradient-to-r from-violet-400 to-pink-400 group-hover:w-2/3 transition-all duration-300" />
                 </a>
               ))}
               
-              {/* CTA Button */}
+              {/* CTA Button - Minimal elegant style */}
               <a 
                 href="#pricing"
-                className="ml-4 px-5 py-2 bg-gradient-to-r from-primary to-accent text-white font-semibold text-xs uppercase tracking-wider rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all duration-300 hover:scale-105"
+                className="ml-3 px-4 py-1.5 bg-white/10 hover:bg-white/15 text-white font-medium text-[11px] uppercase tracking-wider rounded-lg border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/10"
               >
                 Get Started
               </a>
             </div>
 
-            {/* Mobile Hamburger Menu */}
+            {/* Mobile Hamburger Menu - Minimal style */}
             <button
-              className="p-2.5 rounded-xl bg-primary/10 hover:bg-primary/20 border border-primary/20 hover:border-primary/40 transition-all duration-300 md:hidden group active:scale-95"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 md:hidden active:scale-95"
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open menu"
             >
-              <Menu size={20} className="text-primary" />
+              <Menu size={18} className="text-white/70" />
             </button>
           </div>
         </div>
@@ -173,52 +173,52 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div
           ref={mobileMenuRef}
-          className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-background/95 backdrop-blur-xl z-[70] shadow-2xl shadow-black/50 border-l border-primary/20"
+          className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-black/95 backdrop-blur-xl z-[70] shadow-2xl shadow-black/70 border-l border-white/10"
           style={{ transform: 'translateX(100%)' }}
         >
           {/* Menu Header */}
-          <div className="flex items-center justify-between p-5 border-b border-primary/10">
+          <div className="flex items-center justify-between p-5 border-b border-white/10">
             <div className="flex items-center gap-2">
-              <img src={logo} alt="Spectoria" className="w-8 h-8 object-contain" />
-              <span className="font-heading font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <img src={logo} alt="Spectoria" className="w-7 h-7 object-contain" />
+              <span className="font-heading font-bold text-base text-white/90">
                 SPECTORIA
               </span>
             </div>
             <button
               onClick={closeMobileMenu}
-              className="p-2 rounded-xl bg-primary/10 hover:bg-primary/20 border border-primary/20 transition-all duration-300 active:scale-95"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 active:scale-95"
               aria-label="Close menu"
             >
-              <X size={20} className="text-primary" />
+              <X size={18} className="text-white/70" />
             </button>
           </div>
 
           {/* Menu Links */}
-          <div className="p-5 space-y-2">
+          <div className="p-4 space-y-1">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={closeMobileMenu}
-                className="mobile-nav-item flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-primary/5 to-transparent hover:from-primary/15 border border-transparent hover:border-primary/20 transition-all duration-300 group active:scale-[0.98]"
+                className="mobile-nav-item flex items-center justify-between p-3.5 rounded-lg bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/10 transition-all duration-300 group active:scale-[0.98]"
               >
-                <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                <span className="font-medium text-white/70 group-hover:text-white transition-colors text-sm">
                   {link.label}
                 </span>
-                <ChevronRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+                <ChevronRight size={16} className="text-white/30 group-hover:text-white/60 group-hover:translate-x-1 transition-all duration-300" />
               </a>
             ))}
           </div>
 
           {/* CTA Button */}
-          <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-primary/10 bg-background/80 backdrop-blur-sm">
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10 bg-black/80 backdrop-blur-sm">
             <a
               href="#pricing"
               onClick={closeMobileMenu}
-              className="mobile-nav-item flex items-center justify-center gap-2 w-full py-4 bg-gradient-to-r from-primary to-accent text-white font-semibold uppercase tracking-wider rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all duration-300 active:scale-[0.98]"
+              className="mobile-nav-item flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-violet-600 to-pink-600 text-white font-medium uppercase tracking-wider rounded-lg text-sm hover:shadow-lg hover:shadow-violet-500/20 transition-all duration-300 active:scale-[0.98]"
             >
               Get Started Free
-              <ChevronRight size={18} />
+              <ChevronRight size={16} />
             </a>
           </div>
         </div>
