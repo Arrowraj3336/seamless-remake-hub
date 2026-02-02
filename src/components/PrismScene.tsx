@@ -191,19 +191,38 @@ export default function PrismScene() {
 
       {/* Mobile-Only Bottom Info Section - Positioned higher, larger text */}
       <div className={`flex sm:hidden absolute bottom-32 left-0 right-0 flex-col items-center pointer-events-none z-10 px-6 transition-all duration-1000 delay-800 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        {/* Decorative AI Circuit Lines */}
+        {/* Decorative AI Circuit Lines with Flowing Light */}
         <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-32 h-6 opacity-30">
-          <svg viewBox="0 0 120 24" className="w-full h-full">
+          <svg viewBox="0 0 120 24" className="w-full h-full overflow-visible">
+            {/* Base circuit path */}
             <path d="M0 12 L20 12 L25 6 L35 6 L40 12 L80 12 L85 18 L95 18 L100 12 L120 12" 
-              stroke="url(#circuit-gradient)" strokeWidth="1" fill="none" className="animate-pulse" style={{ animationDuration: '3s' }} />
-            <circle cx="25" cy="6" r="2" fill="url(#circuit-gradient)" />
-            <circle cx="85" cy="18" r="2" fill="url(#circuit-gradient)" />
-            <circle cx="60" cy="12" r="1.5" fill="url(#circuit-gradient)" className="animate-pulse" />
+              stroke="url(#circuit-gradient)" strokeWidth="1" fill="none" opacity="0.5" />
+            {/* Flowing light effect */}
+            <path d="M0 12 L20 12 L25 6 L35 6 L40 12 L80 12 L85 18 L95 18 L100 12 L120 12" 
+              stroke="url(#flowing-light)" strokeWidth="2" fill="none" strokeLinecap="round">
+              <animate attributeName="stroke-dasharray" values="0 200;40 200;0 200" dur="3s" repeatCount="indefinite" />
+              <animate attributeName="stroke-dashoffset" values="0;-120;-240" dur="3s" repeatCount="indefinite" />
+            </path>
+            {/* Static nodes */}
+            <circle cx="25" cy="6" r="2" fill="url(#circuit-gradient)" opacity="0.6" />
+            <circle cx="85" cy="18" r="2" fill="url(#circuit-gradient)" opacity="0.6" />
+            {/* Pulsing center node */}
+            <circle cx="60" cy="12" r="1.5" fill="#ec4899">
+              <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite" />
+              <animate attributeName="r" values="1.5;2.5;1.5" dur="1.5s" repeatCount="indefinite" />
+            </circle>
             <defs>
               <linearGradient id="circuit-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.5" />
                 <stop offset="50%" stopColor="#ec4899" stopOpacity="0.7" />
                 <stop offset="100%" stopColor="#f97316" stopOpacity="0.5" />
+              </linearGradient>
+              <linearGradient id="flowing-light" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0" />
+                <stop offset="30%" stopColor="#ec4899" stopOpacity="1" />
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+                <stop offset="70%" stopColor="#f97316" stopOpacity="1" />
+                <stop offset="100%" stopColor="#f97316" stopOpacity="0" />
               </linearGradient>
             </defs>
           </svg>
@@ -250,7 +269,7 @@ export default function PrismScene() {
         className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 cursor-pointer group transition-all duration-500 hover:scale-105 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         style={{ transitionDelay: '900ms' }}
       >
-        <span className="text-white/60 text-xs sm:text-xs font-medium tracking-widest uppercase group-hover:text-white/80 transition-colors">Explore</span>
+        <span className="hidden sm:block text-white/60 text-xs font-medium tracking-widest uppercase group-hover:text-white/80 transition-colors">Explore</span>
         <div className="w-6 h-10 sm:w-6 sm:h-9 border-2 sm:border border-white/30 sm:border-white/20 rounded-full flex justify-center pt-2 sm:pt-1.5 group-hover:border-white/50 transition-colors backdrop-blur-sm">
           <div className="w-1.5 h-2.5 sm:w-1.5 sm:h-2.5 bg-white/60 sm:bg-white/50 rounded-full animate-bounce group-hover:bg-white/80" />
         </div>
