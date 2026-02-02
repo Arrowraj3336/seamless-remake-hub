@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { useRef, useCallback, useState, Suspense, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
+import { Sparkles, Wand2, Zap } from 'lucide-react'
 
 import { Beam } from './prism/Beam'
 import { Rainbow } from './prism/Rainbow'
@@ -118,8 +119,8 @@ export default function PrismScene() {
         </Canvas>
       </Suspense>
       
-      {/* Hero Title Overlay - PC: single line, positioned lower | Mobile: two lines */}
-      <div className={`absolute top-[12%] sm:top-[16%] md:top-[18%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
+      {/* Hero Title Overlay - PC: single line, positioned lower | Mobile: two lines, moved down */}
+      <div className={`absolute top-[18%] sm:top-[16%] md:top-[18%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
         <h1 className="text-center font-bold tracking-tight leading-[1.1]">
           {/* Mobile: Two lines */}
           <span className={`block sm:hidden text-white text-xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
@@ -163,37 +164,43 @@ export default function PrismScene() {
         ))}
       </div>
 
-      {/* Mobile-Only Floating Orbs - Positioned below prism with glow animation */}
-      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[42%] justify-center gap-6 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+      {/* Mobile-Only Floating Orbs - Positioned well below prism with glow animation */}
+      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[32%] justify-center gap-8 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
         {[
-          { icon: '✦', label: 'Create', color: 'from-violet-500 to-violet-400' },
-          { icon: '◈', label: 'Generate', color: 'from-pink-500 to-pink-400' },
-          { icon: '❖', label: 'Transform', color: 'from-orange-500 to-orange-400' }
-        ].map((item, i) => (
-          <div 
-            key={item.label}
-            className="flex flex-col items-center gap-1.5 transition-all duration-700"
-            style={{ transitionDelay: `${700 + i * 120}ms` }}
-          >
-            <div className="relative group">
-              {/* Animated glow ring */}
-              <div 
-                className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.color} opacity-40 blur-md animate-pulse`}
-                style={{ animationDelay: `${i * 0.3}s`, animationDuration: '2s' }}
-              />
-              {/* Secondary glow layer */}
-              <div 
-                className={`absolute -inset-1 rounded-full bg-gradient-to-br ${item.color} opacity-20 blur-lg animate-pulse`}
-                style={{ animationDelay: `${i * 0.3 + 0.5}s`, animationDuration: '2.5s' }}
-              />
-              {/* Main orb */}
-              <div className="relative w-11 h-11 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg shadow-black/20">
-                <span className="text-white/80 text-sm drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">{item.icon}</span>
+          { icon: Sparkles, label: 'Create', color: 'from-violet-500 to-violet-400', glowColor: 'rgba(139,92,246,0.6)' },
+          { icon: Wand2, label: 'Generate', color: 'from-pink-500 to-pink-400', glowColor: 'rgba(236,72,153,0.6)' },
+          { icon: Zap, label: 'Transform', color: 'from-orange-500 to-orange-400', glowColor: 'rgba(249,115,22,0.6)' }
+        ].map((item, i) => {
+          const IconComponent = item.icon;
+          return (
+            <div 
+              key={item.label}
+              className="flex flex-col items-center gap-2 transition-all duration-700"
+              style={{ transitionDelay: `${700 + i * 120}ms` }}
+            >
+              <div className="relative group">
+                {/* Animated glow ring */}
+                <div 
+                  className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.color} opacity-50 blur-md animate-pulse`}
+                  style={{ animationDelay: `${i * 0.3}s`, animationDuration: '2s' }}
+                />
+                {/* Secondary glow layer */}
+                <div 
+                  className={`absolute -inset-2 rounded-full bg-gradient-to-br ${item.color} opacity-25 blur-xl animate-pulse`}
+                  style={{ animationDelay: `${i * 0.3 + 0.5}s`, animationDuration: '2.5s' }}
+                />
+                {/* Main orb */}
+                <div 
+                  className="relative w-12 h-12 rounded-full bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md border border-white/25 flex items-center justify-center shadow-lg shadow-black/30"
+                  style={{ boxShadow: `0 0 20px ${item.glowColor}` }}
+                >
+                  <IconComponent className="w-5 h-5 text-white/90 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]" strokeWidth={1.5} />
+                </div>
               </div>
+              <span className="text-white/60 text-[10px] font-medium tracking-widest uppercase">{item.label}</span>
             </div>
-            <span className="text-white/50 text-[9px] font-medium tracking-widest uppercase mt-1">{item.label}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
 
