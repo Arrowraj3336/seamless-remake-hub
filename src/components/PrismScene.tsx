@@ -163,22 +163,35 @@ export default function PrismScene() {
         ))}
       </div>
 
-      {/* Mobile-Only Floating Orbs - Positioned below prism */}
+      {/* Mobile-Only Floating Orbs - Positioned below prism with glow animation */}
       <div className={`flex sm:hidden absolute left-0 right-0 bottom-[42%] justify-center gap-6 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
         {[
-          { icon: '✦', label: 'Create' },
-          { icon: '◈', label: 'Generate' },
-          { icon: '❖', label: 'Transform' }
+          { icon: '✦', label: 'Create', color: 'from-violet-500 to-violet-400' },
+          { icon: '◈', label: 'Generate', color: 'from-pink-500 to-pink-400' },
+          { icon: '❖', label: 'Transform', color: 'from-orange-500 to-orange-400' }
         ].map((item, i) => (
           <div 
             key={item.label}
             className="flex flex-col items-center gap-1.5 transition-all duration-700"
             style={{ transitionDelay: `${700 + i * 120}ms` }}
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500/20 to-pink-500/20 backdrop-blur-sm border border-white/10 flex items-center justify-center">
-              <span className="text-white/70 text-sm">{item.icon}</span>
+            <div className="relative group">
+              {/* Animated glow ring */}
+              <div 
+                className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.color} opacity-40 blur-md animate-pulse`}
+                style={{ animationDelay: `${i * 0.3}s`, animationDuration: '2s' }}
+              />
+              {/* Secondary glow layer */}
+              <div 
+                className={`absolute -inset-1 rounded-full bg-gradient-to-br ${item.color} opacity-20 blur-lg animate-pulse`}
+                style={{ animationDelay: `${i * 0.3 + 0.5}s`, animationDuration: '2.5s' }}
+              />
+              {/* Main orb */}
+              <div className="relative w-11 h-11 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg shadow-black/20">
+                <span className="text-white/80 text-sm drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">{item.icon}</span>
+              </div>
             </div>
-            <span className="text-white/40 text-[9px] font-medium tracking-widest uppercase">{item.label}</span>
+            <span className="text-white/50 text-[9px] font-medium tracking-widest uppercase mt-1">{item.label}</span>
           </div>
         ))}
       </div>
