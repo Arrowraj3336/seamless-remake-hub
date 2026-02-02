@@ -164,30 +164,47 @@ export default function PrismScene() {
         ))}
       </div>
 
-      {/* Mobile-Only Floating Orbs - Smaller, positioned lower, minimal glow */}
-      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[26%] justify-center gap-6 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+      {/* Mobile-Only Floating Orbs - Compact size, positioned lower */}
+      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[28%] justify-center gap-5 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
         {[
-          { icon: Sparkles, label: 'Create', color: 'from-violet-500/30 to-violet-400/30' },
-          { icon: Wand2, label: 'Generate', color: 'from-pink-500/30 to-pink-400/30' },
-          { icon: Zap, label: 'Transform', color: 'from-orange-500/30 to-orange-400/30' }
+          { icon: Sparkles, label: 'Create', color: 'from-violet-500/25 to-violet-400/25' },
+          { icon: Wand2, label: 'Generate', color: 'from-pink-500/25 to-pink-400/25' },
+          { icon: Zap, label: 'Transform', color: 'from-orange-500/25 to-orange-400/25' }
         ].map((item, i) => {
           const IconComponent = item.icon;
           return (
             <div 
               key={item.label}
-              className="flex flex-col items-center gap-1.5 transition-all duration-700"
+              className="flex flex-col items-center gap-1 transition-all duration-700"
               style={{ transitionDelay: `${700 + i * 120}ms` }}
             >
-              {/* Main orb - smaller size, subtle styling */}
+              {/* Main orb - compact size */}
               <div 
-                className={`w-9 h-9 rounded-full bg-gradient-to-br ${item.color} backdrop-blur-sm border border-white/15 flex items-center justify-center`}
+                className={`w-7 h-7 rounded-full bg-gradient-to-br ${item.color} backdrop-blur-sm border border-white/10 flex items-center justify-center`}
               >
-                <IconComponent className="w-4 h-4 text-white/70" strokeWidth={1.5} />
+                <IconComponent className="w-3 h-3 text-white/60" strokeWidth={1.5} />
               </div>
-              <span className="text-white/50 text-[8px] font-medium tracking-widest uppercase">{item.label}</span>
+              <span className="text-white/40 text-[7px] font-medium tracking-widest uppercase">{item.label}</span>
             </div>
           );
         })}
+      </div>
+
+      {/* Mobile-Only Bottom Info Section */}
+      <div className={`flex sm:hidden absolute bottom-20 left-0 right-0 flex-col items-center pointer-events-none z-10 px-6 transition-all duration-1000 delay-800 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="h-px w-8 bg-gradient-to-r from-transparent to-white/20" />
+          <span className="text-white/30 text-[9px] font-light tracking-[0.2em] uppercase">Next-Gen AI</span>
+          <div className="h-px w-8 bg-gradient-to-l from-transparent to-white/20" />
+        </div>
+        <div className="flex items-center gap-4">
+          {['Text to Video', 'Image to Video'].map((feature, i) => (
+            <div key={feature} className="flex items-center gap-1.5">
+              <div className="w-1 h-1 rounded-full bg-violet-400/40" />
+              <span className="text-white/25 text-[8px] font-medium tracking-wide">{feature}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
 
