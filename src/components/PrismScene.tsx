@@ -122,11 +122,11 @@ export default function PrismScene() {
       {/* Hero Title Overlay - PC: single line, positioned lower | Mobile: two lines, moved down */}
       <div className={`absolute top-[18%] sm:top-[16%] md:top-[18%] left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 ease-out ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
         <h1 className="text-center font-bold tracking-tight leading-[1.1]">
-          {/* Mobile: Two lines */}
-          <span className={`block sm:hidden text-white text-xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          {/* Mobile: Two lines - slightly larger text */}
+          <span className={`block sm:hidden text-white text-2xl drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-700 delay-100 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Expand the spectrum
           </span>
-          <span className={`block sm:hidden mt-2 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <span className={`block sm:hidden mt-2 bg-gradient-to-r from-violet-400 via-pink-400 to-orange-400 bg-clip-text text-transparent text-2xl drop-shadow-[0_0_50px_rgba(167,139,250,0.5)] transition-all duration-700 delay-300 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             of Storytelling
           </span>
           {/* PC: Single line, forced nowrap */}
@@ -164,60 +164,47 @@ export default function PrismScene() {
         ))}
       </div>
 
-      {/* Mobile-Only Floating Orbs - Positioned well below prism with glow animation */}
-      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[32%] justify-center gap-8 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+      {/* Mobile-Only Floating Orbs - Smaller, positioned lower, minimal glow */}
+      <div className={`flex sm:hidden absolute left-0 right-0 bottom-[26%] justify-center gap-6 pointer-events-none z-10 transition-all duration-1000 delay-600 ${titleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
         {[
-          { icon: Sparkles, label: 'Create', color: 'from-violet-500 to-violet-400', glowColor: 'rgba(139,92,246,0.6)' },
-          { icon: Wand2, label: 'Generate', color: 'from-pink-500 to-pink-400', glowColor: 'rgba(236,72,153,0.6)' },
-          { icon: Zap, label: 'Transform', color: 'from-orange-500 to-orange-400', glowColor: 'rgba(249,115,22,0.6)' }
+          { icon: Sparkles, label: 'Create', color: 'from-violet-500/30 to-violet-400/30' },
+          { icon: Wand2, label: 'Generate', color: 'from-pink-500/30 to-pink-400/30' },
+          { icon: Zap, label: 'Transform', color: 'from-orange-500/30 to-orange-400/30' }
         ].map((item, i) => {
           const IconComponent = item.icon;
           return (
             <div 
               key={item.label}
-              className="flex flex-col items-center gap-2 transition-all duration-700"
+              className="flex flex-col items-center gap-1.5 transition-all duration-700"
               style={{ transitionDelay: `${700 + i * 120}ms` }}
             >
-              <div className="relative group">
-                {/* Animated glow ring */}
-                <div 
-                  className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.color} opacity-50 blur-md animate-pulse`}
-                  style={{ animationDelay: `${i * 0.3}s`, animationDuration: '2s' }}
-                />
-                {/* Secondary glow layer */}
-                <div 
-                  className={`absolute -inset-2 rounded-full bg-gradient-to-br ${item.color} opacity-25 blur-xl animate-pulse`}
-                  style={{ animationDelay: `${i * 0.3 + 0.5}s`, animationDuration: '2.5s' }}
-                />
-                {/* Main orb */}
-                <div 
-                  className="relative w-12 h-12 rounded-full bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md border border-white/25 flex items-center justify-center shadow-lg shadow-black/30"
-                  style={{ boxShadow: `0 0 20px ${item.glowColor}` }}
-                >
-                  <IconComponent className="w-5 h-5 text-white/90 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]" strokeWidth={1.5} />
-                </div>
+              {/* Main orb - smaller size, subtle styling */}
+              <div 
+                className={`w-9 h-9 rounded-full bg-gradient-to-br ${item.color} backdrop-blur-sm border border-white/15 flex items-center justify-center`}
+              >
+                <IconComponent className="w-4 h-4 text-white/70" strokeWidth={1.5} />
               </div>
-              <span className="text-white/60 text-[10px] font-medium tracking-widest uppercase">{item.label}</span>
+              <span className="text-white/50 text-[8px] font-medium tracking-widest uppercase">{item.label}</span>
             </div>
           );
         })}
       </div>
 
 
-      {/* Bottom Info Section */}
-      <div className={`absolute bottom-24 sm:bottom-28 left-0 right-0 flex flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 delay-700 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-        <p className="text-white/50 text-[10px] sm:text-xs md:text-sm font-light tracking-widest uppercase mb-3">
+      {/* Bottom Info Section - Hidden on mobile */}
+      <div className={`hidden sm:flex absolute bottom-24 sm:bottom-28 left-0 right-0 flex-col items-center pointer-events-none z-10 px-4 transition-all duration-1000 delay-700 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <p className="text-white/50 text-xs md:text-sm font-light tracking-widest uppercase mb-3">
           AI-Powered Video Creation
         </p>
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex items-center gap-6">
           {['Text to Video', 'Image to Video', 'Video Enhancement'].map((feature, i) => (
             <div 
               key={feature}
-              className="flex items-center gap-1.5 sm:gap-2"
+              className="flex items-center gap-2"
               style={{ animationDelay: `${i * 100}ms` }}
             >
               <div className="w-1 h-1 rounded-full bg-violet-400/60" />
-              <span className="text-white/30 text-[8px] sm:text-[10px] md:text-xs font-medium tracking-wide">{feature}</span>
+              <span className="text-white/30 text-[10px] md:text-xs font-medium tracking-wide">{feature}</span>
             </div>
           ))}
         </div>
